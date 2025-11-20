@@ -24,19 +24,19 @@ export async function POST(request: NextRequest) {
     const paymentPayload = decodePaymentHeader(paymentHeader);
 
     // Basic validation
-    if (!paymentPayload || !paymentPayload.payload || !paymentPayload.payload.authorization) {
+    if (!paymentPayload || !paymentPayload.payload) {
       return NextResponse.json(
         { error: 'Invalid payment proof format', verified: false },
         { status: 200 }
       );
     }
 
-    const auth = paymentPayload.payload.authorization;
+    const payload = paymentPayload.payload;
 
     // Validate payment details match expected values
     const expectedAmount = (BigInt(1000000)).toString(); // 1 USDC
     const validPayment =
-      auth.value === expectedAmount &&
+      payload.amount === expectedAmount &&
       paymentPayload.network === X402_CONFIG.NETWORK &&
       paymentPayload.scheme === 'exact';
 
@@ -48,18 +48,18 @@ export async function POST(request: NextRequest) {
     }
 
     console.log('✅ Payment verified:', {
-      from: auth.from,
-      to: auth.to,
-      amount: auth.value,
+      from: payload.from,
+      to: payload.to,
+      amount: payload.amount,
       network: paymentPayload.network,
     });
 
     return NextResponse.json({
       verified: true,
       payment: {
-        from: auth.from,
-        to: auth.to,
-        amount: auth.value,
+        from: payload.from,
+        to: payload.to,
+        amount: payload.amount,
         network: paymentPayload.network,
       },
     });
