@@ -5,8 +5,10 @@
 
 import { NextRequest, NextResponse } from 'next/server';
 
-// Hardcode localhost facilitator URL for server-side
-const FACILITATOR_URL = 'http://localhost:8080';
+// Use environment variable for facilitator URL
+// Development: http://localhost:8080
+// Production: https://your-facilitator.railway.app
+const FACILITATOR_URL = process.env.FACILITATOR_URL || process.env.NEXT_PUBLIC_FACILITATOR_URL || 'http://localhost:8080';
 
 export async function POST(request: NextRequest) {
   try {

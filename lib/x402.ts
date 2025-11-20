@@ -105,20 +105,20 @@ export interface FacilitatorSupportedResponse {
 // CONFIGURATION
 // ==========================================
 
-// Log environment variables for debugging
-console.log('[x402] Environment check:', {
-  PAYMENT_RECIPIENT: process.env.NEXT_PUBLIC_PAYMENT_RECIPIENT,
-  NETWORK: process.env.NEXT_PUBLIC_NETWORK,
-  PAYMENT_AMOUNT: process.env.NEXT_PUBLIC_PAYMENT_AMOUNT,
-});
-
 // Validate required environment variables
 if (!process.env.NEXT_PUBLIC_PAYMENT_RECIPIENT) {
-  throw new Error('NEXT_PUBLIC_PAYMENT_RECIPIENT environment variable is required');
+  throw new Error(
+    '❌ NEXT_PUBLIC_PAYMENT_RECIPIENT environment variable is required. ' +
+    'Please set it in .env.local or Vercel environment variables.'
+  );
 }
 
-// FORCE the correct address - NO FALLBACK
-const CORRECT_RECIPIENT = '0x9c1e7f1652be26b68355b447a76295df7ba94285' as `0x${string}`;
+if (!process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID) {
+  console.warn(
+    '⚠️ NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID not set. ' +
+    'Get one at https://cloud.walletconnect.com/'
+  );
+}
 
 export const X402_CONFIG = {
   VERSION: 1,
@@ -126,16 +126,11 @@ export const X402_CONFIG = {
   FACILITATOR_URL: '/api/x402', // Proxy through Next.js API
   NETWORK: process.env.NEXT_PUBLIC_NETWORK || 'avalanche-fuji',
   USDC_ADDRESS: (process.env.NEXT_PUBLIC_USDC_ADDRESS || '0x5425890298aed601595a70AB815c96711a31Bc65') as `0x${string}`,
-  PAYMENT_RECIPIENT: CORRECT_RECIPIENT, // HARD-CODED for now
+  PAYMENT_RECIPIENT: process.env.NEXT_PUBLIC_PAYMENT_RECIPIENT as `0x${string}`,
   PAYMENT_AMOUNT: process.env.NEXT_PUBLIC_PAYMENT_AMOUNT || '1',
   USDC_DECIMALS: 6,
   TIMEOUT_SECONDS: 300, // 5 minutes
 } as const;
-
-console.log('[x402] X402_CONFIG loaded:', {
-  PAYMENT_RECIPIENT: X402_CONFIG.PAYMENT_RECIPIENT,
-  NETWORK: X402_CONFIG.NETWORK,
-});
 
 // ==========================================
 // UTILITY FUNCTIONS
