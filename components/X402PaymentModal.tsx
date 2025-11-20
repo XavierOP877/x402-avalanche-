@@ -160,14 +160,18 @@ export function X402PaymentModal({ isOpen, onClose }: X402PaymentModalProps) {
 
       console.log('📦 Settlement result:', JSON.stringify(settlementResult, null, 2));
 
-      if (!settlementResult.success || !settlementResult.txHash) {
-        const errorDetails = settlementResult.error || settlementResult.message || 'Payment settlement failed';
-        console.error('❌ Settlement failed with details:', errorDetails);
+      // Extract transaction hash from various possible field names
+      const transactionHash = settlementResult.txHash || settlementResult.tx || settlementResult.transaction;
+
+      if (!transactionHash) {
+        const errorDetails = settlementResult.error || settlementResult.message || 'No transaction hash returned';
+        console.error('❌ Settlement failed - no tx hash:', errorDetails);
+        console.error('❌ Full response:', JSON.stringify(settlementResult, null, 2));
         throw new Error(errorDetails);
       }
 
-      console.log('✅ Payment settled on-chain:', settlementResult.txHash);
-      setTxHash(settlementResult.txHash);
+      console.log('✅ Payment settled on-chain:', transactionHash);
+      setTxHash(transactionHash);
 
       // Step 9: Wait for confirmation
       setPaymentStatus('confirming');

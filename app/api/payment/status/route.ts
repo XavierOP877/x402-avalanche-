@@ -2,11 +2,12 @@
  * Payment Status API Route
  *
  * Checks if a payment has been verified and grants access
- * Simplified: Just validates the payment proof can be decoded
+ * Validates ERC-3009 payment proofs
  */
 
 import { NextRequest, NextResponse } from 'next/server';
 import { decodePaymentHeader, X402_CONFIG } from '@/lib/x402';
+import { parseUnits } from 'viem';
 
 export async function POST(request: NextRequest) {
   try {
@@ -33,14 +34,41 @@ export async function POST(request: NextRequest) {
 
     const payload = paymentPayload.payload;
 
+    // Check if this is an ERC-3009 authorization (has signature and authorization fields)
+    const isERC3009 = 'authorization' in payload && 'signature' in payload;
+
+    let from: string, to: string, amount: string;
+
+    if (isERC3009) {
+      // ERC-3009 authorization payload
+      const auth = (payload as any).authorization;
+      from = auth.from;
+      to = auth.to;
+      amount = auth.value; // Already in atomic units (string)
+    } else {
+      // Simple payload
+      from = (payload as any).from;
+      to = (payload as any).to;
+      amount = (payload as any).amount;
+    }
+
     // Validate payment details match expected values
-    const expectedAmount = (BigInt(1000000)).toString(); // 1 USDC
+    const expectedAmount = parseUnits(X402_CONFIG.PAYMENT_AMOUNT, X402_CONFIG.USDC_DECIMALS).toString();
     const validPayment =
-      payload.amount === expectedAmount &&
+      amount === expectedAmount &&
+      to === X402_CONFIG.PAYMENT_RECIPIENT &&
       paymentPayload.network === X402_CONFIG.NETWORK &&
       paymentPayload.scheme === 'exact';
 
     if (!validPayment) {
+      console.error('❌ Payment validation failed:', {
+        expectedAmount,
+        actualAmount: amount,
+        expectedRecipient: X402_CONFIG.PAYMENT_RECIPIENT,
+        actualRecipient: to,
+        expectedNetwork: X402_CONFIG.NETWORK,
+        actualNetwork: paymentPayload.network,
+      });
       return NextResponse.json(
         { error: 'Payment details do not match requirements', verified: false },
         { status: 200 }
@@ -48,18 +76,19 @@ export async function POST(request: NextRequest) {
     }
 
     console.log('✅ Payment verified:', {
-      from: payload.from,
-      to: payload.to,
-      amount: payload.amount,
+      from,
+      to,
+      amount,
       network: paymentPayload.network,
+      type: isERC3009 ? 'ERC-3009' : 'Simple',
     });
 
     return NextResponse.json({
       verified: true,
       payment: {
-        from: payload.from,
-        to: payload.to,
-        amount: payload.amount,
+        from,
+        to,
+        amount,
         network: paymentPayload.network,
       },
     });

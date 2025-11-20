@@ -81,9 +81,10 @@ export interface FacilitatorSettleRequest {
  * Facilitator Settle Response
  */
 export interface FacilitatorSettleResponse {
-  success: boolean;
+  success?: boolean;
   txHash?: `0x${string}`;
   tx?: `0x${string}`; // Alternative field name
+  transaction?: `0x${string}`; // Alternative field name (ukstv/x402-facilitator)
   networkId?: string;
   network?: string; // Alternative field name
   error?: string;
