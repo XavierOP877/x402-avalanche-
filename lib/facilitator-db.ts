@@ -1,8 +1,28 @@
 /**
- * Facilitator Database Operations (Vercel KV)
+ * Facilitator Database Operations (Upstash Redis)
  */
 
-import { kv } from '@vercel/kv';
+import { Redis } from '@upstash/redis';
+
+// Lazy-load Redis client (only when env vars are set)
+let kv: Redis | null = null;
+
+function getRedisClient(): Redis {
+  if (!kv) {
+    const url = process.env.UPSTASH_REDIS_REST_URL;
+    const token = process.env.UPSTASH_REDIS_REST_TOKEN;
+
+    if (!url || !token || url.includes('your-upstash')) {
+      throw new Error(
+        'Upstash Redis not configured. Please set UPSTASH_REDIS_REST_URL and UPSTASH_REDIS_REST_TOKEN environment variables. ' +
+        'Get them from: https://console.upstash.com/'
+      );
+    }
+
+    kv = new Redis({ url, token });
+  }
+  return kv;
+}
 import {
   UserFacilitator,
   PublicFacilitatorInfo,
@@ -63,10 +83,11 @@ export async function registerFacilitator(
   };
 
   // Store in Redis
-  await kv.set(REDIS_KEYS.facilitator(id), JSON.stringify(facilitator));
-  await kv.set(REDIS_KEYS.byOwner(ownerAddress), id);
-  await kv.set(REDIS_KEYS.byRecipient(recipientAddress), id);
-  await kv.sadd(REDIS_KEYS.allList(), id);
+  const redis = getRedisClient();
+  await redis.set(REDIS_KEYS.facilitator(id), JSON.stringify(facilitator));
+  await redis.set(REDIS_KEYS.byOwner(ownerAddress), id);
+  await redis.set(REDIS_KEYS.byRecipient(recipientAddress), id);
+  await redis.sadd(REDIS_KEYS.allList(), id);
 
   return facilitator;
 }
@@ -79,7 +100,8 @@ export async function registerFacilitator(
  * Get facilitator by ID
  */
 export async function getFacilitator(id: string): Promise<UserFacilitator | null> {
-  const data = await kv.get<string>(REDIS_KEYS.facilitator(id));
+  const redis = getRedisClient();
+  const data = await redis.get<string>(REDIS_KEYS.facilitator(id));
   if (!data) return null;
   return JSON.parse(data);
 }
@@ -90,7 +112,8 @@ export async function getFacilitator(id: string): Promise<UserFacilitator | null
 export async function getFacilitatorByOwner(
   ownerAddress: string
 ): Promise<UserFacilitator | null> {
-  const id = await kv.get<string>(REDIS_KEYS.byOwner(ownerAddress.toLowerCase()));
+  const redis = getRedisClient();
+  const id = await redis.get<string>(REDIS_KEYS.byOwner(ownerAddress.toLowerCase()));
   if (!id) return null;
   return getFacilitator(id);
 }
@@ -101,7 +124,8 @@ export async function getFacilitatorByOwner(
 export async function getFacilitatorByRecipient(
   recipientAddress: string
 ): Promise<UserFacilitator | null> {
-  const id = await kv.get<string>(REDIS_KEYS.byRecipient(recipientAddress.toLowerCase()));
+  const redis = getRedisClient();
+  const id = await redis.get<string>(REDIS_KEYS.byRecipient(recipientAddress.toLowerCase()));
   if (!id) return null;
   return getFacilitator(id);
 }
@@ -110,7 +134,8 @@ export async function getFacilitatorByRecipient(
  * Get all active facilitators (public info only)
  */
 export async function getActiveFacilitators(): Promise<PublicFacilitatorInfo[]> {
-  const activeIds = await kv.smembers(REDIS_KEYS.activeList());
+  const redis = getRedisClient();
+  const activeIds = await redis.smembers(REDIS_KEYS.activeList());
   if (!activeIds || activeIds.length === 0) return [];
 
   const facilitators: PublicFacilitatorInfo[] = [];
@@ -130,7 +155,8 @@ export async function getActiveFacilitators(): Promise<PublicFacilitatorInfo[]> 
  * Get all facilitators (for admin)
  */
 export async function getAllFacilitators(): Promise<PublicFacilitatorInfo[]> {
-  const allIds = await kv.smembers(REDIS_KEYS.allList());
+  const redis = getRedisClient();
+  const allIds = await redis.smembers(REDIS_KEYS.allList());
   if (!allIds || allIds.length === 0) return [];
 
   const facilitators: PublicFacilitatorInfo[] = [];
@@ -159,20 +185,22 @@ export async function updateFacilitator(
   const facilitator = await getFacilitator(id);
   if (!facilitator) return null;
 
+  const redis = getRedisClient();
+
   // If recipient address is changing, update the index
   if (updates.recipientAddress && updates.recipientAddress !== facilitator.recipientAddress) {
-    await kv.del(REDIS_KEYS.byRecipient(facilitator.recipientAddress));
-    await kv.set(REDIS_KEYS.byRecipient(updates.recipientAddress), id);
+    await redis.del(REDIS_KEYS.byRecipient(facilitator.recipientAddress));
+    await redis.set(REDIS_KEYS.byRecipient(updates.recipientAddress), id);
   }
 
   // If status is changing to active, add to active list
   if (updates.status === 'active' && facilitator.status !== 'active') {
-    await kv.sadd(REDIS_KEYS.activeList(), id);
+    await redis.sadd(REDIS_KEYS.activeList(), id);
   }
 
   // If status is changing from active, remove from active list
   if (updates.status !== 'active' && facilitator.status === 'active') {
-    await kv.srem(REDIS_KEYS.activeList(), id);
+    await redis.srem(REDIS_KEYS.activeList(), id);
   }
 
   // Merge updates
@@ -182,7 +210,7 @@ export async function updateFacilitator(
   };
 
   // Save
-  await kv.set(REDIS_KEYS.facilitator(id), JSON.stringify(updated));
+  await redis.set(REDIS_KEYS.facilitator(id), JSON.stringify(updated));
 
   return updated;
 }
@@ -232,12 +260,14 @@ export async function deleteFacilitator(id: string): Promise<boolean> {
   const facilitator = await getFacilitator(id);
   if (!facilitator) return false;
 
+  const redis = getRedisClient();
+
   // Remove all keys
-  await kv.del(REDIS_KEYS.facilitator(id));
-  await kv.del(REDIS_KEYS.byOwner(facilitator.ownerAddress));
-  await kv.del(REDIS_KEYS.byRecipient(facilitator.recipientAddress));
-  await kv.srem(REDIS_KEYS.allList(), id);
-  await kv.srem(REDIS_KEYS.activeList(), id);
+  await redis.del(REDIS_KEYS.facilitator(id));
+  await redis.del(REDIS_KEYS.byOwner(facilitator.ownerAddress));
+  await redis.del(REDIS_KEYS.byRecipient(facilitator.recipientAddress));
+  await redis.srem(REDIS_KEYS.allList(), id);
+  await redis.srem(REDIS_KEYS.activeList(), id);
 
   return true;
 }
