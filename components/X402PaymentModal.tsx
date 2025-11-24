@@ -34,11 +34,12 @@ import {
 interface X402PaymentModalProps {
   isOpen: boolean;
   onClose: () => void;
+  selectedFacilitatorId?: string;
 }
 
 type PaymentStatus = 'idle' | 'checking-facilitator' | 'signing' | 'settling' | 'confirming' | 'verifying' | 'success' | 'error';
 
-export function X402PaymentModal({ isOpen, onClose }: X402PaymentModalProps) {
+export function X402PaymentModal({ isOpen, onClose, selectedFacilitatorId = 'default' }: X402PaymentModalProps) {
   const router = useRouter();
   const { address } = useAccount();
   const [paymentStatus, setPaymentStatus] = useState<PaymentStatus>('idle');
@@ -373,7 +374,10 @@ export function X402PaymentModal({ isOpen, onClose }: X402PaymentModalProps) {
 
               {/* Info */}
               <p className="text-xs text-gray-500 text-center mt-4">
-                Using x402 facilitator on {X402_CONFIG.NETWORK}
+                {selectedFacilitatorId === 'default'
+                  ? `Using official x402 facilitator on ${X402_CONFIG.NETWORK}`
+                  : `Using community facilitator on ${X402_CONFIG.NETWORK}`
+                }
               </p>
             </div>
           </motion.div>

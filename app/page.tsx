@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
 import { useAccount, useBalance } from 'wagmi';
@@ -8,10 +8,22 @@ import { SwapWidget } from '@/components/SwapWidget';
 import { X402PaymentModal } from '@/components/X402PaymentModal';
 import { USDC_FUJI } from '@/lib/contracts';
 import { formatUnits } from 'viem';
+import Link from 'next/link';
+
+interface FacilitatorInfo {
+  id: string;
+  displayName: string;
+  recipientAddress: string;
+  status: string;
+  totalTransactions: number;
+  gasBalance: string;
+}
 
 export default function Home() {
   const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
   const [showSwap, setShowSwap] = useState(false);
+  const [facilitators, setFacilitators] = useState<FacilitatorInfo[]>([]);
+  const [selectedFacilitator, setSelectedFacilitator] = useState<string>('default');
   const { address, isConnected } = useAccount();
 
   const { data: usdcBalance } = useBalance({
@@ -20,6 +32,23 @@ export default function Home() {
   });
 
   const hasEnoughUSDC = usdcBalance && parseFloat(formatUnits(usdcBalance.value, 6)) >= 1;
+
+  // Fetch active facilitators on mount
+  useEffect(() => {
+    fetchFacilitators();
+  }, []);
+
+  const fetchFacilitators = async () => {
+    try {
+      const response = await fetch('/api/facilitator/list');
+      const data = await response.json();
+      if (data.success) {
+        setFacilitators(data.facilitators);
+      }
+    } catch (error) {
+      console.error('Failed to fetch facilitators:', error);
+    }
+  };
 
   const handleLaunchApp = () => {
     if (!isConnected) {
@@ -59,9 +88,9 @@ export default function Home() {
                 <a href="#how-it-works" className="text-sm font-medium hover:text-gray-600 transition-colors">
                   How It Works
                 </a>
-                <a href="#why-avalanche" className="text-sm font-medium hover:text-gray-600 transition-colors">
-                  Why Avalanche
-                </a>
+                <Link href="/facilitator" className="text-sm font-medium hover:text-gray-600 transition-colors">
+                  🚀 Facilitator
+                </Link>
                 <a href="https://github.com/x402-rs/x402-rs" target="_blank" rel="noopener noreferrer" className="text-sm font-medium hover:text-gray-600 transition-colors">
                   Docs
                 </a>
@@ -116,6 +145,37 @@ export default function Home() {
               Pay for APIs, content, and services with{' '}
               <span className="font-bold text-black">crypto as seamlessly as HTTP requests.</span>
             </p>
+
+            {/* Facilitator Selection */}
+            {facilitators.length > 0 && (
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="max-w-md mx-auto mb-8"
+              >
+                <label className="block text-sm font-semibold mb-2 text-gray-700">
+                  Select Facilitator
+                </label>
+                <select
+                  value={selectedFacilitator}
+                  onChange={(e) => setSelectedFacilitator(e.target.value)}
+                  className="w-full p-4 border-2 border-black font-medium text-lg bg-white hover:bg-gray-50 cursor-pointer"
+                >
+                  <option value="default">🏢 Default Facilitator (Official)</option>
+                  {facilitators.map((fac) => (
+                    <option key={fac.id} value={fac.id}>
+                      {fac.displayName} ({fac.totalTransactions} txs)
+                    </option>
+                  ))}
+                </select>
+                <p className="text-xs text-gray-500 mt-2">
+                  {selectedFacilitator === 'default'
+                    ? 'Using the official x402 facilitator'
+                    : `Community facilitator • Gas: ${facilitators.find(f => f.id === selectedFacilitator)?.gasBalance || '0'} AVAX`
+                  }
+                </p>
+              </motion.div>
+            )}
 
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-6">
               <motion.button
@@ -396,7 +456,11 @@ export default function Home() {
       </footer>
 
       {/* x402 Payment Modal */}
-      <X402PaymentModal isOpen={isPaymentModalOpen} onClose={() => setIsPaymentModalOpen(false)} />
+      <X402PaymentModal
+        isOpen={isPaymentModalOpen}
+        onClose={() => setIsPaymentModalOpen(false)}
+        selectedFacilitatorId={selectedFacilitator}
+      />
     </div>
   );
 }
