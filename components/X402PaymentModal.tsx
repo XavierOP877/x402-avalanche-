@@ -18,34 +18,35 @@ import { formatUnits } from 'viem';
 import { USDC_FUJI } from '@/lib/contracts';
 import { useRouter } from 'next/navigation';
 import {
-  settlePaymentWithAuthorization,
   encodePaymentHeader,
   createPaymentRequirements,
   X402_CONFIG,
-  isFacilitatorReady,
 } from '@/lib/x402';
 import {
   createTransferAuthorization,
   getTypedDataForSigning,
   createSignedAuthorization,
   createX402ExactPayload,
+  signedAuthorizationToJSON,
 } from '@/lib/erc3009';
 
 interface X402PaymentModalProps {
   isOpen: boolean;
   onClose: () => void;
+  onSuccess?: (txHash: string, proof: string) => void; // Optional callback - if not provided, redirects to builder-hub
+  facilitatorId?: string; // Optional custom facilitator ID
 }
 
 type PaymentStatus = 'idle' | 'checking-facilitator' | 'signing' | 'settling' | 'confirming' | 'verifying' | 'success' | 'error';
 
-export function X402PaymentModal({ isOpen, onClose }: X402PaymentModalProps) {
+export function X402PaymentModal({ isOpen, onClose, onSuccess, facilitatorId }: X402PaymentModalProps) {
   const router = useRouter();
   const { address } = useAccount();
   const [paymentStatus, setPaymentStatus] = useState<PaymentStatus>('idle');
   const [errorMessage, setErrorMessage] = useState('');
   const [txHash, setTxHash] = useState<string>('');
   const [paymentProof, setPaymentProof] = useState<string>('');
-  const [facilitatorReady, setFacilitatorReady] = useState<boolean>(true);
+  const [customFacilitator, setCustomFacilitator] = useState<any>(null);
 
   const { data: usdcBalance } = useBalance({
     address: address,
@@ -57,12 +58,39 @@ export function X402PaymentModal({ isOpen, onClose }: X402PaymentModalProps) {
 
   const hasEnoughUSDC = usdcBalance && parseFloat(formatUnits(usdcBalance.value, 6)) >= parseFloat(X402_CONFIG.PAYMENT_AMOUNT);
 
-  // Check facilitator status on mount
+  // Fetch custom facilitator details if provided
   useEffect(() => {
-    if (isOpen) {
-      checkFacilitator();
+    if (isOpen && facilitatorId) {
+      fetchCustomFacilitator();
+    } else {
+      setCustomFacilitator(null);
     }
-  }, [isOpen]);
+  }, [isOpen, facilitatorId]);
+
+  const fetchCustomFacilitator = async () => {
+    try {
+      const response = await fetch('/api/facilitator/list');
+      const data = await response.json();
+
+      if (data.success) {
+        const fac = data.facilitators.find((f: any) => f.id === facilitatorId);
+        if (fac) {
+          setCustomFacilitator(fac);
+          console.log('🔧 Using custom facilitator:', fac.name);
+        }
+      }
+    } catch (error) {
+      console.error('Failed to fetch custom facilitator:', error);
+    }
+  };
+
+  // Check facilitator status on mount
+  // DISABLED: No longer using Docker facilitator, using Next.js API instead
+  // useEffect(() => {
+  //   if (isOpen) {
+  //     checkFacilitator();
+  //   }
+  // }, [isOpen]);
 
   // Reset status when modal opens
   useEffect(() => {
@@ -74,57 +102,56 @@ export function X402PaymentModal({ isOpen, onClose }: X402PaymentModalProps) {
     }
   }, [isOpen]);
 
-  // Redirect on success
+  // Handle success - callback or redirect
   useEffect(() => {
     if (paymentStatus === 'success' && paymentProof) {
-      // Store payment proof in session storage
-      sessionStorage.setItem('x402-payment-proof', paymentProof);
-      sessionStorage.setItem('x402-tx-hash', txHash);
+      if (onSuccess) {
+        // Custom callback provided - use it instead of redirecting
+        setTimeout(() => {
+          onSuccess(txHash, paymentProof);
+        }, 1500);
+      } else {
+        // No callback - default behavior: redirect to builder-hub
+        sessionStorage.setItem('x402-payment-proof', paymentProof);
+        sessionStorage.setItem('x402-tx-hash', txHash);
 
-      setTimeout(() => {
-        router.push('/builder-hub');
-      }, 2000);
-    }
-  }, [paymentStatus, paymentProof, txHash, router]);
-
-  const checkFacilitator = async () => {
-    try {
-      const ready = await isFacilitatorReady();
-      setFacilitatorReady(ready);
-      if (!ready) {
-        setErrorMessage('x402 facilitator is not ready. Please check if Docker container is running.');
+        setTimeout(() => {
+          router.push('/builder-hub');
+        }, 2000);
       }
-    } catch (error) {
-      setFacilitatorReady(false);
-      setErrorMessage('Cannot connect to x402 facilitator.');
     }
-  };
+  }, [paymentStatus, paymentProof, txHash, router, onSuccess]);
+
+  // Removed checkFacilitator - no longer using Docker facilitator
 
   const handleX402Payment = async () => {
-    if (!address || !hasEnoughUSDC || !facilitatorReady) return;
+    if (!address || !hasEnoughUSDC) return;
 
     try {
-      setPaymentStatus('checking-facilitator');
+      setPaymentStatus('signing');
       setErrorMessage('');
-
-      // Step 1: Check facilitator is ready
-      console.log('🔍 Checking x402 facilitator...');
-      const ready = await isFacilitatorReady();
-      if (!ready) {
-        throw new Error('Facilitator does not support required payment method');
-      }
 
       // Step 2: Create ERC-3009 authorization
       setPaymentStatus('signing');
       console.log('✍️ Creating ERC-3009 authorization...');
 
+      // Use custom facilitator's payment recipient if provided, otherwise use default
+      const paymentRecipient = customFacilitator
+        ? customFacilitator.paymentRecipient
+        : X402_CONFIG.PAYMENT_RECIPIENT;
+
+      console.log('🔍 Payment recipient:', paymentRecipient);
+      console.log('🔍 Using facilitator:', customFacilitator ? customFacilitator.name : 'Default');
+      console.log('🔍 Your address:', address);
+
       const authorization = createTransferAuthorization(
         address,
-        X402_CONFIG.PAYMENT_RECIPIENT,
+        paymentRecipient,
         X402_CONFIG.PAYMENT_AMOUNT
       );
 
       console.log('📝 Authorization created:', authorization);
+      console.log('📝 Authorization TO address:', authorization.to);
 
       // Step 3: Get typed data for signing
       const typedData = getTypedDataForSigning(authorization);
@@ -156,7 +183,50 @@ export function X402PaymentModal({ isOpen, onClose }: X402PaymentModalProps) {
       setPaymentStatus('settling');
       console.log('🚀 Submitting payment to x402 facilitator...');
 
-      const settlementResult = await settlePaymentWithAuthorization(x402Payload, paymentRequirements);
+      let settlementResult;
+
+      if (customFacilitator) {
+        // Use custom facilitator endpoint
+        console.log('🔧 Using custom facilitator:', customFacilitator.name);
+
+        // Convert BigInt values to strings for JSON serialization
+        const signedAuthJSON = signedAuthorizationToJSON(signedAuth);
+
+        const response = await fetch('/api/x402/settle-custom', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            facilitatorId,
+            paymentPayload: signedAuthJSON,
+          }),
+        });
+
+        if (!response.ok) {
+          const error = await response.text();
+          throw new Error(`Custom facilitator settlement failed: ${error}`);
+        }
+
+        settlementResult = await response.json();
+      } else {
+        // Use default Next.js facilitator (ERC-3009 compatible)
+        console.log('🔧 Using default facilitator');
+
+        const response = await fetch('/api/x402/settle-default', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            paymentPayload: x402Payload,
+            paymentRequirements: paymentRequirements,
+          }),
+        });
+
+        if (!response.ok) {
+          const error = await response.text();
+          throw new Error(`Default facilitator settlement failed: ${error}`);
+        }
+
+        settlementResult = await response.json();
+      }
 
       console.log('📦 Settlement result:', JSON.stringify(settlementResult, null, 2));
 
@@ -266,24 +336,21 @@ export function X402PaymentModal({ isOpen, onClose }: X402PaymentModalProps) {
                 x402 PROTOCOL (ERC-3009)
               </div>
 
-              <h2 className="text-3xl font-bold mb-4">Payment Required</h2>
+              <h2 className="text-3xl font-bold mb-4">
+                {onSuccess ? 'Facilitator Registration Fee' : 'Payment Required'}
+              </h2>
 
               <div className="mb-6">
-                <p className="text-lg mb-2">To access the Builder Hub, pay via x402:</p>
+                <p className="text-lg mb-2">
+                  {onSuccess
+                    ? 'Register your facilitator on x402:'
+                    : 'To access the Builder Hub, pay via x402:'}
+                </p>
                 <div className="text-4xl font-bold mb-2">{X402_CONFIG.PAYMENT_AMOUNT} USDC</div>
                 <p className="text-sm text-gray-600">on {X402_CONFIG.NETWORK}</p>
               </div>
 
-              {/* Facilitator Status */}
-              {!facilitatorReady && (
-                <div className="mb-4 p-4 bg-yellow-50 border-2 border-yellow-500 text-yellow-900">
-                  <p className="text-sm font-semibold mb-1">⚠️ Facilitator Offline</p>
-                  <p className="text-xs">
-                    Make sure Docker container is running:
-                    <code className="block mt-1 text-xs bg-yellow-100 p-1">docker compose up -d</code>
-                  </p>
-                </div>
-              )}
+              {/* Facilitator Status - REMOVED: No longer using Docker */}
 
               {/* Balance Display */}
               {address && usdcBalance && (
@@ -325,11 +392,10 @@ export function X402PaymentModal({ isOpen, onClose }: X402PaymentModalProps) {
               {/* Payment Button */}
               <button
                 onClick={handleX402Payment}
-                disabled={!address || !hasEnoughUSDC || isProcessing || paymentStatus === 'success' || !facilitatorReady}
+                disabled={!address || !hasEnoughUSDC || isProcessing || paymentStatus === 'success'}
                 className="w-full py-4 bg-black text-white font-bold hover:bg-gray-800 disabled:bg-gray-300 disabled:cursor-not-allowed transition-all shadow-md hover:shadow-lg mb-4"
               >
                 {!address ? 'Connect Wallet First'
-                  : !facilitatorReady ? 'Facilitator Offline'
                   : !hasEnoughUSDC ? 'Insufficient USDC'
                   : getStatusMessage()}
               </button>
@@ -366,7 +432,11 @@ export function X402PaymentModal({ isOpen, onClose }: X402PaymentModalProps) {
                   >
                     <p className="font-bold mb-2">✓ Payment Verified via x402!</p>
                     <p className="text-sm mb-2">Transaction confirmed on-chain</p>
-                    <p className="text-xs">Redirecting to Builder Hub...</p>
+                    <p className="text-xs">
+                      {onSuccess
+                        ? 'Creating your facilitator...'
+                        : 'Redirecting to Builder Hub...'}
+                    </p>
                   </motion.div>
                 )}
               </AnimatePresence>

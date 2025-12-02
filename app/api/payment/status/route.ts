@@ -54,9 +54,11 @@ export async function POST(request: NextRequest) {
 
     // Validate payment details match expected values
     const expectedAmount = parseUnits(X402_CONFIG.PAYMENT_AMOUNT, X402_CONFIG.USDC_DECIMALS).toString();
+
+    // Check amount, network, and scheme
+    // Note: We don't validate the recipient address to allow custom facilitators
     const validPayment =
       amount === expectedAmount &&
-      to === X402_CONFIG.PAYMENT_RECIPIENT &&
       paymentPayload.network === X402_CONFIG.NETWORK &&
       paymentPayload.scheme === 'exact';
 
@@ -64,8 +66,7 @@ export async function POST(request: NextRequest) {
       console.error('❌ Payment validation failed:', {
         expectedAmount,
         actualAmount: amount,
-        expectedRecipient: X402_CONFIG.PAYMENT_RECIPIENT,
-        actualRecipient: to,
+        paymentRecipient: to,
         expectedNetwork: X402_CONFIG.NETWORK,
         actualNetwork: paymentPayload.network,
       });

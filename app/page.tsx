@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
 import { useAccount, useBalance } from 'wagmi';
@@ -8,10 +8,13 @@ import { SwapWidget } from '@/components/SwapWidget';
 import { X402PaymentModal } from '@/components/X402PaymentModal';
 import { USDC_FUJI } from '@/lib/contracts';
 import { formatUnits } from 'viem';
+import type { PublicFacilitatorInfo } from '@/lib/facilitator-storage';
 
 export default function Home() {
   const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
   const [showSwap, setShowSwap] = useState(false);
+  const [facilitators, setFacilitators] = useState<PublicFacilitatorInfo[]>([]);
+  const [selectedFacilitatorId, setSelectedFacilitatorId] = useState<string>('default');
   const { address, isConnected } = useAccount();
 
   const { data: usdcBalance } = useBalance({
@@ -20,6 +23,41 @@ export default function Home() {
   });
 
   const hasEnoughUSDC = usdcBalance && parseFloat(formatUnits(usdcBalance.value, 6)) >= 1;
+
+  // Fetch available facilitators
+  useEffect(() => {
+    fetchFacilitators();
+  }, []);
+
+  const fetchFacilitators = async () => {
+    try {
+      const response = await fetch('/api/facilitator/list');
+      const data = await response.json();
+
+      if (data.success) {
+        console.log('📋 All facilitators:', data.facilitators.map((f: PublicFacilitatorInfo) => ({
+          id: f.id,
+          name: f.name,
+          status: f.status,
+        })));
+
+        // ONLY show active facilitators in dropdown (exclude paused, needs_funding, inactive)
+        const activeFacilitators = data.facilitators.filter(
+          (f: PublicFacilitatorInfo) => f.status === 'active'
+        );
+
+        setFacilitators(activeFacilitators);
+        console.log(`✅ Found ${activeFacilitators.length} active facilitators`);
+        console.log('✅ Active facilitators:', activeFacilitators.map((f: PublicFacilitatorInfo) => ({
+          id: f.id,
+          name: f.name,
+          status: f.status,
+        })));
+      }
+    } catch (error) {
+      console.error('Failed to fetch facilitators:', error);
+    }
+  };
 
   const handleLaunchApp = () => {
     if (!isConnected) {
@@ -30,6 +68,14 @@ export default function Home() {
     if (!hasEnoughUSDC) {
       setShowSwap(true);
       return;
+    }
+
+    // Log selected facilitator
+    if (selectedFacilitatorId === 'default') {
+      console.log('💰 Using default facilitator for payment');
+    } else {
+      const selectedFac = facilitators.find(f => f.id === selectedFacilitatorId);
+      console.log('💰 Using custom facilitator:', selectedFac?.name, selectedFacilitatorId);
     }
 
     setIsPaymentModalOpen(true);
@@ -61,6 +107,9 @@ export default function Home() {
                 </a>
                 <a href="#why-avalanche" className="text-sm font-medium hover:text-gray-600 transition-colors">
                   Why Avalanche
+                </a>
+                <a href="/facilitator-hub" className="text-sm font-medium hover:text-gray-600 transition-colors">
+                  Create Facilitator
                 </a>
                 <a href="https://github.com/x402-rs/x402-rs" target="_blank" rel="noopener noreferrer" className="text-sm font-medium hover:text-gray-600 transition-colors">
                   Docs
@@ -116,6 +165,35 @@ export default function Home() {
               Pay for APIs, content, and services with{' '}
               <span className="font-bold text-black">crypto as seamlessly as HTTP requests.</span>
             </p>
+
+            {/* Facilitator Selection */}
+            {isConnected && (
+              <motion.div
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="mb-6 max-w-md mx-auto"
+              >
+                <label className="block text-sm font-bold mb-2 text-left">
+                  Select Facilitator:
+                </label>
+                <select
+                  value={selectedFacilitatorId}
+                  onChange={(e) => setSelectedFacilitatorId(e.target.value)}
+                  className="w-full p-3 border-2 border-black text-sm font-medium bg-white hover:bg-gray-50 transition-colors"
+                >
+                  <option value="default">Default Facilitator (Recommended)</option>
+                  {facilitators.map((fac) => (
+                    <option key={fac.id} value={fac.id}>
+                      {fac.name} ({fac.totalPayments} payments processed)
+                    </option>
+                  ))}
+                </select>
+                <p className="text-xs text-gray-500 mt-2 text-left">
+                  Choose which facilitator processes your payment.
+                  {facilitators.length === 0 && " No custom facilitators available yet."}
+                </p>
+              </motion.div>
+            )}
 
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-6">
               <motion.button
@@ -399,6 +477,7 @@ export default function Home() {
       <X402PaymentModal
         isOpen={isPaymentModalOpen}
         onClose={() => setIsPaymentModalOpen(false)}
+        facilitatorId={selectedFacilitatorId === 'default' ? undefined : selectedFacilitatorId}
       />
     </div>
   );

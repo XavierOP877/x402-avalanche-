@@ -1,0 +1,377 @@
+'use client';
+
+import { useState } from 'react';
+import { motion } from 'framer-motion';
+import { useAccount } from 'wagmi';
+import { Wallet } from 'ethers';
+import { encryptPrivateKey, validatePasswordStrength } from '@/lib/facilitator-crypto';
+import { X402PaymentModal } from '@/components/X402PaymentModal';
+
+export default function FacilitatorHub() {
+  const { address, isConnected } = useAccount();
+  const [step, setStep] = useState<'intro' | 'generate' | 'encrypt' | 'payment' | 'complete'>('intro');
+
+  // Wallet generation
+  const [generatedWallet, setGeneratedWallet] = useState<{ address: string; privateKey: string } | null>(null);
+  const [showPrivateKey, setShowPrivateKey] = useState(false);
+  const [privateKeyCopied, setPrivateKeyCopied] = useState(false);
+
+  // Encryption
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [passwordError, setPasswordError] = useState('');
+  const [encryptedKey, setEncryptedKey] = useState('');
+
+  // Payment recipient
+  const [paymentRecipient, setPaymentRecipient] = useState('');
+
+  // Payment modal
+  const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
+  const [registrationTxHash, setRegistrationTxHash] = useState('');
+
+  const generateWallet = () => {
+    const wallet = Wallet.createRandom();
+    setGeneratedWallet({
+      address: wallet.address,
+      privateKey: wallet.privateKey,
+    });
+    setStep('generate');
+  };
+
+  const copyPrivateKey = () => {
+    if (generatedWallet) {
+      navigator.clipboard.writeText(generatedWallet.privateKey);
+      setPrivateKeyCopied(true);
+      setTimeout(() => setPrivateKeyCopied(false), 2000);
+    }
+  };
+
+  const handleEncrypt = () => {
+    if (!generatedWallet) return;
+
+    // Validate password
+    const validation = validatePasswordStrength(password);
+    if (!validation.valid) {
+      setPasswordError(validation.message);
+      return;
+    }
+
+    if (password !== confirmPassword) {
+      setPasswordError('Passwords do not match');
+      return;
+    }
+
+    // Encrypt the private key
+    const encrypted = encryptPrivateKey(generatedWallet.privateKey, password);
+    setEncryptedKey(encrypted);
+    setStep('encrypt');
+  };
+
+  const proceedToPayment = () => {
+    if (!paymentRecipient.match(/^0x[a-fA-F0-9]{40}$/)) {
+      alert('Invalid payment recipient address');
+      return;
+    }
+    setStep('payment');
+    setIsPaymentModalOpen(true);
+  };
+
+  const handlePaymentComplete = async (txHash: string) => {
+    setRegistrationTxHash(txHash);
+    setIsPaymentModalOpen(false);
+
+    // Register facilitator
+    try {
+      const response = await fetch('/api/facilitator/create', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          encryptedPrivateKey: encryptedKey,
+          facilitatorWallet: generatedWallet?.address,
+          paymentRecipient,
+          createdBy: address,
+          registrationTxHash: txHash,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to register facilitator');
+      }
+
+      setStep('complete');
+    } catch (error) {
+      console.error('Failed to register facilitator:', error);
+      alert('Failed to register facilitator. Please try again.');
+    }
+  };
+
+  return (
+    <div className="min-h-screen bg-white">
+      {/* Header */}
+      <nav className="border-b-4 border-black">
+        <div className="max-w-7xl mx-auto px-6 py-6">
+          <div className="flex justify-between items-center">
+            <div>
+              <h1 className="text-3xl font-bold">Facilitator Hub</h1>
+              <p className="text-sm text-gray-600">Create your own x402 facilitator</p>
+            </div>
+            <a href="/" className="px-6 py-3 border-2 border-black hover:bg-black hover:text-white transition-all font-bold">
+              ← Back Home
+            </a>
+          </div>
+        </div>
+      </nav>
+
+      <div className="max-w-4xl mx-auto px-6 py-12">
+        {/* Intro Step */}
+        {step === 'intro' && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="space-y-8"
+          >
+            <div className="border-4 border-black p-8">
+              <h2 className="text-4xl font-bold mb-4">Create Your Facilitator</h2>
+              <p className="text-lg mb-6">
+                Run your own x402 facilitator and earn fees by processing payments for others.
+              </p>
+
+              <div className="bg-gray-100 p-6 mb-6 space-y-3">
+                <h3 className="font-bold text-xl mb-3">How it works:</h3>
+                <div className="space-y-2">
+                  <p className="flex items-start">
+                    <span className="font-bold mr-2">1.</span>
+                    <span>Generate a new wallet for your facilitator</span>
+                  </p>
+                  <p className="flex items-start">
+                    <span className="font-bold mr-2">2.</span>
+                    <span>Encrypt the private key with your password</span>
+                  </p>
+                  <p className="flex items-start">
+                    <span className="font-bold mr-2">3.</span>
+                    <span>Pay 1 USDC registration fee via x402</span>
+                  </p>
+                  <p className="flex items-start">
+                    <span className="font-bold mr-2">4.</span>
+                    <span>Fund your facilitator with AVAX for gas fees</span>
+                  </p>
+                  <p className="flex items-start">
+                    <span className="font-bold mr-2">5.</span>
+                    <span>Start earning fees from payments!</span>
+                  </p>
+                </div>
+              </div>
+
+              {!isConnected ? (
+                <div className="p-6 bg-yellow-50 border-2 border-yellow-500">
+                  <p className="font-bold">⚠️ Connect your wallet first</p>
+                </div>
+              ) : (
+                <button
+                  onClick={generateWallet}
+                  className="w-full py-4 bg-black text-white text-xl font-bold hover:bg-gray-800 transition-all"
+                >
+                  Generate Facilitator Wallet →
+                </button>
+              )}
+            </div>
+          </motion.div>
+        )}
+
+        {/* Generate Step */}
+        {step === 'generate' && generatedWallet && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="space-y-6"
+          >
+            <div className="border-4 border-black p-8">
+              <h2 className="text-3xl font-bold mb-4">✅ Wallet Generated!</h2>
+
+              <div className="bg-gray-100 p-6 mb-6">
+                <h3 className="font-bold mb-2">Facilitator Wallet Address:</h3>
+                <p className="font-mono text-sm break-all bg-white p-3 border-2 border-gray-300">
+                  {generatedWallet.address}
+                </p>
+              </div>
+
+              <div className="bg-red-50 border-2 border-red-500 p-6 mb-6">
+                <h3 className="font-bold mb-3 text-red-900">🔐 IMPORTANT: Save Your Private Key</h3>
+                <p className="mb-4 text-sm">
+                  This is the ONLY time you'll see this private key. Save it securely!
+                  You'll need it to import this wallet into MetaMask and fund it with AVAX.
+                </p>
+
+                <div className="mb-4">
+                  <button
+                    onClick={() => setShowPrivateKey(!showPrivateKey)}
+                    className="px-4 py-2 bg-black text-white font-bold hover:bg-gray-800 mb-2"
+                  >
+                    {showPrivateKey ? 'Hide Private Key' : 'Show Private Key'}
+                  </button>
+
+                  {showPrivateKey && (
+                    <div>
+                      <p className="font-mono text-xs break-all bg-white p-3 border-2 border-red-300 mb-2">
+                        {generatedWallet.privateKey}
+                      </p>
+                      <button
+                        onClick={copyPrivateKey}
+                        className="px-4 py-2 bg-white border-2 border-black font-bold hover:bg-black hover:text-white"
+                      >
+                        {privateKeyCopied ? '✓ Copied!' : 'Copy to Clipboard'}
+                      </button>
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              <div className="space-y-4">
+                <h3 className="font-bold text-xl">Encrypt with Password:</h3>
+                <input
+                  type="password"
+                  placeholder="Enter password (min 8 chars, uppercase, lowercase, number)"
+                  value={password}
+                  onChange={(e) => {
+                    setPassword(e.target.value);
+                    setPasswordError('');
+                  }}
+                  className="w-full p-3 border-2 border-black"
+                />
+                <input
+                  type="password"
+                  placeholder="Confirm password"
+                  value={confirmPassword}
+                  onChange={(e) => {
+                    setConfirmPassword(e.target.value);
+                    setPasswordError('');
+                  }}
+                  className="w-full p-3 border-2 border-black"
+                />
+
+                {passwordError && (
+                  <p className="text-red-600 font-bold">❌ {passwordError}</p>
+                )}
+
+                <button
+                  onClick={handleEncrypt}
+                  disabled={!password || !confirmPassword}
+                  className="w-full py-4 bg-black text-white text-xl font-bold hover:bg-gray-800 disabled:bg-gray-300 transition-all"
+                >
+                  Encrypt & Continue →
+                </button>
+              </div>
+            </div>
+          </motion.div>
+        )}
+
+        {/* Encrypt Step */}
+        {step === 'encrypt' && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="space-y-6"
+          >
+            <div className="border-4 border-black p-8">
+              <h2 className="text-3xl font-bold mb-4">✅ Private Key Encrypted!</h2>
+
+              <div className="bg-green-50 border-2 border-green-500 p-6 mb-6">
+                <p className="font-bold mb-2">🔐 Your private key is now encrypted and stored securely.</p>
+                <p className="text-sm">Only you can decrypt it with your password.</p>
+              </div>
+
+              <div className="space-y-4">
+                <h3 className="font-bold text-xl">Where should payments be sent?</h3>
+                <p className="text-sm text-gray-600">
+                  Enter the wallet address where you want to receive USDC payments from your facilitator.
+                </p>
+                <input
+                  type="text"
+                  placeholder="0x... (your payment recipient address)"
+                  value={paymentRecipient}
+                  onChange={(e) => setPaymentRecipient(e.target.value)}
+                  className="w-full p-3 border-2 border-black font-mono text-sm"
+                />
+
+                <button
+                  onClick={proceedToPayment}
+                  disabled={!paymentRecipient}
+                  className="w-full py-4 bg-black text-white text-xl font-bold hover:bg-gray-800 disabled:bg-gray-300 transition-all"
+                >
+                  Pay Registration Fee (1 USDC) →
+                </button>
+              </div>
+            </div>
+          </motion.div>
+        )}
+
+        {/* Complete Step */}
+        {step === 'complete' && generatedWallet && (
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            className="space-y-6"
+          >
+            <div className="border-4 border-black p-8 bg-black text-white">
+              <h2 className="text-4xl font-bold mb-4">🎉 Facilitator Created!</h2>
+              <p className="text-xl mb-6">Your facilitator is now registered on x402.</p>
+            </div>
+
+            <div className="border-4 border-black p-8">
+              <h3 className="text-2xl font-bold mb-4">Next Steps:</h3>
+
+              <div className="space-y-4">
+                <div className="bg-yellow-50 border-2 border-yellow-500 p-4">
+                  <p className="font-bold mb-2">1. Import wallet to MetaMask</p>
+                  <p className="text-sm mb-2">Use the private key you saved earlier:</p>
+                  <p className="font-mono text-xs bg-white p-2 border border-gray-300">
+                    {generatedWallet.address}
+                  </p>
+                </div>
+
+                <div className="bg-blue-50 border-2 border-blue-500 p-4">
+                  <p className="font-bold mb-2">2. Fund with AVAX for gas fees</p>
+                  <p className="text-sm">
+                    Send at least 0.5 AVAX to your facilitator wallet to pay for transaction gas fees.
+                  </p>
+                  <a
+                    href="https://core.app/tools/testnet-faucet/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-block mt-2 px-4 py-2 bg-blue-600 text-white font-bold hover:bg-blue-700"
+                  >
+                    Get Testnet AVAX →
+                  </a>
+                </div>
+
+                <div className="bg-green-50 border-2 border-green-500 p-4">
+                  <p className="font-bold mb-2">3. Your facilitator is ready!</p>
+                  <p className="text-sm">
+                    Once funded, your facilitator will be active and can process payments.
+                  </p>
+                </div>
+              </div>
+
+              <div className="mt-8 pt-6 border-t-2 border-gray-300">
+                <a
+                  href="/"
+                  className="inline-block px-8 py-3 bg-black text-white font-bold hover:bg-gray-800"
+                >
+                  ← Back to Home
+                </a>
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </div>
+
+      {/* Payment Modal */}
+      {isPaymentModalOpen && (
+        <X402PaymentModal
+          isOpen={isPaymentModalOpen}
+          onClose={() => setIsPaymentModalOpen(false)}
+        />
+      )}
+    </div>
+  );
+}

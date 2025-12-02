@@ -142,6 +142,26 @@ export function createSignedAuthorization(
 }
 
 /**
+ * Convert SignedAuthorization to SignedAuthorizationJSON
+ * Converts all BigInt values to strings for JSON serialization
+ */
+export function signedAuthorizationToJSON(
+  signedAuth: SignedAuthorization
+): SignedAuthorizationJSON {
+  return {
+    signature: signedAuth.signature,
+    authorization: {
+      from: signedAuth.authorization.from,
+      to: signedAuth.authorization.to,
+      value: signedAuth.authorization.value.toString(),
+      validAfter: signedAuth.authorization.validAfter.toString(),
+      validBefore: signedAuth.authorization.validBefore.toString(),
+      nonce: signedAuth.authorization.nonce,
+    },
+  };
+}
+
+/**
  * Create x402 exact payment payload with ERC-3009 authorization
  * Converts bigint values to strings for JSON serialization
  */

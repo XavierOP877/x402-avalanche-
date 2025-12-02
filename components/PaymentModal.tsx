@@ -19,7 +19,12 @@ export function PaymentModal({ isOpen, onClose }: PaymentModalProps) {
   const [errorMessage, setErrorMessage] = useState('');
 
   const PAYMENT_AMOUNT = '1'; // 1 USDC
-  const PAYMENT_RECIPIENT = (process.env.NEXT_PUBLIC_PAYMENT_RECIPIENT || '0x35941c9f822f3ecb9bc6e3d4966535da450d2827') as `0x${string}`;
+
+  if (!process.env.NEXT_PUBLIC_PAYMENT_RECIPIENT) {
+    throw new Error('NEXT_PUBLIC_PAYMENT_RECIPIENT not set in environment variables!');
+  }
+
+  const PAYMENT_RECIPIENT = process.env.NEXT_PUBLIC_PAYMENT_RECIPIENT as `0x${string}`;
 
   const { data: usdcBalance } = useBalance({
     address: address,
