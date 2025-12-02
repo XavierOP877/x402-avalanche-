@@ -1,240 +1,390 @@
-# x402 Avalanche Payment Demo
+# x402 Facilitator Network on Avalanche
 
-A Next.js application demonstrating the x402 payment protocol on Avalanche Fuji testnet. This app showcases seamless on-chain payments using HTTP 402 status codes with USDC on Avalanche.
+A decentralized payment facilitator network powered by the x402 protocol on Avalanche. Users can create and run their own facilitators to process ERC-3009 USDC payments, earning fees while contributing to a permissionless payment infrastructure.
 
-## Features
+## 🌐 What is This?
 
-- 🎨 **Modern UI** - Clean black & white design with smooth animations
-- 💳 **AVAX to USDC Swap** - Integrated swap widget for easy token conversion
-- 🔐 **x402 Payments** - Native HTTP payment protocol integration
-- ⚡ **Avalanche Fuji** - Fast, low-cost testnet transactions
-- 🌈 **Wallet Connect** - Easy wallet connection with RainbowKit
-- 🎯 **Payment Gating** - Access control based on on-chain payments
+This project enables anyone to become a **payment facilitator** in the x402 network:
+- Create your own facilitator with a one-time 1 USDC registration
+- Fund it with AVAX for gas fees
+- Your facilitator processes payments and appears in the network dropdown
+- Earn transaction fees while supporting decentralized payments
 
-## Tech Stack
+## ✨ Key Features
 
-- **Frontend**: Next.js 14+, TypeScript, Tailwind CSS
-- **Web3**: wagmi, viem, RainbowKit
-- **Animations**: Framer Motion
-- **Blockchain**: Avalanche Fuji Testnet
-- **Protocol**: x402 (HTTP 402 Payment Required)
+### For Facilitator Operators
+- 🚀 **One-Click Facilitator Creation** - Generate and register facilitators in minutes
+- 🔐 **Secure Key Management** - Encrypted private keys with user password + system master key
+- 💰 **Automatic Status Tracking** - Real-time monitoring of AVAX balance and facilitator status
+- 📊 **Dashboard** - View facilitator status, wallet address, balance, and payments processed
+- ⚡ **ERC-3009 Compatible** - Process gasless USDC transfers on Avalanche
 
-## Prerequisites
+### For Payment Users
+- 💳 **Choose Your Facilitator** - Select from available facilitators in the network
+- 🎨 **Clean UI** - Modern black & white design with smooth animations
+- 🔄 **AVAX to USDC Swap** - Integrated swap widget for easy token conversion
+- 🌈 **Wallet Connect** - Easy connection with RainbowKit
+
+## 🏗️ Architecture
+
+### Facilitator Creation Flow
+```
+1. User connects wallet
+2. Fills facilitator form (name, wallet, payment recipient)
+3. Generates new facilitator wallet
+4. Encrypts private key with password
+5. Pays 1 USDC registration fee via x402
+6. Facilitator registered in Redis
+7. User funds facilitator wallet with AVAX (0.1+ AVAX)
+8. Facilitator becomes ACTIVE and appears in dropdown
+```
+
+### Payment Processing Flow
+```
+1. User selects facilitator from dropdown
+2. Signs ERC-3009 authorization for 1 USDC
+3. Selected facilitator executes transaction (pays gas)
+4. USDC transferred to merchant
+5. Facilitator earns fee
+```
+
+## 🛠️ Tech Stack
+
+### Frontend
+- **Next.js 14+** - React framework with App Router
+- **TypeScript** - Type-safe development
+- **Tailwind CSS** - Utility-first styling
+- **Framer Motion** - Smooth animations
+- **wagmi + viem** - Web3 interactions
+- **RainbowKit** - Wallet connection
+
+### Backend
+- **Next.js API Routes** - Serverless functions
+- **Upstash Redis** - Facilitator data storage
+- **ethers.js** - Blockchain interactions
+- **ERC-3009** - Gasless USDC transfers
+
+### Blockchain
+- **Avalanche Fuji Testnet** - Fast, low-cost test environment
+- **USDC Contract** - ERC-3009 compatible stablecoin
+- **x402 Protocol** - HTTP 402 payment standard
+
+## 📋 Prerequisites
 
 Before you begin, ensure you have:
 
-1. **Node.js** 18+ installed
-2. **Docker** and Docker Compose installed
-3. **Avalanche Fuji Testnet** funds:
-   - Get AVAX from [Avalanche Faucet](https://core.app/tools/testnet-faucet/?subnet=c&token=c)
+1. **Node.js 18+** installed
+2. **Avalanche Fuji Testnet** funds:
+   - Get AVAX from [Avalanche Faucet](https://core.app/tools/testnet-faucet/)
    - You'll need AVAX for gas fees and swapping to USDC
-4. **WalletConnect Project ID**:
+3. **WalletConnect Project ID**:
    - Get one free at [WalletConnect Cloud](https://cloud.walletconnect.com/)
+4. **Upstash Redis** (for production):
+   - Create account at [Upstash](https://upstash.com/)
+   - Get REST URL and Token
 5. **MetaMask** or any Web3 wallet
 
-## Setup Instructions
+## 🚀 Setup Instructions
 
 ### 1. Clone and Install
 
-\`\`\`bash
+```bash
+git clone <your-repo-url>
 cd x402
 npm install
-\`\`\`
+```
 
 ### 2. Configure Environment Variables
 
-#### For Next.js App:
+Create `.env.local` file:
 
-Edit \`.env.local\`:
+```env
+# ==========================================
+# FRONTEND (Browser)
+# ==========================================
 
-\`\`\`env
-# Get your project ID from https://cloud.walletconnect.com/
-NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID=your_walletconnect_project_id
+# WalletConnect Project ID (Required)
+# Get yours at: https://cloud.walletconnect.com/
+NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID=your_project_id_here
 
-# Facilitator URL (default is localhost)
-NEXT_PUBLIC_FACILITATOR_URL=http://localhost:8080
-
-# Your wallet address to receive payments
+# Payment Configuration
 NEXT_PUBLIC_PAYMENT_RECIPIENT=0xYourWalletAddress
-\`\`\`
+NEXT_PUBLIC_PAYMENT_AMOUNT=1
+NEXT_PUBLIC_NETWORK=avalanche-fuji
 
-#### For x402 Facilitator:
+# USDC Token Address on Avalanche Fuji
+NEXT_PUBLIC_USDC_ADDRESS=0x5425890298aed601595a70AB815c96711a31Bc65
 
-Edit \`.env.facilitator\`:
+# ==========================================
+# BACKEND (API Routes)
+# ==========================================
 
-\`\`\`env
-HOST=0.0.0.0
-PORT=8080
+# Default Facilitator Private Key (for fallback payments)
+# This wallet needs AVAX for gas fees
+DEFAULT_FACILITATOR_PRIVATE_KEY=your_private_key_here
+
+# Upstash Redis (Required for production)
+UPSTASH_REDIS_REST_URL=https://your-redis.upstash.io
+UPSTASH_REDIS_REST_TOKEN=your_redis_token
+
+# System Master Key (for encrypting facilitator private keys)
+# Generate a secure random string
+SYSTEM_MASTER_KEY=your_secure_random_string_here
+
+# Optional: RPC URL (defaults to public Avalanche Fuji RPC)
 RPC_URL_AVALANCHE_FUJI=https://api.avax-test.network/ext/bc/C/rpc
-SIGNER_TYPE=private-key
+```
 
-# IMPORTANT: Replace with your own private key
-# This account needs AVAX on Fuji for gas fees
-EVM_PRIVATE_KEY=0xYourPrivateKeyHere
+### 3. Generate Secure Keys
 
-RUST_LOG=info
-\`\`\`
+**For SYSTEM_MASTER_KEY**, generate a secure random string:
 
-⚠️ **Security Warning**: Never commit your private keys to version control! The provided key is just an example.
+```bash
+node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"
+```
 
-### 3. Start the x402 Facilitator
+Copy the output and use it as your `SYSTEM_MASTER_KEY`.
 
-The facilitator handles payment verification and on-chain settlement:
+### 4. Run Development Server
 
-\`\`\`bash
-docker-compose up -d
-\`\`\`
-
-Check if it's running:
-
-\`\`\`bash
-docker-compose logs -f
-\`\`\`
-
-You should see logs indicating the facilitator is listening on port 8080.
-
-### 4. Run the Next.js App
-
-\`\`\`bash
+```bash
 npm run dev
-\`\`\`
+```
 
 Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-## How to Use
+### 5. Deploy to Production
 
-### Step 1: Get Testnet Funds
+#### Deploy to Vercel
 
-1. Go to [Avalanche Fuji Faucet](https://core.app/tools/testnet-faucet/?subnet=c&token=c)
-2. Connect your wallet
-3. Request AVAX tokens (you'll get test AVAX)
+1. Push code to GitHub
+2. Import project on [Vercel](https://vercel.com)
+3. Add all environment variables from `.env.local`
+4. Deploy
 
-### Step 2: Add Avalanche Fuji to Your Wallet
+**Important**: Make sure these are set in Vercel:
+- `UPSTASH_REDIS_REST_URL`
+- `UPSTASH_REDIS_REST_TOKEN`
+- `SYSTEM_MASTER_KEY`
+- `DEFAULT_FACILITATOR_PRIVATE_KEY`
 
-- **Network Name**: Avalanche Fuji C-Chain
-- **RPC URL**: https://api.avax-test.network/ext/bc/C/rpc
-- **Chain ID**: 43113
-- **Symbol**: AVAX
-- **Explorer**: https://testnet.snowtrace.io/
+## 📖 How to Use
 
-### Step 3: Use the Application
+### Creating a Facilitator
 
-1. **Connect Wallet**: Click "Connect Wallet" button
-2. **Swap AVAX to USDC** (if needed):
-   - Enter amount of AVAX to swap
-   - Click "Swap" button
+1. **Navigate to Facilitator Hub**
+   - Click "Create Facilitator" from homepage
+
+2. **Fill Facilitator Details**
+   - Enter facilitator name (e.g., "My Facilitator")
+   - Click "Generate Wallet" - creates new wallet address
+
+3. **Secure Your Private Key**
+   - **IMPORTANT**: Save the private key shown
+   - You'll need it to fund with AVAX later
+   - Encrypt it with a strong password
+
+4. **Enter Payment Recipient**
+   - Your wallet address where USDC payments go
+
+5. **Pay Registration Fee**
+   - Click "Pay Facilitator Registration Fee (1 USDC)"
    - Approve transaction in wallet
    - Wait for confirmation
-3. **Launch App**: Click "LAUNCH APP" button
-4. **Pay 1 USDC**:
-   - Payment modal appears
-   - Click "Pay 1 USDC"
-   - Approve transaction
-5. **Access Builder Hub**: After successful payment, you're redirected to exclusive content
 
-## Project Structure
+6. **Fund with AVAX**
+   - Import facilitator wallet to MetaMask (use saved private key)
+   - Send at least 0.1 AVAX to facilitator wallet
+   - Get testnet AVAX: [Avalanche Faucet](https://core.app/tools/testnet-faucet/)
 
-\`\`\`
+7. **Facilitator Activated**
+   - Status changes to "ACTIVE"
+   - Appears in payment dropdown on homepage
+   - Ready to process payments!
+
+### Making Payments (As User)
+
+1. **Get USDC**
+   - Swap AVAX to USDC using integrated swap widget
+   - Or get USDC directly from faucet
+
+2. **Select Facilitator**
+   - Choose from available facilitators in dropdown
+   - Each facilitator processes payments independently
+
+3. **Make Payment**
+   - Click "Launch App"
+   - Sign ERC-3009 authorization (no gas needed from you!)
+   - Selected facilitator executes transaction
+   - Access granted to builder hub
+
+## 📁 Project Structure
+
+```
 x402/
 ├── app/
-│   ├── page.tsx              # Landing page with swap widget
-│   ├── layout.tsx            # Root layout with providers
-│   ├── globals.css           # Global styles
-│   └── builder-hub/
-│       └── page.tsx          # Protected content page
+│   ├── page.tsx                    # Landing page with swap & facilitator selector
+│   ├── layout.tsx                  # Root layout with Web3 providers
+│   ├── facilitator-hub/
+│   │   └── page.tsx                # Facilitator creation & dashboard
+│   ├── builder-hub/
+│   │   └── page.tsx                # Protected content (after payment)
+│   └── api/
+│       ├── facilitator/
+│       │   ├── create/             # Register new facilitator
+│       │   ├── list/               # Get all facilitators
+│       │   ├── balance/            # Check AVAX balance
+│       │   ├── encrypt-system/     # Encrypt with master key
+│       │   └── update-status/      # Update facilitator status
+│       ├── x402/
+│       │   ├── settle-default/     # Default facilitator payment
+│       │   └── settle-custom/      # User facilitator payment
+│       └── payment/
+│           └── status/             # Check payment status
 ├── components/
-│   ├── Providers.tsx         # Web3 providers wrapper
-│   ├── SwapWidget.tsx        # AVAX to USDC swap interface
-│   └── PaymentModal.tsx      # x402 payment modal
+│   ├── Providers.tsx               # Web3 providers wrapper
+│   ├── SwapWidget.tsx              # AVAX to USDC swap
+│   ├── PaymentModal.tsx            # Legacy payment modal
+│   └── X402PaymentModal.tsx        # x402 payment modal
 ├── lib/
-│   ├── wagmi.ts             # Wagmi configuration
-│   └── contracts.ts         # Contract addresses and ABIs
-├── docker-compose.yml       # x402 facilitator setup
-├── .env.facilitator        # Facilitator configuration
-└── .env.local              # Next.js environment variables
-\`\`\`
+│   ├── wagmi.ts                    # Wagmi configuration
+│   ├── contracts.ts                # Contract addresses & ABIs
+│   ├── x402.ts                     # x402 protocol utilities
+│   ├── erc3009.ts                  # ERC-3009 implementation
+│   ├── redis.ts                    # Redis connection
+│   ├── facilitator-storage.ts      # Facilitator CRUD operations
+│   └── facilitator-crypto.ts       # Encryption utilities
+├── .env.local                      # Environment variables
+└── README.md                       # This file
+```
 
-## Contract Addresses (Avalanche Fuji)
+## 🔑 Facilitator Dashboard
 
-- **USDC**: \`0x5425890298aed601595a70AB815c96711a31Bc65\`
-- **WAVAX**: \`0xd00ae08403B9bbb9124bB305C09058E32C39A48c\`
-- **Trader Joe Router**: \`0xd7f655E3376cE2D7A2b08fF01Eb3B1023191A901\`
+Once your facilitator is created, the dashboard shows:
 
-## How x402 Protocol Works
+### Status Cards
+- **STATUS**: ACTIVE (green) or INACTIVE (yellow)
+- **FACILITATOR WALLET**: Your facilitator's address
+- **AVAX BALANCE**: Current gas balance
+- **PAYMENTS PROCESSED**: Total transactions
 
-1. **Request**: Client requests protected resource
-2. **402 Response**: Server returns \`402 Payment Required\` with payment details
-3. **Payment**: Client signs and submits payment on-chain
-4. **Verification**: Facilitator verifies payment on Avalanche
-5. **Access Granted**: Client receives access token to protected resource
+### Activation Requirements
+- **Minimum Balance**: 0.1 AVAX required
+- **Status Updates**: Automatic when balance changes
+- **Refresh Button**: Manually check latest status
 
-## Troubleshooting
+## 🔒 Security Features
 
-### Facilitator not starting?
-- Check Docker is running: \`docker ps\`
-- Check logs: \`docker-compose logs\`
-- Ensure port 8080 is not in use
+### Private Key Encryption
+- **User Password**: First layer of encryption
+- **System Master Key**: Second layer for backend operations
+- **Never Stored Plain**: All keys encrypted at rest in Redis
 
-### Swap failing?
-- Ensure you have enough AVAX (need some for gas)
-- Check you're on Avalanche Fuji network
-- Try a smaller amount first
+### Payment Security
+- **ERC-3009**: User signs authorization, facilitator executes
+- **No Direct Key Exposure**: Frontend never sees unencrypted keys
+- **On-Chain Verification**: All payments verified on Avalanche
 
-### Payment not working?
-- Ensure you have at least 1 USDC
-- Check facilitator is running
-- Verify wallet is connected to Fuji
-- Check wallet has AVAX for gas fees
+## 📊 Contract Addresses (Avalanche Fuji)
 
-### Wallet not connecting?
-- Ensure WalletConnect Project ID is set in \`.env.local\`
-- Try refreshing the page
-- Check browser console for errors
+- **USDC**: `0x5425890298aed601595a70AB815c96711a31Bc65`
+- **WAVAX**: `0xd00ae08403B9bbb9124bB305C09058E32C39A48c`
+- **Trader Joe Router**: `0xd7f655E3376cE2D7A2b08fF01Eb3B1023191A901`
 
-## Development
+## 🐛 Troubleshooting
 
-### Run in development mode:
-\`\`\`bash
-npm run dev
-\`\`\`
+### Facilitator Creation Issues
 
-### Build for production:
-\`\`\`bash
-npm run build
-npm start
-\`\`\`
+**"Failed to register facilitator"**
+- Check you have 1 USDC in wallet
+- Ensure connected to Avalanche Fuji
+- Verify payment recipient address is valid
 
-### Stop facilitator:
-\`\`\`bash
-docker-compose down
-\`\`\`
+**"System configuration error"**
+- On Vercel: Check `SYSTEM_MASTER_KEY` is set in environment variables
+- On local: Verify `.env.local` has all required variables
 
-## Resources
+### Facilitator Not Appearing in Dropdown
+
+- Ensure facilitator status is "ACTIVE"
+- Check AVAX balance >= 0.1
+- Refresh the page
+- Click "Refresh Status" button on dashboard
+
+### Payment Failures
+
+**"Default facilitator not configured"**
+- Check `DEFAULT_FACILITATOR_PRIVATE_KEY` set on Vercel
+- Ensure that wallet has AVAX for gas
+
+**"Insufficient USDC"**
+- Swap AVAX to USDC using the swap widget
+- Minimum 1 USDC required
+
+### Wallet Connection Issues
+
+- Verify `NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID` is set
+- Try different wallet (MetaMask, WalletConnect, etc.)
+- Clear browser cache and retry
+
+## 🚀 Production Deployment Checklist
+
+- [ ] Generate secure `SYSTEM_MASTER_KEY`
+- [ ] Create Upstash Redis database
+- [ ] Add all environment variables to Vercel
+- [ ] Fund default facilitator wallet with AVAX
+- [ ] Test facilitator creation end-to-end
+- [ ] Test payment processing
+- [ ] Monitor facilitator gas balances
+
+## 🌟 Future Enhancements
+
+- [ ] Facilitator fee structure & payouts
+- [ ] Advanced analytics dashboard
+- [ ] Multi-chain support
+- [ ] Automated AVAX top-up for facilitators
+- [ ] Reputation system for facilitators
+- [ ] Gas price optimization
+
+## 📚 Resources
 
 - [x402 Protocol Documentation](https://github.com/x402-rs/x402-rs)
+- [ERC-3009 Specification](https://eips.ethereum.org/EIPS/eip-3009)
 - [Avalanche Documentation](https://docs.avax.network/)
 - [Avalanche Fuji Explorer](https://testnet.snowtrace.io/)
-- [Fuji Testnet Faucet](https://core.app/tools/testnet-faucet/?subnet=c&token=c)
-- [WalletConnect Cloud](https://cloud.walletconnect.com/)
+- [Upstash Redis Documentation](https://docs.upstash.com/redis)
 
-## Important Notes
+## ⚠️ Important Notes
 
-⚠️ **Testnet Only**: This app uses Avalanche Fuji testnet. Do not use real funds.
+**Testnet Only**: This project uses Avalanche Fuji testnet. Do not use real funds.
 
-⚠️ **Demo Purpose**: This is a demonstration of the x402 protocol. For production use, implement proper security measures, payment verification, and access control.
+**Demo Purpose**: This is a demonstration of decentralized payment facilitators. For production use, implement:
+- Rate limiting
+- Advanced monitoring
+- Automated gas management
+- Comprehensive error handling
+- Security audits
 
-⚠️ **Private Keys**: Never commit private keys to version control. Always use environment variables.
+**Private Keys**: Never commit private keys to version control. Always use environment variables and keep them secure.
 
-## License
+**Gas Management**: Monitor facilitator AVAX balances. Facilitators become inactive when gas runs out.
+
+## 📄 License
 
 MIT
 
-## Support
+## 🤝 Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+## 💬 Support
 
 For issues and questions:
-- x402 Protocol: [GitHub Issues](https://github.com/x402-rs/x402-rs/issues)
-- Avalanche: [Avalanche Discord](https://discord.gg/avalanche)
+- Open a GitHub issue
+- Check the troubleshooting section above
 
 ---
 
-Built with ❤️ using x402 protocol on Avalanche
+**Built with ❤️ using x402 protocol on Avalanche**
+
+*Enabling anyone to become a payment facilitator in a decentralized network*
