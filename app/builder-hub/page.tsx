@@ -32,13 +32,16 @@ export default function BuilderHub() {
 
     setTxHash(hash || '');
 
-    // Verify payment with backend
+    // Verify payment with backend (with on-chain verification)
     fetch('/api/payment/status', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ paymentHeader: proof }),
+      body: JSON.stringify({
+        paymentHeader: proof,
+        txHash: hash // Include transaction hash for on-chain verification
+      }),
     })
       .then(res => res.json())
       .then(data => {

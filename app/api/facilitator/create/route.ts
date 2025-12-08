@@ -78,8 +78,20 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // TODO: Verify registration transaction hash on-chain
-    // For now, we'll trust it
+    // Verify registration payment on-chain
+    console.log('🔍 Verifying registration payment...');
+    const { verifyRegistrationPayment } = await import('@/lib/verify-payment');
+    const verification = await verifyRegistrationPayment(registrationTxHash, createdBy);
+
+    if (!verification.valid) {
+      console.error('❌ Payment verification failed:', verification.error);
+      return NextResponse.json(
+        { error: `Payment verification failed: ${verification.error}` },
+        { status: 400 }
+      );
+    }
+
+    console.log('✅ Registration payment verified:', verification.details);
 
     // Generate facilitator ID
     const id = generateFacilitatorId();

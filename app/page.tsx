@@ -14,7 +14,7 @@ export default function Home() {
   const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
   const [showSwap, setShowSwap] = useState(false);
   const [facilitators, setFacilitators] = useState<PublicFacilitatorInfo[]>([]);
-  const [selectedFacilitatorId, setSelectedFacilitatorId] = useState<string>('default');
+  const [selectedFacilitator, setSelectedFacilitator] = useState<PublicFacilitatorInfo | null>(null);
   const { address, isConnected } = useAccount();
 
   const { data: usdcBalance } = useBalance({
@@ -70,12 +70,16 @@ export default function Home() {
       return;
     }
 
-    // Log selected facilitator
-    if (selectedFacilitatorId === 'default') {
-      console.log('💰 Using default facilitator for payment');
+    // Randomly select a facilitator from all active facilitators
+    if (facilitators.length > 0) {
+      const randomIndex = Math.floor(Math.random() * facilitators.length);
+      const randomFacilitator = facilitators[randomIndex];
+      setSelectedFacilitator(randomFacilitator);
+      console.log('🎲 Randomly selected facilitator:', randomFacilitator.name, randomFacilitator.id);
     } else {
-      const selectedFac = facilitators.find(f => f.id === selectedFacilitatorId);
-      console.log('💰 Using custom facilitator:', selectedFac?.name, selectedFacilitatorId);
+      // No custom facilitators available, use default
+      setSelectedFacilitator(null);
+      console.log('💰 Using default facilitator (no custom facilitators available)');
     }
 
     setIsPaymentModalOpen(true);
@@ -166,32 +170,15 @@ export default function Home() {
               <span className="font-bold text-black">crypto as seamlessly as HTTP requests.</span>
             </p>
 
-            {/* Facilitator Selection */}
-            {isConnected && (
+            {/* Network Status - Show number of active facilitators */}
+            {isConnected && facilitators.length > 0 && (
               <motion.div
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="mb-6 max-w-md mx-auto"
+                className="mb-6 inline-flex items-center space-x-2 px-4 py-2 bg-green-50 border border-green-500 text-green-700 text-sm font-medium"
               >
-                <label className="block text-sm font-bold mb-2 text-left">
-                  Select Facilitator:
-                </label>
-                <select
-                  value={selectedFacilitatorId}
-                  onChange={(e) => setSelectedFacilitatorId(e.target.value)}
-                  className="w-full p-3 border-2 border-black text-sm font-medium bg-white hover:bg-gray-50 transition-colors"
-                >
-                  <option value="default">Default Facilitator (Recommended)</option>
-                  {facilitators.map((fac) => (
-                    <option key={fac.id} value={fac.id}>
-                      {fac.name} ({fac.totalPayments} payments processed)
-                    </option>
-                  ))}
-                </select>
-                <p className="text-xs text-gray-500 mt-2 text-left">
-                  Choose which facilitator processes your payment.
-                  {facilitators.length === 0 && " No custom facilitators available yet."}
-                </p>
+                <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
+                <span>{facilitators.length} Active Facilitator{facilitators.length !== 1 ? 's' : ''} in Network</span>
               </motion.div>
             )}
 
@@ -477,7 +464,8 @@ export default function Home() {
       <X402PaymentModal
         isOpen={isPaymentModalOpen}
         onClose={() => setIsPaymentModalOpen(false)}
-        facilitatorId={selectedFacilitatorId === 'default' ? undefined : selectedFacilitatorId}
+        facilitatorId={selectedFacilitator?.id}
+        facilitatorName={selectedFacilitator?.name}
       />
     </div>
   );

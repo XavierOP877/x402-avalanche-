@@ -35,11 +35,12 @@ interface X402PaymentModalProps {
   onClose: () => void;
   onSuccess?: (txHash: string, proof: string) => void; // Optional callback - if not provided, redirects to builder-hub
   facilitatorId?: string; // Optional custom facilitator ID
+  facilitatorName?: string; // Optional facilitator name (for display)
 }
 
 type PaymentStatus = 'idle' | 'checking-facilitator' | 'signing' | 'settling' | 'confirming' | 'verifying' | 'success' | 'error';
 
-export function X402PaymentModal({ isOpen, onClose, onSuccess, facilitatorId }: X402PaymentModalProps) {
+export function X402PaymentModal({ isOpen, onClose, onSuccess, facilitatorId, facilitatorName }: X402PaymentModalProps) {
   const router = useRouter();
   const { address } = useAccount();
   const [paymentStatus, setPaymentStatus] = useState<PaymentStatus>('idle');
@@ -350,7 +351,20 @@ export function X402PaymentModal({ isOpen, onClose, onSuccess, facilitatorId }: 
                 <p className="text-sm text-gray-600">on {X402_CONFIG.NETWORK}</p>
               </div>
 
-              {/* Facilitator Status - REMOVED: No longer using Docker */}
+              {/* Randomly Selected Facilitator */}
+              {!onSuccess && (facilitatorName || customFacilitator) && (
+                <div className="mb-6 p-4 bg-green-50 border-2 border-green-500">
+                  <div className="flex items-center space-x-2">
+                    <span className="text-lg">🎲</span>
+                    <div>
+                      <p className="text-xs font-bold text-green-700 mb-1">RANDOMLY SELECTED FACILITATOR</p>
+                      <p className="font-bold text-green-900">
+                        {facilitatorName || customFacilitator?.name || 'Custom Facilitator'}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              )}
 
               {/* Balance Display */}
               {address && usdcBalance && (

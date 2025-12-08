@@ -218,46 +218,6 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
    - Selected facilitator executes transaction
    - Access granted to builder hub
 
-## 📁 Project Structure
-
-```
-x402/
-├── app/
-│   ├── page.tsx                    # Landing page with swap & facilitator selector
-│   ├── layout.tsx                  # Root layout with Web3 providers
-│   ├── facilitator-hub/
-│   │   └── page.tsx                # Facilitator creation & dashboard
-│   ├── builder-hub/
-│   │   └── page.tsx                # Protected content (after payment)
-│   └── api/
-│       ├── facilitator/
-│       │   ├── create/             # Register new facilitator
-│       │   ├── list/               # Get all facilitators
-│       │   ├── balance/            # Check AVAX balance
-│       │   ├── encrypt-system/     # Encrypt with master key
-│       │   └── update-status/      # Update facilitator status
-│       ├── x402/
-│       │   ├── settle-default/     # Default facilitator payment
-│       │   └── settle-custom/      # User facilitator payment
-│       └── payment/
-│           └── status/             # Check payment status
-├── components/
-│   ├── Providers.tsx               # Web3 providers wrapper
-│   ├── SwapWidget.tsx              # AVAX to USDC swap
-│   ├── PaymentModal.tsx            # Legacy payment modal
-│   └── X402PaymentModal.tsx        # x402 payment modal
-├── lib/
-│   ├── wagmi.ts                    # Wagmi configuration
-│   ├── contracts.ts                # Contract addresses & ABIs
-│   ├── x402.ts                     # x402 protocol utilities
-│   ├── erc3009.ts                  # ERC-3009 implementation
-│   ├── redis.ts                    # Redis connection
-│   ├── facilitator-storage.ts      # Facilitator CRUD operations
-│   └── facilitator-crypto.ts       # Encryption utilities
-├── .env.local                      # Environment variables
-└── README.md                       # This file
-```
-
 ## 🔑 Facilitator Dashboard
 
 Once your facilitator is created, the dashboard shows:
@@ -300,51 +260,6 @@ Once your facilitator is created, the dashboard shows:
 - Ensure connected to Avalanche Fuji
 - Verify payment recipient address is valid
 
-**"System configuration error"**
-- On Vercel: Check `SYSTEM_MASTER_KEY` is set in environment variables
-- On local: Verify `.env.local` has all required variables
-
-### Facilitator Not Appearing in Dropdown
-
-- Ensure facilitator status is "ACTIVE"
-- Check AVAX balance >= 0.1
-- Refresh the page
-- Click "Refresh Status" button on dashboard
-
-### Payment Failures
-
-**"Default facilitator not configured"**
-- Check `DEFAULT_FACILITATOR_PRIVATE_KEY` set on Vercel
-- Ensure that wallet has AVAX for gas
-
-**"Insufficient USDC"**
-- Swap AVAX to USDC using the swap widget
-- Minimum 1 USDC required
-
-### Wallet Connection Issues
-
-- Verify `NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID` is set
-- Try different wallet (MetaMask, WalletConnect, etc.)
-- Clear browser cache and retry
-
-## 🚀 Production Deployment Checklist
-
-- [ ] Generate secure `SYSTEM_MASTER_KEY`
-- [ ] Create Upstash Redis database
-- [ ] Add all environment variables to Vercel
-- [ ] Fund default facilitator wallet with AVAX
-- [ ] Test facilitator creation end-to-end
-- [ ] Test payment processing
-- [ ] Monitor facilitator gas balances
-
-## 🌟 Future Enhancements
-
-- [ ] Facilitator fee structure & payouts
-- [ ] Advanced analytics dashboard
-- [ ] Multi-chain support
-- [ ] Automated AVAX top-up for facilitators
-- [ ] Reputation system for facilitators
-- [ ] Gas price optimization
 
 ## 📚 Resources
 

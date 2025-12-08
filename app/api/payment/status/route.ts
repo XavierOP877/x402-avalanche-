@@ -2,17 +2,20 @@
  * Payment Status API Route
  *
  * Checks if a payment has been verified and grants access
- * Validates ERC-3009 payment proofs
+ * Validates ERC-3009 payment proofs with ON-CHAIN verification
  */
 
 import { NextRequest, NextResponse } from 'next/server';
 import { decodePaymentHeader, X402_CONFIG } from '@/lib/x402';
 import { parseUnits } from 'viem';
+import { verifyPayment } from '@/lib/verify-payment';
+
+const ONE_USDC_ATOMIC = '1000000'; // 1 USDC with 6 decimals
 
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { paymentHeader } = body;
+    const { paymentHeader, txHash } = body;
 
     if (!paymentHeader) {
       return NextResponse.json(
@@ -56,7 +59,6 @@ export async function POST(request: NextRequest) {
     const expectedAmount = parseUnits(X402_CONFIG.PAYMENT_AMOUNT, X402_CONFIG.USDC_DECIMALS).toString();
 
     // Check amount, network, and scheme
-    // Note: We don't validate the recipient address to allow custom facilitators
     const validPayment =
       amount === expectedAmount &&
       paymentPayload.network === X402_CONFIG.NETWORK &&
@@ -76,12 +78,43 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    // ============================================
+    // ON-CHAIN VERIFICATION (if txHash provided)
+    // ============================================
+    if (txHash) {
+      console.log('🔍 Verifying payment transaction on-chain:', txHash);
+
+      // Verify the transaction exists on blockchain and is valid
+      const verification = await verifyPayment(
+        txHash,
+        from, // Expected payer
+        to,   // Expected recipient (facilitator's payment recipient)
+        ONE_USDC_ATOMIC
+      );
+
+      if (!verification.valid) {
+        console.error('❌ On-chain verification failed:', verification.error);
+        return NextResponse.json(
+          {
+            error: `On-chain verification failed: ${verification.error}`,
+            verified: false
+          },
+          { status: 200 }
+        );
+      }
+
+      console.log('✅ Payment verified on-chain:', verification.details);
+    } else {
+      console.warn('⚠️  No txHash provided - skipping on-chain verification (not recommended)');
+    }
+
     console.log('✅ Payment verified:', {
       from,
       to,
       amount,
       network: paymentPayload.network,
       type: isERC3009 ? 'ERC-3009' : 'Simple',
+      onChainVerified: !!txHash,
     });
 
     return NextResponse.json({
@@ -91,6 +124,7 @@ export async function POST(request: NextRequest) {
         to,
         amount,
         network: paymentPayload.network,
+        onChainVerified: !!txHash,
       },
     });
   } catch (error) {
