@@ -1,0 +1,17 @@
+{
+  "headers": {
+    "x-nextjs-stale-time": "300",
+    "x-nextjs-prerender": "1",
+    "x-next-cache-tags": "_N_T_/layout,_N_T_/docs/layout,_N_T_/docs/agents/layout,_N_T_/docs/agents/overview/layout,_N_T_/docs/agents/overview/page,_N_T_/docs/agents/overview"
+  },
+  "segmentPaths": [
+    "/_tree",
+    "/_full",
+    "/docs/agents/overview/__PAGE__",
+    "/docs/agents/overview",
+    "/docs/agents",
+    "/docs",
+    "/_index",
+    "/_head"
+  ]
+}

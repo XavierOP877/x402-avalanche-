@@ -1,0 +1,17 @@
+{
+  "headers": {
+    "x-nextjs-stale-time": "300",
+    "x-nextjs-prerender": "1",
+    "x-next-cache-tags": "_N_T_/layout,_N_T_/docs/layout,_N_T_/docs/api/layout,_N_T_/docs/api/facilitator/layout,_N_T_/docs/api/facilitator/page,_N_T_/docs/api/facilitator"
+  },
+  "segmentPaths": [
+    "/_tree",
+    "/_full",
+    "/docs/api/facilitator/__PAGE__",
+    "/docs/api/facilitator",
+    "/docs/api",
+    "/docs",
+    "/_index",
+    "/_head"
+  ]
+}

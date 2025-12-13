@@ -1,0 +1,212 @@
+{
+  "version": 3,
+  "pages404": true,
+  "caseSensitive": false,
+  "basePath": "",
+  "redirects": [
+    {
+      "source": "/:path+/",
+      "destination": "/:path+",
+      "internal": true,
+      "priority": true,
+      "statusCode": 308,
+      "regex": "^(?:/((?:[^/]+?)(?:/(?:[^/]+?))*))/$"
+    }
+  ],
+  "headers": [],
+  "rewrites": {
+    "beforeFiles": [],
+    "afterFiles": [],
+    "fallback": []
+  },
+  "dynamicRoutes": [],
+  "staticRoutes": [
+    {
+      "page": "/",
+      "regex": "^/(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/(?:/)?$"
+    },
+    {
+      "page": "/_global-error",
+      "regex": "^/_global\\-error(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/_global\\-error(?:/)?$"
+    },
+    {
+      "page": "/_not-found",
+      "regex": "^/_not\\-found(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/_not\\-found(?:/)?$"
+    },
+    {
+      "page": "/agents",
+      "regex": "^/agents(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/agents(?:/)?$"
+    },
+    {
+      "page": "/api/agents",
+      "regex": "^/api/agents(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/agents(?:/)?$"
+    },
+    {
+      "page": "/api/facilitators",
+      "regex": "^/api/facilitators(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/facilitators(?:/)?$"
+    },
+    {
+      "page": "/docs",
+      "regex": "^/docs(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/docs(?:/)?$"
+    },
+    {
+      "page": "/docs/agents/capabilities",
+      "regex": "^/docs/agents/capabilities(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/docs/agents/capabilities(?:/)?$"
+    },
+    {
+      "page": "/docs/agents/overview",
+      "regex": "^/docs/agents/overview(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/docs/agents/overview(?:/)?$"
+    },
+    {
+      "page": "/docs/agents/register",
+      "regex": "^/docs/agents/register(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/docs/agents/register(?:/)?$"
+    },
+    {
+      "page": "/docs/agents/versioning",
+      "regex": "^/docs/agents/versioning(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/docs/agents/versioning(?:/)?$"
+    },
+    {
+      "page": "/docs/api/agents",
+      "regex": "^/docs/api/agents(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/docs/api/agents(?:/)?$"
+    },
+    {
+      "page": "/docs/api/events",
+      "regex": "^/docs/api/events(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/docs/api/events(?:/)?$"
+    },
+    {
+      "page": "/docs/api/facilitator",
+      "regex": "^/docs/api/facilitator(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/docs/api/facilitator(?:/)?$"
+    },
+    {
+      "page": "/docs/architecture/flow",
+      "regex": "^/docs/architecture/flow(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/docs/architecture/flow(?:/)?$"
+    },
+    {
+      "page": "/docs/architecture/network",
+      "regex": "^/docs/architecture/network(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/docs/architecture/network(?:/)?$"
+    },
+    {
+      "page": "/docs/client/cli",
+      "regex": "^/docs/client/cli(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/docs/client/cli(?:/)?$"
+    },
+    {
+      "page": "/docs/client/features",
+      "regex": "^/docs/client/features(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/docs/client/features(?:/)?$"
+    },
+    {
+      "page": "/docs/client/installation",
+      "regex": "^/docs/client/installation(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/docs/client/installation(?:/)?$"
+    },
+    {
+      "page": "/docs/client/sdk",
+      "regex": "^/docs/client/sdk(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/docs/client/sdk(?:/)?$"
+    },
+    {
+      "page": "/docs/facilitator/config",
+      "regex": "^/docs/facilitator/config(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/docs/facilitator/config(?:/)?$"
+    },
+    {
+      "page": "/docs/facilitator/install",
+      "regex": "^/docs/facilitator/install(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/docs/facilitator/install(?:/)?$"
+    },
+    {
+      "page": "/docs/facilitator/monitoring",
+      "regex": "^/docs/facilitator/monitoring(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/docs/facilitator/monitoring(?:/)?$"
+    },
+    {
+      "page": "/docs/facilitator/overview",
+      "regex": "^/docs/facilitator/overview(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/docs/facilitator/overview(?:/)?$"
+    },
+    {
+      "page": "/docs/facilitator/staking",
+      "regex": "^/docs/facilitator/staking(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/docs/facilitator/staking(?:/)?$"
+    },
+    {
+      "page": "/docs/getting-started",
+      "regex": "^/docs/getting\\-started(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/docs/getting\\-started(?:/)?$"
+    },
+    {
+      "page": "/explorer",
+      "regex": "^/explorer(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/explorer(?:/)?$"
+    },
+    {
+      "page": "/facilitator",
+      "regex": "^/facilitator(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/facilitator(?:/)?$"
+    }
+  ],
+  "dataRoutes": [],
+  "rsc": {
+    "header": "rsc",
+    "varyHeader": "rsc, next-router-state-tree, next-router-prefetch, next-router-segment-prefetch",
+    "prefetchHeader": "next-router-prefetch",
+    "didPostponeHeader": "x-nextjs-postponed",
+    "contentTypeHeader": "text/x-component",
+    "suffix": ".rsc",
+    "prefetchSuffix": ".prefetch.rsc",
+    "prefetchSegmentHeader": "next-router-segment-prefetch",
+    "prefetchSegmentSuffix": ".segment.rsc",
+    "prefetchSegmentDirSuffix": ".segments",
+    "clientParamParsing": false,
+    "dynamicRSCPrerender": false
+  },
+  "rewriteHeaders": {
+    "pathHeader": "x-nextjs-rewritten-path",
+    "queryHeader": "x-nextjs-rewritten-query"
+  }
+}

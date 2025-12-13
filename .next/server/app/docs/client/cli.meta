@@ -1,0 +1,17 @@
+{
+  "headers": {
+    "x-nextjs-stale-time": "300",
+    "x-nextjs-prerender": "1",
+    "x-next-cache-tags": "_N_T_/layout,_N_T_/docs/layout,_N_T_/docs/client/layout,_N_T_/docs/client/cli/layout,_N_T_/docs/client/cli/page,_N_T_/docs/client/cli"
+  },
+  "segmentPaths": [
+    "/_tree",
+    "/_full",
+    "/docs/client/cli/__PAGE__",
+    "/docs/client/cli",
+    "/docs/client",
+    "/docs",
+    "/_index",
+    "/_head"
+  ]
+}

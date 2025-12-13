@@ -1,0 +1,17 @@
+{
+  "headers": {
+    "x-nextjs-stale-time": "300",
+    "x-nextjs-prerender": "1",
+    "x-next-cache-tags": "_N_T_/layout,_N_T_/docs/layout,_N_T_/docs/facilitator/layout,_N_T_/docs/facilitator/monitoring/layout,_N_T_/docs/facilitator/monitoring/page,_N_T_/docs/facilitator/monitoring"
+  },
+  "segmentPaths": [
+    "/_tree",
+    "/_full",
+    "/docs/facilitator/monitoring/__PAGE__",
+    "/docs/facilitator/monitoring",
+    "/docs/facilitator",
+    "/docs",
+    "/_index",
+    "/_head"
+  ]
+}

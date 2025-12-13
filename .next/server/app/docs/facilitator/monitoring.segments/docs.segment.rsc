@@ -1,0 +1,6 @@
+1:"$Sreact.fragment"
+2:I[1092,["/_next/static/chunks/b60d6e04009dea8d.js","/_next/static/chunks/81a60d51103683c6.js","/_next/static/chunks/b70c2acfe835be27.js"],"DocsHeader"]
+3:I[61574,["/_next/static/chunks/b60d6e04009dea8d.js","/_next/static/chunks/81a60d51103683c6.js","/_next/static/chunks/b70c2acfe835be27.js"],"DocsSidebar"]
+4:I[39756,["/_next/static/chunks/ff1a16fafef87110.js","/_next/static/chunks/247eb132b7f7b574.js"],"default"]
+5:I[37457,["/_next/static/chunks/ff1a16fafef87110.js","/_next/static/chunks/247eb132b7f7b574.js"],"default"]
+0:{"buildId":"E572kNdsMs6pwRO66sCQ-","rsc":["$","$1","c",{"children":[[["$","script","script-0",{"src":"/_next/static/chunks/81a60d51103683c6.js","async":true}],["$","script","script-1",{"src":"/_next/static/chunks/b70c2acfe835be27.js","async":true}]],["$","div",null,{"className":"relative min-h-screen","children":["$","div",null,{"className":"relative z-10","children":[["$","$L2",null,{}],["$","div",null,{"className":"container mx-auto px-4 sm:px-6 lg:px-8","children":["$","div",null,{"className":"flex gap-12","children":[["$","$L3",null,{}],["$","main",null,{"className":"flex-1 min-w-0 py-12","children":["$","$L4",null,{"parallelRouterKey":"children","template":["$","$L5",null,{}]}]}]]}]}]]}]}]]}],"loading":null,"isPartial":false}

@@ -1,0 +1,6 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 14, "column": 0}, "map": {"version":3,"sources":["file:///Users/sarnavo/Development/facinet/app/explorer/page.tsx"],"sourcesContent":["export default function ExplorerPage() {\n  return (\n    <div className=\"relative min-h-screen py-24\">\n      <div className=\"container mx-auto px-4 sm:px-6 lg:px-8 text-center\">\n        <h1 className=\"text-4xl md:text-5xl font-bold font-mono text-white mb-6 uppercase tracking-tight\">\n          Network Explorer\n        </h1>\n        <p className=\"text-xl text-white/50 font-mono\">\n          Coming Soon...\n        </p>\n      </div>\n    </div>\n  )\n}\n"],"names":[],"mappings":";;;;;;AAAe,SAAS;IACtB,qBACE,8OAAC;QAAI,WAAU;kBACb,cAAA,8OAAC;YAAI,WAAU;;8BACb,8OAAC;oBAAG,WAAU;8BAAoF;;;;;;8BAGlG,8OAAC;oBAAE,WAAU;8BAAkC;;;;;;;;;;;;;;;;;AAMvD"}}]
+}

@@ -1,0 +1,111 @@
+"use client"
+
+import Link from 'next/link'
+
+interface HeroAsciiWrapperProps {
+  children?: React.ReactNode
+}
+// ... (rest is same)
+
+export default function HeroAsciiWrapper({ children }: HeroAsciiWrapperProps) {
+
+  return (
+    <main className="relative min-h-screen overflow-x-hidden bg-transparent text-white selection:bg-white/20">
+      {/* Stars background extracted to RootLayout */}
+
+      {/* Top Header */}
+      <div className="fixed top-0 left-0 right-0 z-50 border-b border-white/10 bg-black/50 backdrop-blur-md">
+        <div className="container mx-auto px-4 lg:px-8 py-2 lg:py-3 flex items-center justify-between">
+          <div className="flex items-center gap-3 lg:gap-6">
+            <div className="font-mono text-white text-xl lg:text-2xl font-bold tracking-widest italic transform -skew-x-12">
+              FASCINET
+            </div>
+            <div className="h-3 lg:h-4 w-px bg-white/40"></div>
+            <span className="text-white/60 text-[8px] lg:text-[9px] font-mono">EST. 2025</span>
+            
+            {/* Nav Links */}
+            <div className="hidden lg:flex items-center gap-6 ml-8">
+               {['Home', 'Facilitator', 'Explorer', 'Docs'].map((item) => (
+                 <Link 
+                   key={item} 
+                   href={item === 'Home' ? '/' : `/${item.toLowerCase()}`}
+                   className="text-white/70 hover:text-white text-xs font-mono tracking-widest uppercase transition-colors"
+                 >
+                   {item}
+                 </Link>
+               ))}
+            </div>
+          </div>
+          
+          <div className="hidden lg:flex items-center gap-6">
+            <button className="flex items-center gap-2 px-3 py-1.5 rounded-full border border-white/20 bg-white/5 hover:bg-white/10 hover:border-white/40 transition-all group">
+              <span className="h-1.5 w-1.5 rounded-full bg-red-500 group-hover:bg-green-400 transition-colors" />
+              <span className="text-xs font-mono font-bold tracking-wider text-white/80 group-hover:text-white">CONNECT WALLET</span>
+            </button>
+
+            <div className="h-4 w-px bg-white/10" />
+
+            <div className="flex items-center gap-3 text-[10px] font-mono text-white/60">
+              <span>NET: ACTIVE</span>
+              <div className="w-1 h-1 bg-green-500/80 rounded-full animate-pulse"></div>
+              <span>TPS: 0</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Corner Frame Accents (Fixed) */}
+      <div className="fixed top-20 left-4 lg:top-24 lg:left-8 w-8 h-8 lg:w-12 lg:h-12 border-t-2 border-l-2 border-white/10 z-40 pointer-events-none"></div>
+      <div className="fixed top-20 right-4 lg:top-24 lg:right-8 w-8 h-8 lg:w-12 lg:h-12 border-t-2 border-r-2 border-white/10 z-40 pointer-events-none"></div>
+      <div className="fixed bottom-20 left-4 lg:bottom-12 lg:left-8 w-8 h-8 lg:w-12 lg:h-12 border-b-2 border-l-2 border-white/10 z-40 pointer-events-none"></div>
+      <div className="fixed bottom-20 right-4 lg:bottom-12 lg:right-8 w-8 h-8 lg:w-12 lg:h-12 border-b-2 border-r-2 border-white/10 z-40 pointer-events-none"></div>
+
+      {/* Main Content (Fixed Scrollable Viewport) */}
+      <div className="fixed top-20 bottom-20 left-4 right-4 lg:top-24 lg:bottom-12 lg:left-8 lg:right-8 z-10 overflow-y-auto overflow-x-hidden scrollbar-none">
+        {children}
+      </div>
+      
+      <style jsx global>{`
+        .scrollbar-none::-webkit-scrollbar {
+          display: none;
+        }
+        .scrollbar-none {
+          -ms-overflow-style: none;
+          scrollbar-width: none;
+        }
+      `}</style>
+
+      {/* Bottom Footer (Fixed) */}
+      <div className="fixed bottom-0 left-0 right-0 z-50 border-t border-white/10 bg-black/80 backdrop-blur-md">
+        <div className="container mx-auto px-4 lg:px-8 py-2 lg:py-3 flex items-center justify-between">
+          <div className="flex items-center gap-3 lg:gap-6 text-[8px] lg:text-[9px] font-mono text-white/50">
+            <div className="flex items-center gap-2">
+              <span className="relative flex h-1.5 w-1.5 lg:h-2 lg:w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-1.5 w-1.5 lg:h-2 lg:w-2 bg-green-500"></span>
+              </span>
+              <span className="font-bold tracking-widest text-white/90">FACINET</span>
+            </div>
+            <div className="hidden lg:flex gap-1">
+              {Array.from({ length: 8 }).map((_, i) => (
+                <div key={i} className="w-1 h-3 bg-white/10" style={{ height: `${[12, 8, 14, 6, 16, 10, 8, 12][i % 8]}px` }}></div>
+              ))}
+            </div>
+            <span>V1.0.0</span>
+          </div>
+          
+          <div className="flex items-center gap-2 lg:gap-4 text-[8px] lg:text-[9px] font-mono text-white/50">
+            <span className="hidden lg:inline">◐ RENDERING</span>
+            <div className="flex gap-1">
+              <div className="w-1 h-1 bg-white/60 rounded-full animate-pulse"></div>
+              <div className="w-1 h-1 bg-white/40 rounded-full animate-pulse" style={{ animationDelay: '0.2s' }}></div>
+              <div className="w-1 h-1 bg-white/20 rounded-full animate-pulse" style={{ animationDelay: '0.4s' }}></div>
+            </div>
+            <span className="hidden lg:inline">FRAME: ∞</span>
+          </div>
+        </div>
+      </div>
+
+    </main>
+  )
+}

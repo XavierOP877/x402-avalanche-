@@ -1,0 +1,20 @@
+[00:00:04.227] Server  LOG      ✓ Ready in 2.8s
+[00:00:07.793] Server  LOG      ○ Compiling /facilitator ...
+[00:00:27.943] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:00:30.851] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[00:00:30.851] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/facilitator","route":"/facilitator"}
+[00:00:30.851] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/facilitator color: rgb(120, 120, 120) color: inherit {"dp":"/facilitator","o":"http://localhost:3000/facilitator","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1765616027008}
+[00:02:55.928] Server  LOG      ○ Compiling / ...
+[00:03:04.562] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/ color: rgb(120, 120, 120) color: inherit {"dp":"/","o":"http://localhost:3000/","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1765616181280}
+[00:05:13.706] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/facilitator color: rgb(120, 120, 120) color: inherit {"dp":"/facilitator","o":"http://localhost:3000/facilitator","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1765616310885}
+[00:06:47.330] Server  LOG      ✓ Compiled in 3.4s
+[00:10:08.199] Server  LOG      ✓ Compiled in 2.3s
+[00:11:10.703] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:11:11.876] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[00:11:11.876] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/facilitator","route":"/facilitator"}
+[00:11:11.877] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/facilitator color: rgb(120, 120, 120) color: inherit {"dp":"/facilitator","o":"http://localhost:3000/facilitator","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1765616669081}
+[00:11:21.034] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/explorer color: rgb(120, 120, 120) color: inherit {"dp":"/explorer","o":"http://localhost:3000/explorer","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1765616677826}
+[00:11:21.392] Browser LOG     THREE.WebGLRenderer: Context Lost.
+[00:11:44.962] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/facilitator color: rgb(120, 120, 120) color: inherit {"dp":"/facilitator","o":"http://localhost:3000/facilitator","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1765616701496}
+[00:11:45.152] Browser LOG     THREE.WebGLRenderer: Context Lost.
+[00:12:56.251] Server  LOG      ✓ Compiled in 1614ms

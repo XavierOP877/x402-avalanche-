@@ -1,0 +1,6 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 14, "column": 0}, "map": {"version":3,"sources":["file:///Users/sarnavo/Development/facinet/app/agents/page.tsx"],"sourcesContent":["export default function AgentsPage() {\n  return (\n    <div className=\"relative py-12\">\n      <div className=\"container mx-auto px-4 sm:px-6 lg:px-8\">\n          <div className=\"space-y-4\">\n            <h1 className=\"text-4xl md:text-5xl font-bold font-mono\">\n              <span className=\"text-gradient\">Agent</span> Registry\n            </h1>\n             {/* Content cleared as requested */}\n          </div>\n      </div>\n    </div>\n  )\n}\n"],"names":[],"mappings":";;;;;;AAAe,SAAS;IACtB,qBACE,8OAAC;QAAI,WAAU;kBACb,cAAA,8OAAC;YAAI,WAAU;sBACX,cAAA,8OAAC;gBAAI,WAAU;0BACb,cAAA,8OAAC;oBAAG,WAAU;;sCACZ,8OAAC;4BAAK,WAAU;sCAAgB;;;;;;wBAAY;;;;;;;;;;;;;;;;;;;;;;AAO1D"}}]
+}

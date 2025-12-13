@@ -1,0 +1,5 @@
+{
+  "/explorer/page": "app/explorer/page.js",
+  "/facilitator/page": "app/facilitator/page.js",
+  "/page": "app/page.js"
+}
