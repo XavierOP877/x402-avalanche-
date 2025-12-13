@@ -3,7 +3,6 @@
 import Link from "next/link"
 import { ShieldCheck, Server, Activity, Wallet, Clock, ArrowRight, Terminal, Cloud, X } from "lucide-react"
 import { useState } from "react"
-import { DotScreenShader } from "@/components/ui/dot-shader-background"
 
 export default function FacilitatorPage() {
   const [showDeployModal, setShowDeployModal] = useState(false)
@@ -12,11 +11,8 @@ export default function FacilitatorPage() {
   const [paymentAddress, setPaymentAddress] = useState("0x71C...9A23") // Mock default connected wallet
 
   return (
-    <div className="relative py-12 md:py-24 space-y-24 min-h-screen">
-      <div className="absolute inset-0 z-0 pointer-events-none">
-        <DotScreenShader />
-      </div>
-      <div className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="relative py-12 md:py-24 space-y-24">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* HERO HEADER */}
         <div className="space-y-6 mb-16">
