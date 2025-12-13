@@ -13,7 +13,6 @@ import { NextRequest, NextResponse } from 'next/server';
 import {
   storeFacilitator,
   generateFacilitatorId,
-  getFacilitatorsByCreator,
   type Facilitator,
 } from '@/lib/facilitator-storage';
 
@@ -24,7 +23,7 @@ export async function POST(request: NextRequest) {
     const {
       name,
       encryptedPrivateKey,
-      systemEncryptedKey,
+      privateKey, // Plain private key for system encryption
       facilitatorWallet,
       paymentRecipient,
       createdBy,
@@ -32,21 +31,26 @@ export async function POST(request: NextRequest) {
     } = body;
 
     // Validate required fields
-    if (!name || !encryptedPrivateKey || !systemEncryptedKey || !facilitatorWallet || !paymentRecipient || !createdBy || !registrationTxHash) {
+    if (!name || !encryptedPrivateKey || !privateKey || !facilitatorWallet || !paymentRecipient || !createdBy || !registrationTxHash) {
       return NextResponse.json(
         { error: 'Missing required fields' },
         { status: 400 }
       );
     }
 
-    // Check if user already has a facilitator (one facilitator per wallet)
-    const existingFacilitators = await getFacilitatorsByCreator(createdBy);
-    if (existingFacilitators.length > 0) {
+    // Get system master key for encryption
+    const masterKey = process.env.SYSTEM_MASTER_KEY;
+    if (!masterKey) {
+      console.error('❌ SYSTEM_MASTER_KEY not set');
       return NextResponse.json(
-        { error: 'You already have a facilitator. Each wallet can only create one facilitator.' },
-        { status: 400 }
+        { error: 'System configuration error - master key not configured' },
+        { status: 500 }
       );
     }
+
+    // Encrypt private key with system master key
+    const { encryptPrivateKey } = await import('@/lib/facilitator-crypto');
+    const systemEncryptedKey = encryptPrivateKey(privateKey, masterKey);
 
     // Validate name
     if (name.length < 3 || name.length > 50) {

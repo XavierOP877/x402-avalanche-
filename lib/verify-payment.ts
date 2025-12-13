@@ -16,6 +16,11 @@ const ERC3009_ABI = [
   'function transferWithAuthorization(address from, address to, uint256 value, uint256 validAfter, uint256 validBefore, bytes32 nonce, uint8 v, bytes32 r, bytes32 s) external'
 ];
 
+// Standard ERC-20 ABI
+const ERC20_ABI = [
+  'function transfer(address to, uint256 value) external returns (bool)'
+];
+
 const USDC_ADDRESS = '0x5425890298aed601595a70AB815c96711a31Bc65';
 const ONE_USDC_ATOMIC = '1000000'; // 1 USDC with 6 decimals
 const MAX_TX_AGE_MS = 60 * 60 * 1000; // 1 hour
@@ -105,33 +110,49 @@ export async function verifyPayment(
       };
     }
 
-    // Step 4: Decode transaction data to extract ERC-3009 parameters
+    // Step 4: Decode transaction data (try both ERC-3009 and standard ERC-20)
     console.log('  🔓 Decoding transaction data...');
-    const iface = new Interface(ERC3009_ABI);
 
+    let from: string;
+    let to: string;
+    let value: string;
+
+    // Try ERC-3009 first
+    const erc3009Interface = new Interface(ERC3009_ABI);
     let decodedData;
     try {
-      decodedData = iface.parseTransaction({ data: tx.data });
+      decodedData = erc3009Interface.parseTransaction({ data: tx.data });
+      if (decodedData && decodedData.name === 'transferWithAuthorization') {
+        console.log('  ✓ Decoded as ERC-3009 transferWithAuthorization');
+        from = decodedData.args[0] as string;
+        to = decodedData.args[1] as string;
+        value = decodedData.args[2].toString();
+      } else {
+        throw new Error('Not ERC-3009');
+      }
     } catch (error) {
-      console.error('❌ Failed to decode transaction data:', error);
-      return {
-        valid: false,
-        error: 'Transaction is not a valid ERC-3009 transferWithAuthorization'
-      };
+      // Try standard ERC-20 transfer
+      console.log('  🔄 Not ERC-3009, trying standard ERC-20 transfer...');
+      const erc20Interface = new Interface(ERC20_ABI);
+      try {
+        decodedData = erc20Interface.parseTransaction({ data: tx.data });
+        if (decodedData && decodedData.name === 'transfer') {
+          console.log('  ✓ Decoded as ERC-20 transfer');
+          // For standard transfer, 'from' is the tx sender
+          from = tx.from;
+          to = decodedData.args[0] as string;
+          value = decodedData.args[1].toString();
+        } else {
+          throw new Error('Not ERC-20 transfer');
+        }
+      } catch (erc20Error) {
+        console.error('❌ Failed to decode as ERC-3009 or ERC-20:', erc20Error);
+        return {
+          valid: false,
+          error: 'Transaction is not a valid USDC transfer (neither ERC-3009 nor ERC-20)'
+        };
+      }
     }
-
-    if (!decodedData || decodedData.name !== 'transferWithAuthorization') {
-      console.error('❌ Transaction is not transferWithAuthorization:', decodedData?.name);
-      return {
-        valid: false,
-        error: 'Transaction is not calling transferWithAuthorization'
-      };
-    }
-
-    // Extract parameters
-    const from = decodedData.args[0] as string;
-    const to = decodedData.args[1] as string;
-    const value = decodedData.args[2].toString();
 
     console.log('  ✓ Decoded parameters:');
     console.log('    From:', from);
