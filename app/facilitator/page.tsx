@@ -440,11 +440,11 @@ export default function FacilitatorPage() {
              <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
                    <div className="p-3 rounded-lg bg-primary/10 border border-primary/20">
-                      <ShieldCheck className="text-primary" size={24} />
+                      <Server className="text-primary" size={24} />
                    </div>
                    <div>
-                     <h3 className="text-2xl font-bold text-white font-mono uppercase tracking-tight">My Facilitators</h3>
-                     <p className="text-white/60 font-light text-sm">Manage your facilitator instances</p>
+                     <h3 className="text-2xl font-bold text-white font-mono uppercase tracking-tight">Deploy Facilitator</h3>
+                     <p className="text-white/60 font-light text-sm">Choose your deployment method</p>
                    </div>
                 </div>
              </div>
@@ -494,6 +494,20 @@ export default function FacilitatorPage() {
                  </p>
                </button>
              </div>
+
+             {/* MY FACILITATORS SECTION */}
+             <div className="space-y-6">
+                <div className="flex items-center justify-between">
+                   <div className="flex items-center gap-3">
+                      <div className="p-3 rounded-lg bg-primary/10 border border-primary/20">
+                         <ShieldCheck className="text-primary" size={24} />
+                      </div>
+                      <div>
+                        <h3 className="text-2xl font-bold text-white font-mono uppercase tracking-tight">My Facilitators</h3>
+                        <p className="text-white/60 font-light text-sm">Manage your facilitator instances</p>
+                      </div>
+                   </div>
+                </div>
 
              {loading ? (
                <div className="text-center py-12 text-white/40">Loading...</div>
@@ -578,6 +592,7 @@ export default function FacilitatorPage() {
                  <p className="text-sm text-white/40">Select an option above to get started.</p>
                </div>
              )}
+          </div>
           </div>
         )}
 

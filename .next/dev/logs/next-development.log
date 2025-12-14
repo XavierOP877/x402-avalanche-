@@ -432,3 +432,129 @@ Import trace:
 [00:37:36.059] Server  ERROR   ❌ Error listing facilitators: TypeError: Failed to parse URL from 
 [00:37:36.079] Server  WARN    [Upstash Redis] Redis client was initialized without url or token. Failed to execute command.
 [00:37:40.610] Server  ERROR   ❌ Error listing facilitators: TypeError: Failed to parse URL from 
+[00:40:41.773] Server  LOG      ✓ Compiled in 3.8s
+[00:40:42.367] Browser ERROR   ./app/facilitator/page.tsx:596:10
+Parsing ecmascript source code failed
+  594 |              )}
+  595 |           </div>
+> 596 |         )}
+      |          ^
+  597 |
+  598 |         {/* 4. ACTIVE FACILITATORS LIST */}
+  599 |         <div className="space-y-8">
+
+Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+
+Import traces:
+  Client Component Browser:
+    ./app/facilitator/page.tsx [Client Component Browser]
+    ./app/facilitator/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./app/facilitator/page.tsx [Client Component SSR]
+    ./app/facilitator/page.tsx [Server Component]
+[00:41:26.302] Server  ERROR    ⨯ ./app/facilitator/page.tsx:596:10
+Parsing ecmascript source code failed
+  594 |              )}
+  595 |           </div>
+> 596 |         )}
+      |          ^
+  597 |
+  598 |         {/* 4. ACTIVE FACILITATORS LIST */}
+  599 |         <div className="space-y-8">
+
+Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+
+Import traces:
+  Client Component Browser:
+    ./app/facilitator/page.tsx [Client Component Browser]
+    ./app/facilitator/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./app/facilitator/page.tsx [Client Component SSR]
+    ./app/facilitator/page.tsx [Server Component]
+
+
+[00:41:28.727] Browser ERROR   uncaughtError: Error: ./app/facilitator/page.tsx:596:10
+Parsing ecmascript source code failed
+  594 |              )}
+  595 |           </div>
+> 596 |         )}
+      |          ^
+  597 |
+  598 |         {/* 4. ACTIVE FACILITATORS LIST */}
+  599 |         <div className="space-y-8">
+
+Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+
+Import traces:
+  Client Component Browser:
+    ./app/facilitator/page.tsx [Client Component Browser]
+    ./app/facilitator/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./app/facilitator/page.tsx [Client Component SSR]
+    ./app/facilitator/page.tsx [Server Component]
+
+
+[00:41:28.913] Browser ERROR   ./app/facilitator/page.tsx:596:10
+Parsing ecmascript source code failed
+  594 |              )}
+  595 |           </div>
+> 596 |         )}
+      |          ^
+  597 |
+  598 |         {/* 4. ACTIVE FACILITATORS LIST */}
+  599 |         <div className="space-y-8">
+
+Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+
+Import traces:
+  Client Component Browser:
+    ./app/facilitator/page.tsx [Client Component Browser]
+    ./app/facilitator/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./app/facilitator/page.tsx [Client Component SSR]
+    ./app/facilitator/page.tsx [Server Component]
+[00:41:29.016] Browser ERROR   ./app/facilitator/page.tsx:596:10
+Parsing ecmascript source code failed
+  594 |              )}
+  595 |           </div>
+> 596 |         )}
+      |          ^
+  597 |
+  598 |         {/* 4. ACTIVE FACILITATORS LIST */}
+  599 |         <div className="space-y-8">
+
+Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+
+Import traces:
+  Client Component Browser:
+    ./app/facilitator/page.tsx [Client Component Browser]
+    ./app/facilitator/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./app/facilitator/page.tsx [Client Component SSR]
+    ./app/facilitator/page.tsx [Server Component]
+[00:42:37.139] Server  LOG      ✓ Compiled in 1573ms
+[00:42:42.493] Server  WARN    WalletConnect Core is already initialized. This is probably a mistake and can lead to unexpected behavior. Init() was called 5 times.
+[00:42:42.499] Server  WARN    WalletConnect Core is already initialized. This is probably a mistake and can lead to unexpected behavior. Init() was called 5 times.
+[00:42:43.127] Server  WARN    [Reown Config] Failed to fetch remote project configuration. Using local/default values. Error: HTTP status code: 403
+[00:42:45.358] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:42:46.184] Server  WARN    [Upstash Redis] Redis client was initialized without url or token. Failed to execute command.
+[00:42:46.366] Browser LOG     BackgroundLayout: {"pathname":"/facilitator","showColorBends":true}
+[00:42:46.366] Browser LOG     BackgroundLayout: {"pathname":"/facilitator","showColorBends":true}
+[00:42:46.366] Browser LOG     BackgroundLayout: {"pathname":"/facilitator","showColorBends":true}
+[00:42:46.366] Browser LOG     BackgroundLayout: {"pathname":"/facilitator","showColorBends":true}
+[00:42:47.363] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[00:42:47.363] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/facilitator","route":"/facilitator"}
+[00:42:47.364] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/facilitator color: rgb(120, 120, 120) color: inherit {"dp":"/facilitator","o":"http://localhost:3000/facilitator","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1765703490106}
+[00:42:49.369] Browser WARN    Lit is in dev mode. Not recommended for production! See https://lit.dev/msg/dev-mode for more information.
+[00:42:49.369] Browser WARN    [Reown Config] Failed to fetch remote project configuration. Using local/default values. {}
+[00:42:50.788] Server  ERROR   ❌ Error listing facilitators: TypeError: Failed to parse URL from 
+[00:42:50.811] Server  WARN    [Upstash Redis] Redis client was initialized without url or token. Failed to execute command.
+[00:42:55.314] Server  ERROR   ❌ Error listing facilitators: TypeError: Failed to parse URL from 
+[00:42:55.339] Server  WARN    [Upstash Redis] Redis client was initialized without url or token. Failed to execute command.
+[00:42:59.820] Server  ERROR   ❌ Error listing facilitators: TypeError: Failed to parse URL from 
+[00:43:54.009] Browser ERROR   Analytics SDK: {} {"context":"AnalyticsSDKApiError"}
