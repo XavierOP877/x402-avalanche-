@@ -10,6 +10,13 @@ import { NextRequest, NextResponse } from 'next/server';
 // Production: https://your-facilitator.railway.app
 const FACILITATOR_URL = process.env.FACILITATOR_URL || process.env.NEXT_PUBLIC_FACILITATOR_URL || 'http://localhost:8080';
 
+/**
+ * Proxies the payment settlement request to the running facilitator instance.
+ * Executes the payment on-chain using the facilitator's wallet.
+ * 
+ * @param {NextRequest} request - The incoming request containing signed authorization
+ * @returns {Promise<NextResponse>} JSON response with transaction hash and status
+ */
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();

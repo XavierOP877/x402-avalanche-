@@ -32,11 +32,11 @@ export default function FacilitatorInstallPage() {
       <div className="mb-12">
         <CodeWindow title="Terminal">
 {`docker run -d \\
-  --name fascinet-facilitator \\
+  --name facinet-facilitator \\
   -e PRIVATE_KEY=$PRIVATE_KEY \\
   -e RPC_URL=$RPC_URL \\
   -e STAKE_AMOUNT=100 \\
-  fascinet/facilitator:latest`}
+  facinet/facilitator:latest`}
         </CodeWindow>
       </div>
 
@@ -44,7 +44,7 @@ export default function FacilitatorInstallPage() {
 
       <div className="mb-12">
         <CodeWindow title="Terminal">
-{`git clone https://github.com/fascinet/facilitator
+{`git clone https://github.com/facinet/facilitator
 cd facilitator
 
 cp .env.example .env
@@ -61,7 +61,7 @@ npm run start`}
 
       <div className="mb-6">
         <CodeWindow title="Terminal">
-          docker logs -f fascinet-facilitator
+          docker logs -f facinet-facilitator
         </CodeWindow>
       </div>
 

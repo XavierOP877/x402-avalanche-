@@ -8,7 +8,7 @@ export default function ArchitectureFlowPage() {
       <h1 className="text-4xl font-bold mb-6 text-gradient">Request Lifecycle</h1>
 
       <p className="text-xl text-muted-foreground mb-12">
-        Understanding the step-by-step flow of a request through the Fascinet network.
+        Understanding the step-by-step flow of a request through the Facinet network.
       </p>
 
       <div className="max-w-2xl mx-auto mb-16 not-prose">

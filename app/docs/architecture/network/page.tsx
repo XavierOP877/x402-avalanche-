@@ -9,7 +9,7 @@ export default function ArchitectureNetworkPage() {
       <h1 className="text-4xl font-bold mb-6 text-gradient">Network Architecture</h1>
 
       <p className="text-xl text-muted-foreground mb-12">
-        The Fascinet network topology consists of five key stakeholders working in unison.
+        The Facinet network topology consists of five key stakeholders working in unison.
       </p>
 
       <div className="grid md:grid-cols-2 gap-4 not-prose mb-16">

@@ -56,7 +56,7 @@ STAKE_AMOUNT=100`}
 
       <div className="mb-6">
         <CodeWindow title="Terminal">
-          docker restart fascinet-facilitator
+          docker restart facinet-facilitator
         </CodeWindow>
       </div>
 

@@ -81,7 +81,7 @@ export function RunFacilitatorSection() {
                   <Terminal className="h-5 w-5 text-primary mt-1 flex-shrink-0" />
                   <pre className="text-sm text-primary/90 font-mono overflow-x-auto">
                     <code>{`# Clone the repository
-git clone https://github.com/fascinet/facilitator-node.git
+git clone https://github.com/facinet/facilitator-node.git
 cd facilitator-node
 
 # Install dependencies
@@ -104,15 +104,15 @@ npm run start`}</code>
                   <Terminal className="h-5 w-5 text-primary mt-1 flex-shrink-0" />
                   <pre className="text-sm text-primary/90 font-mono overflow-x-auto">
                     <code>{`# Pull the Docker image
-docker pull fascinet/facilitator:latest
+docker pull facinet/facilitator:latest
 
 # Run the container
 docker run -d \\
-  --name fascinet-facilitator \\
+  --name facinet-facilitator \\
   -p 8080:8080 \\
   -e STAKE_AMOUNT=10000 \\
   -e NETWORK_ID=mainnet \\
-  fascinet/facilitator:latest`}</code>
+  facinet/facilitator:latest`}</code>
                   </pre>
                 </div>
               </Card>
@@ -124,7 +124,7 @@ docker run -d \\
                   <Terminal className="h-5 w-5 text-primary mt-1 flex-shrink-0" />
                   <pre className="text-sm text-primary/90 font-mono overflow-x-auto">
                     <code>{`// index.js
-const { Facilitator } = require('@fascinet/sdk');
+const { Facilitator } = require('@facinet/sdk');
 
 const facilitator = new Facilitator({
   networkId: 'mainnet',

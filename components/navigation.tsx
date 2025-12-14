@@ -70,7 +70,7 @@ export function Navigation() {
         <div className="flex h-14 items-center justify-between">
           <Link href="/" className="flex items-center gap-2">
             <div className="h-8 w-8 rounded-full bg-gradient-to-br from-neon-blue via-neon-purple to-neon-pink glow-effect flex-shrink-0" />
-            <span className="text-xl font-bold text-gradient hidden sm:inline-block">Fascinet</span>
+            <span className="text-xl font-bold text-gradient hidden sm:inline-block">Facinet</span>
           </Link>
 
           <div className="hidden md:flex items-center gap-1">

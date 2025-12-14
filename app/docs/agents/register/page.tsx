@@ -26,11 +26,11 @@ export default function AgentsRegisterPage() {
       </div>
 
       <h2 className="text-2xl font-bold mb-6">CLI Registration</h2>
-      <p className="text-muted-foreground mb-4">Use the <code>fascinet</code> CLI to register quickly:</p>
+      <p className="text-muted-foreground mb-4">Use the <code>facinet</code> CLI to register quickly:</p>
 
       <div className="mb-12">
         <CodeWindow title="Terminal">
-{`fascinet agent register \\
+{`facinet agent register \\
   --name "sample-agent" \\
   --api "https://your-agent-host/api" \\
   --capabilities "nlp,classifier" \\
@@ -52,7 +52,7 @@ export default function AgentsRegisterPage() {
 
       <div className="mb-6">
         <CodeWindow title="Terminal">
-          fascinet agent update --version 1.1.0
+          facinet agent update --version 1.1.0
         </CodeWindow>
       </div>
 

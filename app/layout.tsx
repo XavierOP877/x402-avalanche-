@@ -4,6 +4,7 @@ import { Geist, Geist_Mono } from "next/font/google"
 import { Analytics } from "@vercel/analytics/next"
 import { ThemeProvider } from "@/components/theme-provider"
 import { Providers } from "@/components/Providers"
+import { BackgroundLayout } from "@/components/BackgroundLayout"
 import "./globals.css"
 
 const geistSans = Geist({
@@ -17,7 +18,7 @@ const geistMono = Geist_Mono({
 })
 
 export const metadata: Metadata = {
-  title: "Fascinet - Distributed Facilitator Network",
+  title: "Facinet - Distributed Facilitator Network",
   description: "The infrastructure layer for the autonomous agent economy.",
   generator: "v0.app",
   icons: {
@@ -52,7 +53,7 @@ export default function RootLayout({
         <Providers>
           <ThemeProvider attribute="class" defaultTheme="dark" enableSystem disableTransitionOnChange>
             <div className="relative min-h-screen flex flex-col">
-              <div className="fixed inset-0 w-full h-full stars-bg z-0 pointer-events-none"></div>
+              <BackgroundLayout />
               <HeroAsciiWrapper>
                 {children}
               </HeroAsciiWrapper>

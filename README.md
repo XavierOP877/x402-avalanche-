@@ -25,6 +25,16 @@ This project enables anyone to become a **payment facilitator** in the x402 netw
 - 🔄 **AVAX to USDC Swap** - Integrated swap widget for easy token conversion
 - 🌈 **Wallet Connect** - Easy connection with RainbowKit
 
+## 📂 Project Structure
+
+For a detailed map of the codebase, see [CODE_MAP.md](./CODE_MAP.md).
+
+- **`app/`**: Next.js 14 App Router pages and API routes.
+- **`components/`**: React UI components (Shadcn UI + custom).
+- **`lib/`**: Core utilities, x402 protocol logic, and crypto helpers.
+- **`contracts/`**: Solidity smart contracts for facilitator registry.
+- **`hooks/`**: Custom React hooks.
+
 ## 🏗️ Architecture
 
 ### Facilitator Creation Flow

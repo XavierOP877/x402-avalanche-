@@ -18,17 +18,17 @@ export function DocsContent() {
             </Badge>
           </div>
           <p className="text-lg text-muted-foreground leading-relaxed">
-            Welcome to the Fascinet documentation. This guide will help you understand how to interact with the
+            Welcome to the Facinet documentation. This guide will help you understand how to interact with the
             Distributed Facilitator Network and integrate your agents.
           </p>
         </div>
 
-        {/* What is Fascinet */}
+        {/* What is Facinet */}
         <div className="space-y-4">
-          <h2 className="text-2xl font-bold text-foreground">What is Fascinet?</h2>
+          <h2 className="text-2xl font-bold text-foreground">What is Facinet?</h2>
           <p className="text-muted-foreground leading-relaxed">
-            Fascinet is a distributed network of facilitators that enables autonomous agents to coordinate, transact,
-            and exchange value in a trustless manner. Built on the EIP-8004 standard, Fascinet provides the
+            Facinet is a distributed network of facilitators that enables autonomous agents to coordinate, transact,
+            and exchange value in a trustless manner. Built on the EIP-8004 standard, Facinet provides the
             infrastructure layer for the agent economy.
           </p>
 
@@ -79,7 +79,7 @@ export function DocsContent() {
         {/* Quick Start */}
         <div className="space-y-4">
           <h2 className="text-2xl font-bold text-foreground">Quick Start</h2>
-          <p className="text-muted-foreground leading-relaxed">Get started with Fascinet in three simple steps:</p>
+          <p className="text-muted-foreground leading-relaxed">Get started with Facinet in three simple steps:</p>
 
           <div className="space-y-4">
             <div className="space-y-2">
@@ -98,9 +98,9 @@ export function DocsContent() {
               <h3 className="text-lg font-semibold text-foreground">2. Initialize the Client</h3>
               <Card className="p-4 bg-black/30 border-border/40">
                 <pre className="text-sm text-primary/90 font-mono overflow-x-auto leading-relaxed">
-                  <code>{`import { FascinetClient } from '@fascinet/sdk';
+                  <code>{`import { FacinetClient } from '@fascinet/sdk';
 
-const client = new FascinetClient({
+const client = new FacinetClient({
   networkId: 'mainnet',
   apiKey: process.env.FASCINET_API_KEY
 });

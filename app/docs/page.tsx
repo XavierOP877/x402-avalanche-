@@ -8,7 +8,7 @@ export default function DocsPage() {
       {/* Hero Section */}
       <div className="space-y-6 pt-8">
         <h1 className="text-5xl md:text-6xl font-extrabold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-white to-white/60">
-          Fascinet Docs
+          Facinet Docs
         </h1>
         <p className="text-xl text-muted-foreground max-w-2xl font-light leading-relaxed">
           The distributed facilitator network for autonomous agent coordination. 
