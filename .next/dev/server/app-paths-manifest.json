@@ -1,0 +1,7 @@
+{
+  "/api/facilitator/list/route": "app/api/facilitator/list/route.js",
+  "/explorer/page": "app/explorer/page.js",
+  "/facilitator/page": "app/facilitator/page.js",
+  "/facinetL1/page": "app/facinetL1/page.js",
+  "/page": "app/page.js"
+}

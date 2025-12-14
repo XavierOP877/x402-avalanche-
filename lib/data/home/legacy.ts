@@ -52,7 +52,7 @@ export const HOW_IT_WORKS_DATA = {
 
 export const AGENT_ECONOMY_DATA = {
   title: "Built for the Agent Economy",
-  description: "Fascinet provides the infrastructure layer for the next generation of autonomous economic agents",
+  description: "Facinet provides the infrastructure layer for the next generation of autonomous economic agents",
   features: [
     {
       icon: "Bot",

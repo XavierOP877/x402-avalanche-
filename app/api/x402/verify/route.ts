@@ -8,6 +8,12 @@ import { NextRequest, NextResponse } from 'next/server';
 // Use environment variable for facilitator URL
 const FACILITATOR_URL = process.env.FACILITATOR_URL || process.env.NEXT_PUBLIC_FACILITATOR_URL || 'http://localhost:8080';
 
+/**
+ * Proxies the payment verification request to the running facilitator instance.
+ * 
+ * @param {NextRequest} request - The incoming request containing x402 headers and requirements
+ * @returns {Promise<NextResponse>} JSON response indicating if payment is valid
+ */
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();

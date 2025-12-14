@@ -1,0 +1,560 @@
+[00:00:01.035] Server  LOG      ✓ Ready in 800ms
+[00:00:17.924] Server  LOG      ○ Compiling /facilitator ...
+[00:00:23.121] Server  WARN    Lit is in dev mode. Not recommended for production! See https://lit.dev/msg/dev-mode for more information.
+[00:00:23.440] Server  WARN    [Reown Config] Failed to fetch remote project configuration. Using local/default values. Error: HTTP status code: 403
+[00:00:24.531] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:00:25.321] Browser LOG     BackgroundLayout: {"pathname":"/facilitator","showColorBends":true}
+[00:00:25.321] Browser LOG     BackgroundLayout: {"pathname":"/facilitator","showColorBends":true}
+[00:00:26.212] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[00:00:26.212] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/facilitator","route":"/facilitator"}
+[00:00:26.212] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/facilitator color: rgb(120, 120, 120) color: inherit {"dp":"/facilitator","o":"http://localhost:3000/facilitator","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1765700949681}
+[00:00:26.413] Browser WARN    Lit is in dev mode. Not recommended for production! See https://lit.dev/msg/dev-mode for more information.
+[00:00:27.223] Browser WARN    [Reown Config] Failed to fetch remote project configuration. Using local/default values. {}
+[00:00:27.425] Server  LOG     🔗 Connecting to Local Redis (Docker)
+[00:00:27.426] Server  WARN    [Upstash Redis] Unable to find environment variable: `UPSTASH_REDIS_REST_URL`
+[00:00:27.433] Server  WARN    [Upstash Redis] Unable to find environment variable: `UPSTASH_REDIS_REST_TOKEN`
+[00:00:27.434] Server  WARN    [Upstash Redis] The 'url' property is missing or undefined in your Redis config.
+[00:00:27.434] Server  WARN    [Upstash Redis] The 'token' property is missing or undefined in your Redis config.
+[00:00:27.437] Server  WARN    [Upstash Redis] Redis client was initialized without url or token. Failed to execute command.
+[00:00:31.674] Browser ERROR   Analytics SDK: {} {"context":"AnalyticsSDKApiError"}
+[00:00:31.974] Server  ERROR   ❌ Error listing facilitators: TypeError: Failed to parse URL from 
+[00:00:31.999] Server  WARN    [Upstash Redis] Redis client was initialized without url or token. Failed to execute command.
+[00:00:36.491] Server  ERROR   ❌ Error listing facilitators: TypeError: Failed to parse URL from 
+[00:00:36.515] Server  WARN    [Upstash Redis] Redis client was initialized without url or token. Failed to execute command.
+[00:00:40.981] Server  ERROR   ❌ Error listing facilitators: TypeError: Failed to parse URL from 
+[00:00:46.035] Browser LOG     BackgroundLayout: {"pathname":"/explorer","showColorBends":true}
+[00:00:46.035] Browser LOG     BackgroundLayout: {"pathname":"/explorer","showColorBends":true}
+[00:00:46.035] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/explorer color: rgb(120, 120, 120) color: inherit {"dp":"/explorer","o":"http://localhost:3000/explorer","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1765700969515}
+[00:00:48.637] Browser ERROR   Analytics SDK: {} {"context":"AnalyticsSDKApiError"}
+[00:00:58.854] Server  LOG      ○ Compiling / ...
+[00:00:59.256] Browser LOG     BackgroundLayout: {"pathname":"/","showColorBends":false}
+[00:00:59.257] Browser LOG     BackgroundLayout: {"pathname":"/","showColorBends":false}
+[00:00:59.257] Browser LOG     BackgroundLayout: {"pathname":"/","showColorBends":false}
+[00:00:59.257] Browser LOG     BackgroundLayout: {"pathname":"/","showColorBends":false}
+[00:00:59.257] Browser LOG     BackgroundLayout: {"pathname":"/","showColorBends":false}
+[00:00:59.257] Browser LOG     BackgroundLayout: {"pathname":"/","showColorBends":false}
+[00:00:59.257] Browser LOG     BackgroundLayout: {"pathname":"/","showColorBends":false}
+[00:00:59.257] Browser LOG     BackgroundLayout: {"pathname":"/","showColorBends":false}
+[00:00:59.257] Browser LOG     BackgroundLayout: {"pathname":"/","showColorBends":false}
+[00:00:59.257] Browser LOG     BackgroundLayout: {"pathname":"/","showColorBends":false}
+[00:01:00.019] Server  WARN    [Upstash Redis] Redis client was initialized without url or token. Failed to execute command.
+[00:01:00.540] Browser LOG     BackgroundLayout: {"pathname":"/","showColorBends":false}
+[00:01:00.540] Browser LOG     BackgroundLayout: {"pathname":"/","showColorBends":false}
+[00:01:00.540] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/ color: rgb(120, 120, 120) color: inherit {"dp":"/","o":"http://localhost:3000/","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1765700983335}
+[00:01:00.666] Browser LOG     BackgroundLayout: {"pathname":"/","showColorBends":false}
+[00:01:00.666] Browser LOG     BackgroundLayout: {"pathname":"/","showColorBends":false}
+[00:01:04.987] Server  ERROR   ❌ Error listing facilitators: TypeError: Failed to parse URL from 
+[00:01:05.006] Server  WARN    [Upstash Redis] Redis client was initialized without url or token. Failed to execute command.
+[00:01:09.474] Server  ERROR   ❌ Error listing facilitators: TypeError: Failed to parse URL from 
+[00:01:18.187] Browser ERROR   Analytics SDK: {} {"context":"AnalyticsSDKApiError"}
+[00:01:30.433] Browser LOG     BackgroundLayout: {"pathname":"/explorer","showColorBends":true}
+[00:01:30.433] Browser LOG     BackgroundLayout: {"pathname":"/explorer","showColorBends":true}
+[00:01:30.433] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/explorer color: rgb(120, 120, 120) color: inherit {"dp":"/explorer","o":"http://localhost:3000/explorer","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1765701013914}
+[00:01:34.774] Browser LOG     BackgroundLayout: {"pathname":"/explorer","showColorBends":true}
+[00:01:34.774] Browser LOG     BackgroundLayout: {"pathname":"/explorer","showColorBends":true}
+[00:02:28.123] Browser LOG     BackgroundLayout: {"pathname":"/facilitator","showColorBends":true}
+[00:02:28.123] Browser LOG     BackgroundLayout: {"pathname":"/facilitator","showColorBends":true}
+[00:02:28.123] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/facilitator color: rgb(120, 120, 120) color: inherit {"dp":"/facilitator","o":"http://localhost:3000/facilitator","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1765701071594}
+[00:02:28.152] Server  WARN    [Upstash Redis] Redis client was initialized without url or token. Failed to execute command.
+[00:02:32.826] Server  ERROR   ❌ Error listing facilitators: TypeError: Failed to parse URL from 
+[00:02:32.873] Server  WARN    [Upstash Redis] Redis client was initialized without url or token. Failed to execute command.
+[00:02:36.002] Server  LOG      ✓ Compiled in 381ms
+[00:02:38.348] Server  ERROR   ❌ Error listing facilitators: TypeError: Failed to parse URL from 
+[00:02:39.364] Browser LOG     BackgroundLayout: {"pathname":"/facilitator","showColorBends":true}
+[00:02:39.364] Browser LOG     BackgroundLayout: {"pathname":"/facilitator","showColorBends":true}
+[00:02:39.558] Server  LOG      ✓ Compiled in 258ms
+[00:02:40.371] Browser LOG     BackgroundLayout: {"pathname":"/facilitator","showColorBends":true}
+[00:02:40.372] Browser LOG     BackgroundLayout: {"pathname":"/facilitator","showColorBends":true}
+[00:03:17.461] Browser LOG     BackgroundLayout: {"pathname":"/explorer","showColorBends":true}
+[00:03:17.461] Browser LOG     BackgroundLayout: {"pathname":"/explorer","showColorBends":true}
+[00:03:17.462] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/explorer color: rgb(120, 120, 120) color: inherit {"dp":"/explorer","o":"http://localhost:3000/explorer","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1765701120921}
+[00:03:23.597] Browser LOG     BackgroundLayout: {"pathname":"/facinetL1","showColorBends":true}
+[00:03:23.597] Browser LOG     BackgroundLayout: {"pathname":"/facinetL1","showColorBends":true}
+[00:03:23.597] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/facinetL1 color: rgb(120, 120, 120) color: inherit {"dp":"/facinetL1","o":"http://localhost:3000/facinetL1","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1765701127076}
+[00:03:26.861] Browser LOG     BackgroundLayout: {"pathname":"/explorer","showColorBends":true}
+[00:03:26.861] Browser LOG     BackgroundLayout: {"pathname":"/explorer","showColorBends":true}
+[00:03:26.861] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/explorer color: rgb(120, 120, 120) color: inherit {"dp":"/explorer","o":"http://localhost:3000/explorer","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1765701130342}
+[00:03:28.118] Browser LOG     BackgroundLayout: {"pathname":"/facinetL1","showColorBends":true}
+[00:03:28.118] Browser LOG     BackgroundLayout: {"pathname":"/facinetL1","showColorBends":true}
+[00:03:28.118] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/facinetL1 color: rgb(120, 120, 120) color: inherit {"dp":"/facinetL1","o":"http://localhost:3000/facinetL1","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1765701131599}
+[00:03:29.463] Browser LOG     BackgroundLayout: {"pathname":"/explorer","showColorBends":true}
+[00:03:29.463] Browser LOG     BackgroundLayout: {"pathname":"/explorer","showColorBends":true}
+[00:03:29.463] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/explorer color: rgb(120, 120, 120) color: inherit {"dp":"/explorer","o":"http://localhost:3000/explorer","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1765701132943}
+[00:03:31.668] Browser LOG     BackgroundLayout: {"pathname":"/facinetL1","showColorBends":true}
+[00:03:31.668] Browser LOG     BackgroundLayout: {"pathname":"/facinetL1","showColorBends":true}
+[00:03:31.668] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/facinetL1 color: rgb(120, 120, 120) color: inherit {"dp":"/facinetL1","o":"http://localhost:3000/facinetL1","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1765701135151}
+[00:03:35.953] Server  WARN    [Upstash Redis] Redis client was initialized without url or token. Failed to execute command.
+[00:03:35.991] Browser LOG     BackgroundLayout: {"pathname":"/facilitator","showColorBends":true}
+[00:03:35.991] Browser LOG     BackgroundLayout: {"pathname":"/facilitator","showColorBends":true}
+[00:03:35.991] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/facilitator color: rgb(120, 120, 120) color: inherit {"dp":"/facilitator","o":"http://localhost:3000/facilitator","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1765701139467}
+[00:03:40.474] Server  ERROR   ❌ Error listing facilitators: TypeError: Failed to parse URL from 
+[00:03:40.514] Server  WARN    [Upstash Redis] Redis client was initialized without url or token. Failed to execute command.
+[00:03:44.967] Server  ERROR   ❌ Error listing facilitators: TypeError: Failed to parse URL from 
+[00:04:03.143] Server  LOG      ✓ Compiled in 1893ms
+[00:04:03.362] Browser LOG     BackgroundLayout: {"pathname":"/facilitator","showColorBends":true}
+[00:04:03.362] Browser LOG     BackgroundLayout: {"pathname":"/facilitator","showColorBends":true}
+[00:04:46.128] Server  WARN    WalletConnect Core is already initialized. This is probably a mistake and can lead to unexpected behavior. Init() was called 2 times.
+[00:04:46.132] Server  WARN    WalletConnect Core is already initialized. This is probably a mistake and can lead to unexpected behavior. Init() was called 2 times.
+[00:04:46.237] Server  WARN    Multiple versions of Lit loaded. Loading multiple versions is not recommended. See https://lit.dev/msg/multiple-versions for more information.
+[00:04:46.552] Server  WARN    [Reown Config] Failed to fetch remote project configuration. Using local/default values. Error: HTTP status code: 403
+[00:04:47.955] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:04:48.715] Browser LOG     BackgroundLayout: {"pathname":"/facilitator","showColorBends":true}
+[00:04:48.715] Browser LOG     BackgroundLayout: {"pathname":"/facilitator","showColorBends":true}
+[00:04:48.715] Browser LOG     BackgroundLayout: {"pathname":"/facilitator","showColorBends":true}
+[00:04:48.715] Browser LOG     BackgroundLayout: {"pathname":"/facilitator","showColorBends":true}
+[00:04:48.715] Browser LOG     BackgroundLayout: {"pathname":"/facilitator","showColorBends":true}
+[00:04:48.715] Browser LOG     BackgroundLayout: {"pathname":"/facilitator","showColorBends":true}
+[00:04:48.715] Browser LOG     BackgroundLayout: {"pathname":"/facilitator","showColorBends":true}
+[00:04:48.715] Browser LOG     BackgroundLayout: {"pathname":"/facilitator","showColorBends":true}
+[00:04:48.715] Browser LOG     BackgroundLayout: {"pathname":"/facilitator","showColorBends":true}
+[00:04:48.715] Browser LOG     BackgroundLayout: {"pathname":"/facilitator","showColorBends":true}
+[00:04:48.715] Browser LOG     BackgroundLayout: {"pathname":"/facilitator","showColorBends":true}
+[00:04:48.715] Browser LOG     BackgroundLayout: {"pathname":"/facilitator","showColorBends":true}
+[00:04:48.868] Server  WARN    [Upstash Redis] Redis client was initialized without url or token. Failed to execute command.
+[00:04:48.921] Server  WARN    [Upstash Redis] Redis client was initialized without url or token. Failed to execute command.
+[00:04:49.003] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[00:04:49.003] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/facilitator","route":"/facilitator"}
+[00:04:49.003] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/facilitator color: rgb(120, 120, 120) color: inherit {"dp":"/facilitator","o":"http://localhost:3000/facilitator","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1765701212460}
+[00:04:49.187] Browser WARN    Lit is in dev mode. Not recommended for production! See https://lit.dev/msg/dev-mode for more information.
+[00:04:49.595] Browser WARN    [Reown Config] Failed to fetch remote project configuration. Using local/default values. {}
+[00:04:54.041] Server  ERROR   ❌ Error listing facilitators: TypeError: Failed to parse URL from 
+[00:04:54.356] Server  ERROR   ❌ Error listing facilitators: TypeError: Failed to parse URL from 
+[00:04:54.412] Server  WARN    [Upstash Redis] Redis client was initialized without url or token. Failed to execute command.
+[00:04:56.362] Browser ERROR   Analytics SDK: {} {"context":"AnalyticsSDKApiError"}
+[00:04:58.864] Server  ERROR   ❌ Error listing facilitators: TypeError: Failed to parse URL from 
+[00:05:50.372] Browser LOG     BackgroundLayout: {"pathname":"/facilitator","showColorBends":true}
+[00:05:50.373] Browser LOG     BackgroundLayout: {"pathname":"/facilitator","showColorBends":true}
+[00:24:32.616] Server  LOG      ✓ Compiled in 759ms
+[00:24:36.714] Server  LOG      ✓ Compiled in 1500ms
+[00:24:37.212] Browser ERROR   ./components/BackgroundLayout.tsx:30:9
+Parsing ecmascript source code failed
+  28 |       >
+  29 |         <ColorBends
+> 30 |         <ColorBends
+     |         ^
+  31 |           colors={[
+  32 |             "#FFFFFF", // White
+  33 |             "#FF0000", "#FF0000", // Red Red
+
+Expression expected
+
+Import trace:
+  Server Component:
+    ./components/BackgroundLayout.tsx
+    ./app/layout.tsx
+[00:26:42.583] Server  ERROR    ⨯ ./components/BackgroundLayout.tsx:30:9
+Parsing ecmascript source code failed
+  28 |       >
+  29 |         <ColorBends
+> 30 |         <ColorBends
+     |         ^
+  31 |           colors={[
+  32 |             "#FFFFFF", // White
+  33 |             "#FF0000", "#FF0000", // Red Red
+
+Expression expected
+
+Import trace:
+  Server Component:
+    ./components/BackgroundLayout.tsx
+    ./app/layout.tsx
+
+
+[00:26:42.607] Browser ERROR   ./components/BackgroundLayout.tsx:30:9
+Parsing ecmascript source code failed
+  28 |       >
+  29 |         <ColorBends
+> 30 |         <ColorBends
+     |         ^
+  31 |           colors={[
+  32 |             "#FFFFFF", // White
+  33 |             "#FF0000", "#FF0000", // Red Red
+
+Expression expected
+
+Import trace:
+  Server Component:
+    ./components/BackgroundLayout.tsx
+    ./app/layout.tsx
+[00:26:44.788] Browser ERROR   ./components/BackgroundLayout.tsx:30:9
+Parsing ecmascript source code failed
+  28 |       >
+  29 |         <ColorBends
+> 30 |         <ColorBends
+     |         ^
+  31 |           colors={[
+  32 |             "#FFFFFF", // White
+  33 |             "#FF0000", "#FF0000", // Red Red
+
+Expression expected
+
+Import trace:
+  Server Component:
+    ./components/BackgroundLayout.tsx
+    ./app/layout.tsx
+[00:26:45.607] Server  LOG      ○ Compiling /_error ...
+[00:26:46.194] Browser ERROR   ./components/BackgroundLayout.tsx:30:9
+Parsing ecmascript source code failed
+  28 |       >
+  29 |         <ColorBends
+> 30 |         <ColorBends
+     |         ^
+  31 |           colors={[
+  32 |             "#FFFFFF", // White
+  33 |             "#FF0000", "#FF0000", // Red Red
+
+Expression expected
+
+Import trace:
+  Server Component:
+    ./components/BackgroundLayout.tsx
+    ./app/layout.tsx
+[00:26:47.274] Browser ERROR   ./components/BackgroundLayout.tsx:30:9
+Parsing ecmascript source code failed
+  28 |       >
+  29 |         <ColorBends
+> 30 |         <ColorBends
+     |         ^
+  31 |           colors={[
+  32 |             "#FFFFFF", // White
+  33 |             "#FF0000", "#FF0000", // Red Red
+
+Expression expected
+
+Import trace:
+  Server Component:
+    ./components/BackgroundLayout.tsx
+    ./app/layout.tsx
+[00:26:50.659] Browser ERROR   uncaughtError: Error: ./components/BackgroundLayout.tsx:30:9
+Parsing ecmascript source code failed
+  28 |       >
+  29 |         <ColorBends
+> 30 |         <ColorBends
+     |         ^
+  31 |           colors={[
+  32 |             "#FFFFFF", // White
+  33 |             "#FF0000", "#FF0000", // Red Red
+
+Expression expected
+
+Import trace:
+  Server Component:
+    ./components/BackgroundLayout.tsx
+    ./app/layout.tsx
+
+
+[00:26:52.368] Browser ERROR   ./components/BackgroundLayout.tsx:30:9
+Parsing ecmascript source code failed
+  28 |       >
+  29 |         <ColorBends
+> 30 |         <ColorBends
+     |         ^
+  31 |           colors={[
+  32 |             "#FFFFFF", // White
+  33 |             "#FF0000", "#FF0000", // Red Red
+
+Expression expected
+
+Import trace:
+  Server Component:
+    ./components/BackgroundLayout.tsx
+    ./app/layout.tsx
+[00:26:52.369] Browser ERROR   ./components/BackgroundLayout.tsx:30:9
+Parsing ecmascript source code failed
+  28 |       >
+  29 |         <ColorBends
+> 30 |         <ColorBends
+     |         ^
+  31 |           colors={[
+  32 |             "#FFFFFF", // White
+  33 |             "#FF0000", "#FF0000", // Red Red
+
+Expression expected
+
+Import trace:
+  Server Component:
+    ./components/BackgroundLayout.tsx
+    ./app/layout.tsx
+[00:26:52.369] Browser ERROR   ./components/BackgroundLayout.tsx:30:9
+Parsing ecmascript source code failed
+  28 |       >
+  29 |         <ColorBends
+> 30 |         <ColorBends
+     |         ^
+  31 |           colors={[
+  32 |             "#FFFFFF", // White
+  33 |             "#FF0000", "#FF0000", // Red Red
+
+Expression expected
+
+Import trace:
+  Server Component:
+    ./components/BackgroundLayout.tsx
+    ./app/layout.tsx
+[00:26:52.369] Browser ERROR   ./components/BackgroundLayout.tsx:30:9
+Parsing ecmascript source code failed
+  28 |       >
+  29 |         <ColorBends
+> 30 |         <ColorBends
+     |         ^
+  31 |           colors={[
+  32 |             "#FFFFFF", // White
+  33 |             "#FF0000", "#FF0000", // Red Red
+
+Expression expected
+
+Import trace:
+  Server Component:
+    ./components/BackgroundLayout.tsx
+    ./app/layout.tsx
+[00:26:52.369] Browser ERROR   ./components/BackgroundLayout.tsx:30:9
+Parsing ecmascript source code failed
+  28 |       >
+  29 |         <ColorBends
+> 30 |         <ColorBends
+     |         ^
+  31 |           colors={[
+  32 |             "#FFFFFF", // White
+  33 |             "#FF0000", "#FF0000", // Red Red
+
+Expression expected
+
+Import trace:
+  Server Component:
+    ./components/BackgroundLayout.tsx
+    ./app/layout.tsx
+[00:27:18.120] Server  LOG      ✓ Compiled in 560ms
+[00:27:20.875] Server  WARN    WalletConnect Core is already initialized. This is probably a mistake and can lead to unexpected behavior. Init() was called 3 times.
+[00:27:20.880] Server  WARN    WalletConnect Core is already initialized. This is probably a mistake and can lead to unexpected behavior. Init() was called 3 times.
+[00:27:21.362] Server  WARN    [Reown Config] Failed to fetch remote project configuration. Using local/default values. Error: HTTP status code: 403
+[00:27:22.324] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:27:23.210] Server  WARN    [Upstash Redis] Redis client was initialized without url or token. Failed to execute command.
+[00:27:23.370] Browser LOG     BackgroundLayout: {"pathname":"/facilitator","showColorBends":true}
+[00:27:23.370] Browser LOG     BackgroundLayout: {"pathname":"/facilitator","showColorBends":true}
+[00:27:23.370] Browser LOG     BackgroundLayout: {"pathname":"/facilitator","showColorBends":true}
+[00:27:23.370] Browser LOG     BackgroundLayout: {"pathname":"/facilitator","showColorBends":true}
+[00:27:24.367] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[00:27:24.368] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/facilitator","route":"/facilitator"}
+[00:27:24.368] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/facilitator color: rgb(120, 120, 120) color: inherit {"dp":"/facilitator","o":"http://localhost:3000/facilitator","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1765702567000}
+[00:27:24.368] Browser WARN    Lit is in dev mode. Not recommended for production! See https://lit.dev/msg/dev-mode for more information.
+[00:27:24.368] Browser WARN    [Reown Config] Failed to fetch remote project configuration. Using local/default values. {}
+[00:27:27.723] Server  ERROR   ❌ Error listing facilitators: TypeError: Failed to parse URL from 
+[00:27:27.737] Server  WARN    [Upstash Redis] Redis client was initialized without url or token. Failed to execute command.
+[00:27:32.203] Server  ERROR   ❌ Error listing facilitators: TypeError: Failed to parse URL from 
+[00:27:32.212] Server  WARN    [Upstash Redis] Redis client was initialized without url or token. Failed to execute command.
+[00:27:36.366] Browser ERROR   Analytics SDK: {} {"context":"AnalyticsSDKApiError"}
+[00:27:36.735] Server  ERROR   ❌ Error listing facilitators: TypeError: Failed to parse URL from 
+[00:28:03.847] Server  WARN    [Upstash Redis] Redis client was initialized without url or token. Failed to execute command.
+[00:28:03.978] Browser LOG     BackgroundLayout: {"pathname":"/","showColorBends":false}
+[00:28:03.978] Browser LOG     BackgroundLayout: {"pathname":"/","showColorBends":false}
+[00:28:03.978] Browser LOG     BackgroundLayout: {"pathname":"/","showColorBends":false}
+[00:28:03.978] Browser LOG     BackgroundLayout: {"pathname":"/","showColorBends":false}
+[00:28:03.978] Browser LOG     BackgroundLayout: {"pathname":"/","showColorBends":false}
+[00:28:03.978] Browser LOG     BackgroundLayout: {"pathname":"/","showColorBends":false}
+[00:28:03.978] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/ color: rgb(120, 120, 120) color: inherit {"dp":"/","o":"http://localhost:3000/","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1765702607240}
+[00:28:05.886] Browser LOG     BackgroundLayout: {"pathname":"/facilitator","showColorBends":true}
+[00:28:05.886] Browser LOG     BackgroundLayout: {"pathname":"/facilitator","showColorBends":true}
+[00:28:05.886] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/facilitator color: rgb(120, 120, 120) color: inherit {"dp":"/facilitator","o":"http://localhost:3000/facilitator","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1765702609365}
+[00:28:08.377] Server  ERROR   ❌ Error listing facilitators: TypeError: Failed to parse URL from 
+[00:28:08.398] Server  WARN    [Upstash Redis] Redis client was initialized without url or token. Failed to execute command.
+[00:28:12.833] Server  ERROR   ❌ Error listing facilitators: TypeError: Failed to parse URL from 
+[00:28:12.855] Server  WARN    [Upstash Redis] Redis client was initialized without url or token. Failed to execute command.
+[00:28:17.284] Server  ERROR   ❌ Error listing facilitators: TypeError: Failed to parse URL from 
+[00:28:17.289] Server  WARN    [Upstash Redis] Redis client was initialized without url or token. Failed to execute command.
+[00:28:19.362] Browser ERROR   Analytics SDK: {} {"context":"AnalyticsSDKApiError"}
+[00:28:21.754] Server  ERROR   ❌ Error listing facilitators: TypeError: Failed to parse URL from 
+[00:29:22.175] Server  LOG      ✓ Compiled in 1581ms
+[00:29:22.350] Browser LOG     BackgroundLayout: {"pathname":"/facilitator","showColorBends":true}
+[00:29:22.350] Browser LOG     BackgroundLayout: {"pathname":"/facilitator","showColorBends":true}
+[00:29:52.361] Browser ERROR   Analytics SDK: {} {"context":"AnalyticsSDKApiError"}
+[00:30:20.111] Server  LOG      ✓ Compiled in 1338ms
+[00:30:20.267] Browser LOG     BackgroundLayout: {"pathname":"/facilitator","showColorBends":true}
+[00:30:20.267] Browser LOG     BackgroundLayout: {"pathname":"/facilitator","showColorBends":true}
+[00:30:46.573] Browser LOG     BackgroundLayout: {"pathname":"/explorer","showColorBends":true}
+[00:30:46.573] Browser LOG     BackgroundLayout: {"pathname":"/explorer","showColorBends":true}
+[00:30:46.573] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/explorer color: rgb(120, 120, 120) color: inherit {"dp":"/explorer","o":"http://localhost:3000/explorer","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1765702770057}
+[00:30:51.945] Browser LOG     BackgroundLayout: {"pathname":"/facilitator","showColorBends":true}
+[00:30:51.945] Browser LOG     BackgroundLayout: {"pathname":"/facilitator","showColorBends":true}
+[00:30:51.945] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/facilitator color: rgb(120, 120, 120) color: inherit {"dp":"/facilitator","o":"http://localhost:3000/facilitator","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1765702775422}
+[00:30:52.021] Server  WARN    [Upstash Redis] Redis client was initialized without url or token. Failed to execute command.
+[00:30:56.993] Server  ERROR   ❌ Error listing facilitators: TypeError: Failed to parse URL from 
+[00:30:57.093] Server  WARN    [Upstash Redis] Redis client was initialized without url or token. Failed to execute command.
+[00:31:01.558] Server  ERROR   ❌ Error listing facilitators: TypeError: Failed to parse URL from 
+[00:31:04.362] Browser ERROR   Analytics SDK: {} {"context":"AnalyticsSDKApiError"}
+[00:31:52.372] Server  LOG      ✓ Compiled in 1542ms
+[00:31:55.569] Browser LOG     BackgroundLayout: {"pathname":"/facilitator","showColorBends":true}
+[00:31:55.569] Browser LOG     BackgroundLayout: {"pathname":"/facilitator","showColorBends":true}
+[00:32:13.544] Browser ERROR   Analytics SDK: {} {"context":"AnalyticsSDKApiError"}
+[00:32:16.396] Server  LOG      ✓ Compiled in 253ms
+[00:32:17.363] Browser LOG     BackgroundLayout: {"pathname":"/facilitator","showColorBends":true}
+[00:32:17.363] Browser LOG     BackgroundLayout: {"pathname":"/facilitator","showColorBends":true}
+[00:32:38.959] Server  LOG      ✓ Compiled in 407ms
+[00:32:40.526] Server  LOG      ✓ Compiled in 181ms
+[00:32:41.374] Browser LOG     BackgroundLayout: {"pathname":"/facilitator","showColorBends":true}
+[00:32:41.374] Browser LOG     BackgroundLayout: {"pathname":"/facilitator","showColorBends":true}
+[00:34:09.943] Server  WARN    WalletConnect Core is already initialized. This is probably a mistake and can lead to unexpected behavior. Init() was called 4 times.
+[00:34:09.948] Server  WARN    WalletConnect Core is already initialized. This is probably a mistake and can lead to unexpected behavior. Init() was called 4 times.
+[00:34:10.490] Server  WARN    [Reown Config] Failed to fetch remote project configuration. Using local/default values. Error: HTTP status code: 403
+[00:34:12.333] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:34:13.406] Browser LOG     BackgroundLayout: {"pathname":"/facilitator","showColorBends":true}
+[00:34:13.407] Browser LOG     BackgroundLayout: {"pathname":"/facilitator","showColorBends":true}
+[00:34:13.649] Server  WARN    [Upstash Redis] Redis client was initialized without url or token. Failed to execute command.
+[00:34:14.197] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[00:34:14.197] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/facilitator","route":"/facilitator"}
+[00:34:14.197] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/facilitator color: rgb(120, 120, 120) color: inherit {"dp":"/facilitator","o":"http://localhost:3000/facilitator","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1765702977672}
+[00:34:14.389] Browser WARN    Lit is in dev mode. Not recommended for production! See https://lit.dev/msg/dev-mode for more information.
+[00:34:14.611] Browser WARN    [Reown Config] Failed to fetch remote project configuration. Using local/default values. {}
+[00:34:18.280] Server  ERROR   ❌ Error listing facilitators: TypeError: Failed to parse URL from 
+[00:34:18.406] Server  WARN    [Upstash Redis] Redis client was initialized without url or token. Failed to execute command.
+[00:34:20.194] Browser ERROR   Analytics SDK: {} {"context":"AnalyticsSDKApiError"}
+[00:34:20.196] Browser LOG     BackgroundLayout: {"pathname":"/","showColorBends":false}
+[00:34:20.196] Browser LOG     BackgroundLayout: {"pathname":"/","showColorBends":false}
+[00:34:20.196] Browser LOG     BackgroundLayout: {"pathname":"/","showColorBends":false}
+[00:34:20.196] Browser LOG     BackgroundLayout: {"pathname":"/","showColorBends":false}
+[00:34:20.196] Browser LOG     BackgroundLayout: {"pathname":"/","showColorBends":false}
+[00:34:20.196] Browser LOG     BackgroundLayout: {"pathname":"/","showColorBends":false}
+[00:34:21.087] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/ color: rgb(120, 120, 120) color: inherit {"dp":"/","o":"http://localhost:3000/","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1765702984146}
+[00:34:23.118] Server  ERROR   ❌ Error listing facilitators: TypeError: Failed to parse URL from 
+[00:34:23.168] Server  WARN    [Upstash Redis] Redis client was initialized without url or token. Failed to execute command.
+[00:34:27.685] Server  ERROR   ❌ Error listing facilitators: TypeError: Failed to parse URL from 
+[00:34:27.725] Server  WARN    [Upstash Redis] Redis client was initialized without url or token. Failed to execute command.
+[00:34:32.361] Server  ERROR   ❌ Error listing facilitators: TypeError: Failed to parse URL from 
+[00:34:32.405] Server  WARN    [Upstash Redis] Redis client was initialized without url or token. Failed to execute command.
+[00:34:34.667] Browser ERROR   Analytics SDK: {} {"context":"AnalyticsSDKApiError"}
+[00:34:36.915] Server  ERROR   ❌ Error listing facilitators: TypeError: Failed to parse URL from 
+[00:34:41.362] Browser ERROR   Analytics SDK: {} {"context":"AnalyticsSDKApiError"}
+[00:35:03.291] Server  LOG      ✓ Compiled in 3.9s
+[00:35:48.012] Server  LOG      ✓ Compiled in 2.4s
+[00:37:31.328] Browser LOG     BackgroundLayout: {"pathname":"/facilitator","showColorBends":true}
+[00:37:31.328] Browser LOG     BackgroundLayout: {"pathname":"/facilitator","showColorBends":true}
+[00:37:31.328] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/facilitator color: rgb(120, 120, 120) color: inherit {"dp":"/facilitator","o":"http://localhost:3000/facilitator","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1765703174814}
+[00:37:31.518] Server  WARN    [Upstash Redis] Redis client was initialized without url or token. Failed to execute command.
+[00:37:36.059] Server  ERROR   ❌ Error listing facilitators: TypeError: Failed to parse URL from 
+[00:37:36.079] Server  WARN    [Upstash Redis] Redis client was initialized without url or token. Failed to execute command.
+[00:37:40.610] Server  ERROR   ❌ Error listing facilitators: TypeError: Failed to parse URL from 
+[00:40:41.773] Server  LOG      ✓ Compiled in 3.8s
+[00:40:42.367] Browser ERROR   ./app/facilitator/page.tsx:596:10
+Parsing ecmascript source code failed
+  594 |              )}
+  595 |           </div>
+> 596 |         )}
+      |          ^
+  597 |
+  598 |         {/* 4. ACTIVE FACILITATORS LIST */}
+  599 |         <div className="space-y-8">
+
+Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+
+Import traces:
+  Client Component Browser:
+    ./app/facilitator/page.tsx [Client Component Browser]
+    ./app/facilitator/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./app/facilitator/page.tsx [Client Component SSR]
+    ./app/facilitator/page.tsx [Server Component]
+[00:41:26.302] Server  ERROR    ⨯ ./app/facilitator/page.tsx:596:10
+Parsing ecmascript source code failed
+  594 |              )}
+  595 |           </div>
+> 596 |         )}
+      |          ^
+  597 |
+  598 |         {/* 4. ACTIVE FACILITATORS LIST */}
+  599 |         <div className="space-y-8">
+
+Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+
+Import traces:
+  Client Component Browser:
+    ./app/facilitator/page.tsx [Client Component Browser]
+    ./app/facilitator/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./app/facilitator/page.tsx [Client Component SSR]
+    ./app/facilitator/page.tsx [Server Component]
+
+
+[00:41:28.727] Browser ERROR   uncaughtError: Error: ./app/facilitator/page.tsx:596:10
+Parsing ecmascript source code failed
+  594 |              )}
+  595 |           </div>
+> 596 |         )}
+      |          ^
+  597 |
+  598 |         {/* 4. ACTIVE FACILITATORS LIST */}
+  599 |         <div className="space-y-8">
+
+Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+
+Import traces:
+  Client Component Browser:
+    ./app/facilitator/page.tsx [Client Component Browser]
+    ./app/facilitator/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./app/facilitator/page.tsx [Client Component SSR]
+    ./app/facilitator/page.tsx [Server Component]
+
+
+[00:41:28.913] Browser ERROR   ./app/facilitator/page.tsx:596:10
+Parsing ecmascript source code failed
+  594 |              )}
+  595 |           </div>
+> 596 |         )}
+      |          ^
+  597 |
+  598 |         {/* 4. ACTIVE FACILITATORS LIST */}
+  599 |         <div className="space-y-8">
+
+Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+
+Import traces:
+  Client Component Browser:
+    ./app/facilitator/page.tsx [Client Component Browser]
+    ./app/facilitator/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./app/facilitator/page.tsx [Client Component SSR]
+    ./app/facilitator/page.tsx [Server Component]
+[00:41:29.016] Browser ERROR   ./app/facilitator/page.tsx:596:10
+Parsing ecmascript source code failed
+  594 |              )}
+  595 |           </div>
+> 596 |         )}
+      |          ^
+  597 |
+  598 |         {/* 4. ACTIVE FACILITATORS LIST */}
+  599 |         <div className="space-y-8">
+
+Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+
+Import traces:
+  Client Component Browser:
+    ./app/facilitator/page.tsx [Client Component Browser]
+    ./app/facilitator/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./app/facilitator/page.tsx [Client Component SSR]
+    ./app/facilitator/page.tsx [Server Component]
+[00:42:37.139] Server  LOG      ✓ Compiled in 1573ms
+[00:42:42.493] Server  WARN    WalletConnect Core is already initialized. This is probably a mistake and can lead to unexpected behavior. Init() was called 5 times.
+[00:42:42.499] Server  WARN    WalletConnect Core is already initialized. This is probably a mistake and can lead to unexpected behavior. Init() was called 5 times.
+[00:42:43.127] Server  WARN    [Reown Config] Failed to fetch remote project configuration. Using local/default values. Error: HTTP status code: 403
+[00:42:45.358] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:42:46.184] Server  WARN    [Upstash Redis] Redis client was initialized without url or token. Failed to execute command.
+[00:42:46.366] Browser LOG     BackgroundLayout: {"pathname":"/facilitator","showColorBends":true}
+[00:42:46.366] Browser LOG     BackgroundLayout: {"pathname":"/facilitator","showColorBends":true}
+[00:42:46.366] Browser LOG     BackgroundLayout: {"pathname":"/facilitator","showColorBends":true}
+[00:42:46.366] Browser LOG     BackgroundLayout: {"pathname":"/facilitator","showColorBends":true}
+[00:42:47.363] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[00:42:47.363] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/facilitator","route":"/facilitator"}
+[00:42:47.364] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/facilitator color: rgb(120, 120, 120) color: inherit {"dp":"/facilitator","o":"http://localhost:3000/facilitator","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1765703490106}
+[00:42:49.369] Browser WARN    Lit is in dev mode. Not recommended for production! See https://lit.dev/msg/dev-mode for more information.
+[00:42:49.369] Browser WARN    [Reown Config] Failed to fetch remote project configuration. Using local/default values. {}
+[00:42:50.788] Server  ERROR   ❌ Error listing facilitators: TypeError: Failed to parse URL from 
+[00:42:50.811] Server  WARN    [Upstash Redis] Redis client was initialized without url or token. Failed to execute command.
+[00:42:55.314] Server  ERROR   ❌ Error listing facilitators: TypeError: Failed to parse URL from 
+[00:42:55.339] Server  WARN    [Upstash Redis] Redis client was initialized without url or token. Failed to execute command.
+[00:42:59.820] Server  ERROR   ❌ Error listing facilitators: TypeError: Failed to parse URL from 
+[00:43:54.009] Browser ERROR   Analytics SDK: {} {"context":"AnalyticsSDKApiError"}

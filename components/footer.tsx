@@ -15,7 +15,7 @@ export function Footer() {
           <div className="space-y-4">
             <div className="flex items-center gap-2">
               <div className="h-8 w-8 rounded-lg bg-gradient-to-br from-neon-blue via-neon-purple to-neon-pink glow-effect" />
-              <span className="text-xl font-bold text-gradient">Fascinet</span>
+              <span className="text-xl font-bold text-gradient">Facinet</span>
             </div>
             <p className="text-sm text-muted-foreground leading-relaxed">
               Distributed Facilitator Network for the Agent Economy
@@ -90,7 +90,7 @@ export function Footer() {
         </div>
 
         <div className="mt-12 pt-8 border-t border-border/40">
-          <p className="text-sm text-muted-foreground text-center">© 2025 Fascinet. All rights reserved.</p>
+          <p className="text-sm text-muted-foreground text-center">© 2025 Facinet. All rights reserved.</p>
         </div>
       </div>
     </footer>

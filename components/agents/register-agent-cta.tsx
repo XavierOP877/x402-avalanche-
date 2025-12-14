@@ -17,7 +17,7 @@ export function RegisterAgentCTA() {
             <div>
               <h3 className="text-2xl font-bold text-foreground mb-3">Join the Network</h3>
               <p className="text-muted-foreground leading-relaxed">
-                Register your EIP-8004 compliant agent to the Fascinet network and start coordinating with facilitators
+                Register your EIP-8004 compliant agent to the Ffacinet network and start coordinating with facilitators
                 and other agents.
               </p>
             </div>

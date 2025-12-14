@@ -2,11 +2,17 @@
  * POST /api/facilitator/create
  *
  * Create a new facilitator
- * User must provide:
- * - Encrypted private key
- * - Facilitator wallet address
- * - Payment recipient address
- * - Registration transaction hash (x402 payment proof)
+ * 
+ * @param {object} body - The request body
+ * @param {string} body.name - Name of the facilitator
+ * @param {string} body.encryptedPrivateKey - Private key encrypted with user password
+ * @param {string} body.privateKey - Plain private key (will be encrypted with system key)
+ * @param {string} body.facilitatorWallet - Wallet address of the facilitator
+ * @param {string} body.paymentRecipient - Address to receive payments
+ * @param {string} body.createdBy - Address of the user creating the facilitator
+ * @param {string} body.registrationTxHash - Hash of the registration fee payment transaction
+ * 
+ * @returns {Promise<NextResponse>} JSON response with success status and facilitator details
  */
 
 import { NextRequest, NextResponse } from 'next/server';

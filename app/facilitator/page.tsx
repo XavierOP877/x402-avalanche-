@@ -1,7 +1,7 @@
 "use client"
 
 import Link from "next/link"
-import { ShieldCheck, Server, Activity, Wallet, Clock, ArrowRight, Cloud, X, AlertCircle } from "lucide-react"
+import { ShieldCheck, Server, Activity, Wallet, Clock, ArrowRight, Cloud, X, AlertCircle, Terminal } from "lucide-react"
 import { useState, useEffect } from "react"
 import { useAccount, useWriteContract, useWaitForTransactionReceipt } from "wagmi"
 import { ConnectButton } from "@rainbow-me/rainbowkit"
@@ -440,21 +440,74 @@ export default function FacilitatorPage() {
              <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
                    <div className="p-3 rounded-lg bg-primary/10 border border-primary/20">
-                      <ShieldCheck className="text-primary" size={24} />
+                      <Server className="text-primary" size={24} />
                    </div>
                    <div>
-                     <h3 className="text-2xl font-bold text-white font-mono uppercase tracking-tight">My Facilitators</h3>
-                     <p className="text-white/60 font-light text-sm">Manage your facilitator instances</p>
+                     <h3 className="text-2xl font-bold text-white font-mono uppercase tracking-tight">Deploy Facilitator</h3>
+                     <p className="text-white/60 font-light text-sm">Choose your deployment method</p>
                    </div>
                 </div>
-                <button
-                  onClick={() => setShowDeployModal(true)}
-                  className="flex items-center gap-2 px-6 py-3 bg-primary hover:bg-primary/90 text-white rounded-lg font-mono font-bold uppercase tracking-wider transition-all"
-                >
-                  <Cloud size={18} />
-                  Create New Facilitator
-                </button>
              </div>
+
+             {/* CREATE OPTIONS */}
+             <div className="grid md:grid-cols-2 gap-6 mb-12">
+               {/* CLI CARD */}
+               <div
+                 className="relative group p-6 rounded-xl border border-white/10 bg-white/5 backdrop-blur-md transition-all text-left opacity-60 cursor-not-allowed"
+               >
+                 <div className="absolute top-4 right-4 p-2 rounded-lg bg-white/10 text-white transition-colors">
+                   <Terminal size={24} />
+                 </div>
+                 <h3 className="text-xl font-bold text-white font-mono uppercase tracking-tight mb-2">CLI Node</h3>
+                 <div className="flex items-center gap-2 mb-2">
+                   <span className="px-2 py-0.5 rounded text-[10px] font-bold font-mono uppercase bg-yellow-500/20 text-yellow-400 border border-yellow-500/20">
+                     Under Development
+                   </span>
+                 </div>
+                 <p className="text-white/40 text-sm font-light max-w-[80%]">
+                   Run a self-hosted node via command line. For advanced users.
+                 </p>
+               </div>
+
+               {/* CLOUD CARD */}
+               <button
+                 onClick={() => setShowDeployModal(true)}
+                 className="relative group p-6 rounded-xl border border-blue-500/40 bg-gradient-to-br from-blue-500/20 via-purple-500/10 to-blue-500/5 hover:border-blue-400/60 hover:from-blue-500/30 hover:to-blue-500/10 backdrop-blur-md transition-all text-left shadow-lg shadow-blue-500/10 hover:shadow-blue-500/20"
+               >
+                 <div className="absolute top-4 right-4 flex gap-2">
+                    <div className="flex items-center gap-1.5 px-2 py-1 rounded bg-green-500/20 border border-green-500/30 text-[10px] font-bold text-green-400 uppercase tracking-wider animate-pulse">
+                        <div className="w-1.5 h-1.5 rounded-full bg-green-400" />
+                        LIVE
+                    </div>
+                    <div className="p-2 rounded-lg bg-blue-500/20 text-blue-400 group-hover:bg-blue-500/30 transition-colors">
+                        <Cloud size={24} />
+                    </div>
+                 </div>
+                 <h3 className="text-xl font-bold text-white font-mono uppercase tracking-tight mb-2">Cloud Node</h3>
+                 <div className="flex items-center gap-2 mb-3">
+                   <span className="px-2 py-0.5 rounded text-[10px] font-bold font-mono uppercase bg-blue-500/20 text-blue-300 border border-blue-500/20">
+                     Recommended
+                   </span>
+                 </div>
+                 <p className="text-blue-100/80 text-sm font-light max-w-[85%]">
+                   Deploy a managed facilitator node instantly. No setup required. Start earning rewards immediately.
+                 </p>
+               </button>
+             </div>
+
+             {/* MY FACILITATORS SECTION */}
+             <div className="space-y-6">
+                <div className="flex items-center justify-between">
+                   <div className="flex items-center gap-3">
+                      <div className="p-3 rounded-lg bg-primary/10 border border-primary/20">
+                         <ShieldCheck className="text-primary" size={24} />
+                      </div>
+                      <div>
+                        <h3 className="text-2xl font-bold text-white font-mono uppercase tracking-tight">My Facilitators</h3>
+                        <p className="text-white/60 font-light text-sm">Manage your facilitator instances</p>
+                      </div>
+                   </div>
+                </div>
 
              {loading ? (
                <div className="text-center py-12 text-white/40">Loading...</div>
@@ -536,14 +589,10 @@ export default function FacilitatorPage() {
              ) : (
                <div className="p-12 rounded-xl border border-white/10 bg-white/5 text-center space-y-4">
                  <p className="text-white/60">You don't have any facilitators yet.</p>
-                 <button
-                   onClick={() => setShowDeployModal(true)}
-                   className="inline-flex items-center gap-2 px-6 py-3 bg-primary text-white rounded-lg font-mono font-bold hover:bg-primary/90 transition-colors"
-                 >
-                   Create Your First Facilitator <ArrowRight size={16} />
-                 </button>
+                 <p className="text-sm text-white/40">Select an option above to get started.</p>
                </div>
              )}
+          </div>
           </div>
         )}
 

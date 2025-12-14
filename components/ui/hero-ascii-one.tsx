@@ -19,17 +19,21 @@ export default function HeroAsciiWrapper({ children }: HeroAsciiWrapperProps) {
         <div className="container mx-auto px-4 lg:px-8 py-2 lg:py-3 flex items-center justify-between">
           <div className="flex items-center gap-3 lg:gap-6">
             <div className="font-mono text-white text-xl lg:text-2xl font-bold tracking-widest italic transform -skew-x-12">
-              FASCINET
+              FACINET
             </div>
             <div className="h-3 lg:h-4 w-px bg-white/40"></div>
             <span className="text-white/60 text-[8px] lg:text-[9px] font-mono">EST. 2025</span>
             
             {/* Nav Links */}
             <div className="hidden lg:flex items-center gap-6 ml-8">
-               {['Home', 'Facilitator', 'Explorer', 'Docs'].map((item) => (
+               {['Home', 'Facilitator', 'Explorer', 'Facinet L1', 'Docs'].map((item) => (
                  <Link 
                    key={item} 
-                   href={item === 'Home' ? '/' : `/${item.toLowerCase()}`}
+                   href={
+                     item === 'Home' ? '/' : 
+                     item === 'Facinet L1' ? '/facinetL1' :
+                     `/${item.toLowerCase()}`
+                   }
                    className="text-white/70 hover:text-white text-xs font-mono tracking-widest uppercase transition-colors"
                  >
                    {item}
