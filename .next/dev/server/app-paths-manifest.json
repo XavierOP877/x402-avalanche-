@@ -1,7 +1,11 @@
 {
+  "/api/explorer/recent/route": "app/api/explorer/recent/route.js",
+  "/api/facilitator/[id]/route": "app/api/facilitator/[id]/route.js",
+  "/api/facilitator/balance/route": "app/api/facilitator/balance/route.js",
+  "/api/facilitator/check-and-activate/route": "app/api/facilitator/check-and-activate/route.js",
   "/api/facilitator/list/route": "app/api/facilitator/list/route.js",
-  "/explorer/page": "app/explorer/page.js",
+  "/api/facilitator/search/route": "app/api/facilitator/search/route.js",
+  "/api/stats/network/route": "app/api/stats/network/route.js",
   "/facilitator/page": "app/facilitator/page.js",
-  "/facinetL1/page": "app/facinetL1/page.js",
   "/page": "app/page.js"
 }

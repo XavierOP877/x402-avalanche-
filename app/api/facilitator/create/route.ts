@@ -21,6 +21,7 @@ import {
   generateFacilitatorId,
   type Facilitator,
 } from '@/lib/facilitator-storage';
+import { logEvent } from '@/lib/explorer-logging';
 
 export async function POST(request: NextRequest) {
   try {
@@ -126,6 +127,16 @@ export async function POST(request: NextRequest) {
     await storeFacilitator(facilitator);
 
     console.log(`✅ Created facilitator: ${id} by ${createdBy}`);
+
+    // Log facilitator creation event
+    await logEvent({
+      eventType: 'facilitator_added',
+      facilitatorId: id,
+      facilitatorName: name,
+      stakeAmount: '1 USDC',
+      stakeTxHash: registrationTxHash,
+      status: 'success',
+    });
 
     // Register on-chain (ERC-8004 Identity Registry)
     let onChainId = null;

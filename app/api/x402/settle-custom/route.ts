@@ -10,6 +10,7 @@ import { getFacilitator, recordPayment } from '@/lib/facilitator-storage';
 import { decryptPrivateKey } from '@/lib/facilitator-crypto';
 import { Wallet, JsonRpcProvider } from 'ethers';
 import { USDC_FUJI } from '@/lib/contracts';
+import { logEvent } from '@/lib/explorer-logging';
 
 // ERC-3009 ABI for transferWithAuthorization
 // This allows the facilitator to pay gas while USDC goes to the payment recipient
@@ -104,11 +105,29 @@ export async function POST(request: NextRequest) {
     console.log('⏳ Transaction submitted:', tx.hash);
 
     // Wait for confirmation
-    await tx.wait();
+    const receipt = await tx.wait();
     console.log('✅ Transaction confirmed:', tx.hash);
+
+    // Calculate gas spent
+    const gasSpent = receipt ? (BigInt(receipt.gasUsed) * BigInt(receipt.gasPrice || 0)).toString() : '0';
 
     // Record payment for facilitator
     await recordPayment(facilitatorId);
+
+    // Log transaction event
+    await logEvent({
+      eventType: 'transaction',
+      facilitatorId: facilitatorId,
+      facilitatorName: facilitator.name,
+      txHash: tx.hash,
+      chainId: 43113,
+      chainName: 'Avalanche Fuji',
+      fromAddress: from,
+      toAddress: to,
+      amount: value.toString(),
+      gasSpent: gasSpent,
+      status: 'success',
+    });
 
     return NextResponse.json({
       success: true,

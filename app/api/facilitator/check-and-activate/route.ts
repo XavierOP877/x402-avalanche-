@@ -10,6 +10,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getFacilitator, updateFacilitatorStatus } from '@/lib/facilitator-storage';
 import { createPublicClient, http, formatEther } from 'viem';
 import { avalancheFuji } from 'viem/chains';
+import { logEvent } from '@/lib/explorer-logging';
 
 const publicClient = createPublicClient({
   chain: avalancheFuji,
@@ -62,6 +63,17 @@ export async function POST(request: NextRequest) {
     if (facilitator.status !== newStatus) {
       await updateFacilitatorStatus(facilitatorId, newStatus);
       console.log(`✅ Status updated: ${facilitator.status} → ${newStatus}`);
+
+      // Log activation event
+      if (newStatus === 'active') {
+        await logEvent({
+          eventType: 'facilitator_activated',
+          facilitatorId: facilitator.id,
+          facilitatorName: facilitator.name,
+          gasFundingAmount: `${balanceInAvax.toFixed(4)} AVAX`,
+          status: 'success',
+        });
+      }
     } else {
       console.log(`ℹ️  Status unchanged: ${newStatus}`);
     }
