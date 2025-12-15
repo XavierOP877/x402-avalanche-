@@ -9,7 +9,7 @@ export function DocsSearch() {
       <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
       <Input 
         placeholder="Search documentation..." 
-        className="pl-9 bg-background/50 border-white/10 focus-visible:ring-primary/50"
+        className="pl-9 bg-black border-white/10 focus-visible:ring-primary/50 text-white placeholder:text-muted-foreground"
       />
     </div>
   )

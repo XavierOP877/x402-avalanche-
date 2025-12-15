@@ -26,12 +26,11 @@ export default function HeroAsciiWrapper({ children }: HeroAsciiWrapperProps) {
             
             {/* Nav Links */}
             <div className="hidden lg:flex items-center gap-6 ml-8">
-               {['Home', 'Facilitator', 'Explorer', 'Facinet L1', 'Docs'].map((item) => (
+               {['Home', 'Facilitator', 'Institution', 'Explorer', 'Chain', 'Docs'].map((item) => (
                  <Link 
                    key={item} 
                    href={
                      item === 'Home' ? '/' : 
-                     item === 'Facinet L1' ? '/facinetL1' :
                      `/${item.toLowerCase()}`
                    }
                    className="text-white/70 hover:text-white text-xs font-mono tracking-widest uppercase transition-colors"

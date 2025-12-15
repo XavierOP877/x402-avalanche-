@@ -427,11 +427,11 @@ export default function FacilitatorPage() {
 
         {/* 1. NETWORK STATS GRID */}
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 mb-24">
-          <StatCard label="Active Nodes" value={loading ? "..." : networkStats.activeNodes.toString()} icon={Server} color="text-green-400" />
-          <StatCard label="Total Staked" value={networkStats.totalStaked} icon={Wallet} color="text-purple-400" />
-          <StatCard label="Fees Generated" value={networkStats.feesGenerated} icon={Activity} color="text-blue-400" />
-          <StatCard label="Transactions" value={networkStats.transactions.toString()} icon={ArrowRight} color="text-orange-400" />
-          <StatCard label="Network Uptime" value={networkStats.networkUptime} icon={Clock} color="text-white" />
+          <StatCard label="Active Nodes" value={loading ? "..." : networkStats.activeNodes.toString()} icon={Server} color="text-blue-500" />
+          <StatCard label="Total Staked" value={networkStats.totalStaked} icon={Wallet} color="text-blue-500" />
+          <StatCard label="Fees Generated" value={networkStats.feesGenerated} icon={Activity} color="text-blue-500" />
+          <StatCard label="Transactions" value={networkStats.transactions.toString()} icon={ArrowRight} color="text-blue-500" />
+          <StatCard label="Network Uptime" value={networkStats.networkUptime} icon={Clock} color="text-blue-500" />
         </div>
 
         {/* 2. MY FACILITATORS DASHBOARD */}
