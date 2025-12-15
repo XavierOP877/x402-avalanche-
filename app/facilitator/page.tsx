@@ -1,12 +1,12 @@
 "use client"
 
 import Link from "next/link"
-import { ShieldCheck, Server, Activity, Wallet, Clock, ArrowRight, Cloud, X, AlertCircle, Terminal } from "lucide-react"
+import { ShieldCheck, Server, Activity, Wallet, Clock, ArrowRight, Cloud, X, AlertCircle, Terminal, Trash2 } from "lucide-react"
 import { useState, useEffect } from "react"
-import { useAccount, useWriteContract, useWaitForTransactionReceipt } from "wagmi"
+import { useAccount } from "wagmi"
 import { ConnectButton } from "@rainbow-me/rainbowkit"
 import { ethers } from "ethers"
-import { parseUnits } from "viem"
+import { X402PaymentModal } from "@/components/X402PaymentModal"
 
 interface Facilitator {
   id: string
@@ -20,30 +20,6 @@ interface Facilitator {
   reputation?: number
 }
 
-// USDC Contract on Avalanche Fuji
-const USDC_ADDRESS = '0x5425890298aed601595a70AB815c96711a31Bc65' as `0x${string}`
-const USDC_ABI = [
-  {
-    constant: false,
-    inputs: [
-      { name: '_to', type: 'address' },
-      { name: '_value', type: 'uint256' }
-    ],
-    name: 'transfer',
-    outputs: [{ name: '', type: 'bool' }],
-    type: 'function'
-  },
-  {
-    constant: true,
-    inputs: [{ name: '_owner', type: 'address' }],
-    name: 'balanceOf',
-    outputs: [{ name: 'balance', type: 'uint256' }],
-    type: 'function'
-  }
-] as const
-
-// Default facilitator address for registration fee (replace with actual)
-const DEFAULT_FACILITATOR = process.env.NEXT_PUBLIC_PAYMENT_RECIPIENT || '0x0000000000000000000000000000000000000000'
 
 export default function FacilitatorPage() {
   const { address, isConnected } = useAccount()
@@ -77,11 +53,10 @@ export default function FacilitatorPage() {
   const [facilitatorBalance, setFacilitatorBalance] = useState<string>('0')
   const [isCheckingStatus, setIsCheckingStatus] = useState(false)
 
-  // USDC contract interaction
-  const { writeContract, data: txHash, isPending: isPaymentPending } = useWriteContract()
-  const { isLoading: isConfirming, isSuccess: isPaymentSuccess } = useWaitForTransactionReceipt({
-    hash: txHash,
-  })
+  // x402 Payment Modal
+  const [showPaymentModal, setShowPaymentModal] = useState(false)
+  const [isCreatingFacilitator, setIsCreatingFacilitator] = useState(false)
+  const [creationInProgress, setCreationInProgress] = useState(false)
 
   // Set payment address to connected wallet (always use connected wallet as recipient)
   useEffect(() => {
@@ -160,35 +135,77 @@ export default function FacilitatorPage() {
     }
   }
 
-  // Handle USDC payment for registration
-  const handlePaymentClick = async () => {
-    if (!address || !isConnected) {
-      alert('Please connect your wallet first!')
+  // Handle x402 payment success
+  const handlePaymentSuccess = async (txHash: string, proof: string) => {
+    console.log('✅ x402 Payment successful:', txHash)
+
+    // Prevent duplicate creation
+    if (creationInProgress) {
+      console.log('⚠️ Creation already in progress, skipping...')
       return
     }
 
-    try {
-      // Transfer 1 USDC to default facilitator
-      const amount = parseUnits('1', 6) // USDC has 6 decimals
+    setShowPaymentModal(false)
 
-      writeContract({
-        address: USDC_ADDRESS,
-        abi: USDC_ABI,
-        functionName: 'transfer',
-        args: [DEFAULT_FACILITATOR as `0x${string}`, amount],
-      })
-    } catch (error) {
-      console.error('Payment failed:', error)
-      alert('Payment failed. Please try again.')
-    }
+    // Automatically create facilitator after successful payment
+    await createFacilitatorAfterPayment(txHash)
   }
 
-  // After payment success, proceed to final step
-  useEffect(() => {
-    if (isPaymentSuccess && txHash && generatedWallet) {
-      setDeployStep(4)
+  // Create facilitator automatically after payment
+  const createFacilitatorAfterPayment = async (txHash: string) => {
+    // Prevent duplicate creation
+    if (creationInProgress) {
+      console.log('⚠️ Creation already in progress, skipping...')
+      return
     }
-  }, [isPaymentSuccess, txHash, generatedWallet])
+
+    if (!generatedWallet || !facilitatorName || !paymentAddress || !address) {
+      alert('Missing required information. Please try again.')
+      setDeployStep(1)
+      return
+    }
+
+    setCreationInProgress(true)
+    setIsCreatingFacilitator(true)
+    setDeployStep(4) // Show loading step
+
+    try {
+      const response = await fetch('/api/facilitator/create', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: facilitatorName,
+          encryptedPrivateKey: encryptedKey,          // User's password-encrypted private key (for backup/export)
+          privateKey: generatedWallet.privateKey,      // Plain private key (backend will encrypt with SYSTEM_MASTER_KEY)
+          facilitatorWallet: generatedWallet.address,  // The generated wallet address
+          paymentRecipient: paymentAddress,            // Where fees go (connected wallet)
+          createdBy: address,                          // Connected wallet that created it
+          registrationTxHash: txHash,                  // x402 payment tx hash
+        }),
+      })
+
+      const data = await response.json()
+
+      if (data.success) {
+        // Save the created facilitator ID and initial status
+        setCreatedFacilitatorId(data.facilitator.id)
+        setFacilitatorStatus('needs_funding')
+        setFacilitatorBalance('0')
+        setDeployStep(5) // Go to step 5 (funding status)
+        // Don't fetch here - will fetch when modal closes
+      } else {
+        alert(`Error: ${data.error}`)
+        setDeployStep(1)
+      }
+    } catch (error) {
+      console.error('Failed to create facilitator:', error)
+      alert('Failed to create facilitator')
+      setDeployStep(1)
+      setCreationInProgress(false)
+    } finally {
+      setIsCreatingFacilitator(false)
+    }
+  }
 
   // Fetch all facilitators and network stats
   useEffect(() => {
@@ -197,10 +214,15 @@ export default function FacilitatorPage() {
 
   // Auto-check and activate facilitators that need funding (on page load)
   useEffect(() => {
+    // Don't auto-check if modal is open or creating facilitator
+    if (showDeployModal || isCreatingFacilitator) {
+      return
+    }
+
     if (myFacilitators.length > 0) {
       autoCheckFacilitators()
     }
-  }, [myFacilitators.length]) // Only run when count changes to avoid loops
+  }, [myFacilitators.length, showDeployModal, isCreatingFacilitator]) // Only run when count changes to avoid loops
 
   // Auto-check all facilitators with "needs_funding" status
   const autoCheckFacilitators = async () => {
@@ -248,6 +270,12 @@ export default function FacilitatorPage() {
 
   const fetchFacilitators = async () => {
     try {
+      // Don't fetch if modal is open or creating facilitator
+      if (showDeployModal || isCreatingFacilitator) {
+        console.log('⏸️  Skipping fetch - modal is open or creating facilitator')
+        return
+      }
+
       setLoading(true)
       const response = await fetch('/api/facilitator/list')
       const data = await response.json()
@@ -356,45 +384,41 @@ export default function FacilitatorPage() {
     }
   }
 
-  // Handle facilitator creation
-  const handleCreateFacilitator = async () => {
-    if (!generatedWallet || !facilitatorName || !paymentAddress || !address || !txHash) {
-      alert('Missing required information. Please complete all steps.')
+  // Delete facilitator
+  const handleDeleteFacilitator = async (facilitatorId: string, facilitatorName: string) => {
+    if (!address) {
+      alert('Please connect your wallet')
       return
     }
 
+    const confirmed = confirm(`Are you sure you want to delete "${facilitatorName}"? This action cannot be undone.`)
+    if (!confirmed) return
+
     try {
-      const response = await fetch('/api/facilitator/create', {
+      const response = await fetch('/api/facilitator/delete', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          name: facilitatorName,
-          encryptedPrivateKey: encryptedKey,          // User's password-encrypted private key (for backup/export)
-          privateKey: generatedWallet.privateKey,      // Plain private key (backend will encrypt with SYSTEM_MASTER_KEY)
-          facilitatorWallet: generatedWallet.address,  // The generated wallet address
-          paymentRecipient: paymentAddress,            // Where fees go (connected wallet)
-          createdBy: address,                          // Connected wallet that created it
-          registrationTxHash: txHash,                  // USDC payment tx hash
+          facilitatorId,
+          userAddress: address,
         }),
       })
 
       const data = await response.json()
 
       if (data.success) {
-        // Save the created facilitator ID and initial status
-        setCreatedFacilitatorId(data.facilitator.id)
-        setFacilitatorStatus('needs_funding')
-        setFacilitatorBalance('0')
-        setDeployStep(5)
-        await fetchFacilitators() // Refresh the list
+        alert(`✅ Facilitator "${facilitatorName}" deleted successfully`)
+        // Refresh facilitator list after modal closes
+        setTimeout(() => fetchFacilitators(), 100)
       } else {
         alert(`Error: ${data.error}`)
       }
     } catch (error) {
-      console.error('Failed to create facilitator:', error)
-      alert('Failed to create facilitator')
+      console.error('Failed to delete facilitator:', error)
+      alert('Failed to delete facilitator')
     }
   }
+
 
   return (
     <div className="relative py-12 md:py-24 space-y-24">
@@ -557,13 +581,22 @@ export default function FacilitatorPage() {
                                 <div className="text-xs text-white/40 font-mono">ID: {facilitator.id.slice(0, 8)}...</div>
                              </div>
                           </div>
-                          <div className={`px-2 py-1 rounded text-[10px] font-mono uppercase tracking-wide flex items-center gap-1.5 ${
-                            facilitator.status === 'active'
-                              ? 'bg-green-500/10 border border-green-500/20 text-green-400'
-                              : 'bg-yellow-500/10 border border-yellow-500/20 text-yellow-400'
-                          }`}>
-                             <div className={`w-1 h-1 rounded-full ${facilitator.status === 'active' ? 'bg-green-500 animate-pulse' : 'bg-yellow-500'}`} />
-                             {facilitator.status}
+                          <div className="flex items-center gap-2">
+                             <div className={`px-2 py-1 rounded text-[10px] font-mono uppercase tracking-wide flex items-center gap-1.5 ${
+                               facilitator.status === 'active'
+                                 ? 'bg-green-500/10 border border-green-500/20 text-green-400'
+                                 : 'bg-yellow-500/10 border border-yellow-500/20 text-yellow-400'
+                             }`}>
+                                <div className={`w-1 h-1 rounded-full ${facilitator.status === 'active' ? 'bg-green-500 animate-pulse' : 'bg-yellow-500'}`} />
+                                {facilitator.status}
+                             </div>
+                             <button
+                                onClick={() => handleDeleteFacilitator(facilitator.id, facilitator.name)}
+                                className="p-2 rounded-lg bg-red-500/10 border border-red-500/20 text-red-400 hover:bg-red-500/20 transition-colors"
+                                title="Delete facilitator"
+                             >
+                                <Trash2 size={14} />
+                             </button>
                           </div>
                        </div>
                        <div className="grid grid-cols-3 gap-4 text-xs font-mono text-white/60">
@@ -651,8 +684,24 @@ export default function FacilitatorPage() {
            <div className="relative w-full max-w-2xl bg-black border border-white/10 rounded-2xl shadow-2xl my-8 animate-in fade-in zoom-in duration-200">
               <div className="max-h-[85vh] overflow-y-auto p-8 space-y-8 scrollbar-thin scrollbar-thumb-white/20 scrollbar-track-transparent">
                 <button
-                  onClick={() => { setShowDeployModal(false); setDeployStep(1); }}
-                  className="absolute top-4 right-4 p-2 rounded-full hover:bg-white/10 text-white/50 hover:text-white transition-colors z-10"
+                  onClick={() => {
+                    // Don't allow closing during creation
+                    if (isCreatingFacilitator) return;
+                    setShowDeployModal(false);
+                    setDeployStep(1);
+                    // Reset all states
+                    setFacilitatorName("");
+                    setGeneratedWallet(null);
+                    setPassword("");
+                    setConfirmPassword("");
+                    setEncryptedKey("");
+                    setShowPrivateKey(false);
+                    setCreationInProgress(false);
+                    // Refresh facilitator list after closing
+                    setTimeout(() => fetchFacilitators(), 100);
+                  }}
+                  disabled={isCreatingFacilitator}
+                  className="absolute top-4 right-4 p-2 rounded-full hover:bg-white/10 text-white/50 hover:text-white transition-colors z-10 disabled:opacity-30 disabled:cursor-not-allowed"
                 >
                    <X size={20} />
                 </button>
@@ -791,26 +840,21 @@ export default function FacilitatorPage() {
                       <h3 className="text-2xl font-bold text-white font-mono uppercase tracking-tight">Facilitator Registration Fee</h3>
                       <p className="text-white/60 font-light">Register your facilitator on x402:</p>
                    </div>
-                   
+
                    <div className="p-8 rounded-2xl bg-white/5 border border-white/10 text-center space-y-2">
                       <div className="text-5xl font-bold text-white font-mono tracking-tighter">1 USDC</div>
                       <div className="text-xs font-mono text-white/40 uppercase tracking-widest">on avalanche-fuji</div>
                    </div>
 
                    <div className="space-y-4">
-                      <div className="flex justify-between items-center p-4 rounded-lg bg-black/50 border border-white/10 font-mono text-sm">
-                         <span className="text-white/60">Your USDC Balance:</span>
-                         <span className="text-white font-bold">1.00 USDC</span>
-                      </div>
-
                       <button
-                         onClick={handlePaymentClick}
-                         disabled={!isConnected || isPaymentPending || isConfirming}
+                         onClick={() => setShowPaymentModal(true)}
+                         disabled={!isConnected}
                          className="w-full bg-white text-black py-4 rounded-lg font-mono font-bold uppercase tracking-wider hover:bg-white/90 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
                       >
-                         {isPaymentPending || isConfirming ? 'Processing Payment...' : 'Pay 1 USDC via x402'}
+                         Pay 1 USDC via x402 (Gasless)
                       </button>
-                      
+
                       <p className="text-center text-[10px] text-white/20 font-mono uppercase tracking-widest">
                          Using x402 facilitator on avalanche-fuji
                       </p>
@@ -818,38 +862,34 @@ export default function FacilitatorPage() {
                 </div>
               )}
 
-              {/* STEP 4: CLAIM WALLET (PAYOUT ADDRESS) */}
+              {/* STEP 4: CREATING FACILITATOR */}
               {deployStep === 4 && (
-                <div className="space-y-6 animate-in fade-in slide-in-from-right-8 duration-300">
-                   <div className="text-center space-y-2">
-                      <h3 className="text-2xl font-bold text-white font-mono uppercase tracking-tight">Set Payout Address</h3>
-                      <p className="text-white/60 font-light">Where should your facilitator fees be sent?</p>
+                <div className="space-y-8 animate-in fade-in zoom-in duration-300">
+                   <div className="text-center space-y-4">
+                      <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-blue-500/20 border border-blue-500/30 mx-auto mb-4">
+                         <div className="w-8 h-8 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+                      </div>
+                      <h3 className="text-2xl font-bold text-white font-mono uppercase tracking-tight">Creating Facilitator...</h3>
+                      <p className="text-white/60 font-light">Please wait while we set up your facilitator node</p>
                    </div>
 
-                   <div className="space-y-4">
-                      <div className="space-y-2">
-                         <label className="text-xs font-mono text-white/40 uppercase tracking-widest">Facilitator Wallet Address</label>
-                         <div className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white/60 font-mono text-sm break-all">
-                            {generatedWallet?.address || 'N/A'}
-                         </div>
-                         <p className="text-[10px] text-white/30 font-mono">This wallet processes payments and pays gas fees.</p>
+                   <div className="p-6 rounded-xl bg-white/5 border border-white/10 space-y-3">
+                      <div className="flex items-center gap-3 text-white/60">
+                         <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
+                         <span className="text-sm font-mono">✓ Payment verified</span>
                       </div>
-
-                      <div className="space-y-2">
-                         <label className="text-xs font-mono text-white/40 uppercase tracking-widest">Fee Recipient Address (Your Connected Wallet)</label>
-                         <div className="w-full bg-primary/10 border border-primary/20 rounded-lg px-4 py-3 text-primary font-mono text-sm break-all">
-                            {paymentAddress || address || '0x...'}
-                         </div>
-                         <p className="text-[10px] text-green-400/60 font-mono">✓ All earned fees will be sent to your connected wallet automatically.</p>
+                      <div className="flex items-center gap-3 text-white/60">
+                         <div className="w-2 h-2 rounded-full bg-blue-500 animate-pulse"></div>
+                         <span className="text-sm font-mono">⏳ Encrypting private key...</span>
                       </div>
-
-                      <button
-                         onClick={handleCreateFacilitator}
-                         disabled={!paymentAddress || !generatedWallet}
-                         className="w-full bg-white text-black py-4 rounded-lg font-mono font-bold uppercase tracking-wider hover:bg-white/90 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
-                      >
-                         Confirm & Launch →
-                      </button>
+                      <div className="flex items-center gap-3 text-white/60">
+                         <div className="w-2 h-2 rounded-full bg-blue-500 animate-pulse"></div>
+                         <span className="text-sm font-mono">⏳ Storing facilitator data...</span>
+                      </div>
+                      <div className="flex items-center gap-3 text-white/60">
+                         <div className="w-2 h-2 rounded-full bg-blue-500 animate-pulse"></div>
+                         <span className="text-sm font-mono">⏳ Registering on-chain...</span>
+                      </div>
                    </div>
                 </div>
               )}
@@ -938,12 +978,22 @@ export default function FacilitatorPage() {
                    {/* Action Buttons */}
                    <div className="flex gap-4">
                       <button
-                         onClick={() => {
+                         onClick={async () => {
                            setShowDeployModal(false)
                            setDeployStep(1)
                            setCreatedFacilitatorId(null)
                            setFacilitatorStatus('needs_funding')
                            setFacilitatorBalance('0')
+                           // Reset all form states
+                           setFacilitatorName("")
+                           setGeneratedWallet(null)
+                           setPassword("")
+                           setConfirmPassword("")
+                           setEncryptedKey("")
+                           setShowPrivateKey(false)
+                           setCreationInProgress(false)
+                           // Refresh facilitator list after closing
+                           setTimeout(() => fetchFacilitators(), 100)
                          }}
                          className="flex-1 py-3 border border-white/10 hover:bg-white/5 text-white rounded-lg text-xs font-mono font-bold uppercase tracking-wider transition-colors"
                       >
@@ -969,6 +1019,13 @@ export default function FacilitatorPage() {
            </div>
         </div>
       )}
+
+      {/* X402 PAYMENT MODAL */}
+      <X402PaymentModal
+        isOpen={showPaymentModal}
+        onClose={() => setShowPaymentModal(false)}
+        onSuccess={handlePaymentSuccess}
+      />
     </div>
   )
 }

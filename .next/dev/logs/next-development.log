@@ -1,0 +1,217 @@
+[00:00:01.201] Server  LOG      ✓ Ready in 924ms
+[00:00:07.418] Server  LOG      ○ Compiling / ...
+[00:00:18.203] Server  WARN    Lit is in dev mode. Not recommended for production! See https://lit.dev/msg/dev-mode for more information.
+[00:00:18.221] Server  ERROR   (node:42239) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+[00:00:18.621] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:00:19.464] Browser LOG     BackgroundLayout: {"pathname":"/","showColorBends":false}
+[00:00:19.464] Browser LOG     BackgroundLayout: {"pathname":"/","showColorBends":false}
+[00:00:19.721] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[00:00:19.721] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/","route":"/"}
+[00:00:19.722] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/ color: rgb(120, 120, 120) color: inherit {"dp":"/","o":"http://localhost:3000/","r":"","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1765819515409}
+[00:00:20.774] Browser WARN    Lit is in dev mode. Not recommended for production! See https://lit.dev/msg/dev-mode for more information.
+[00:00:22.352] Server  LOG      ○ Compiling /api/facilitator/list ...
+[00:00:22.830] Server  LOG     🔗 Connecting to Upstash Redis (Production)
+[00:00:25.476] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:00:25.949] Browser LOG     BackgroundLayout: {"pathname":"/","showColorBends":false}
+[00:00:25.949] Browser LOG     BackgroundLayout: {"pathname":"/","showColorBends":false}
+[00:00:26.201] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[00:00:26.202] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/","route":"/"}
+[00:00:26.202] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/ color: rgb(120, 120, 120) color: inherit {"dp":"/","o":"http://localhost:3000/","r":"","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1765819521811}
+[00:00:26.661] Browser WARN    Lit is in dev mode. Not recommended for production! See https://lit.dev/msg/dev-mode for more information.
+[00:00:53.364] Server  LOG      ○ Compiling /facilitator ...
+[00:00:57.176] Browser LOG     BackgroundLayout: {"pathname":"/facilitator","showColorBends":true}
+[00:00:57.176] Browser LOG     BackgroundLayout: {"pathname":"/facilitator","showColorBends":true}
+[00:00:57.176] Browser LOG     BackgroundLayout: {"pathname":"/facilitator","showColorBends":true}
+[00:00:57.176] Browser LOG     BackgroundLayout: {"pathname":"/facilitator","showColorBends":true}
+[00:00:57.176] Browser LOG     BackgroundLayout: {"pathname":"/facilitator","showColorBends":true}
+[00:00:57.176] Browser LOG     BackgroundLayout: {"pathname":"/facilitator","showColorBends":true}
+[00:00:57.176] Browser LOG     BackgroundLayout: {"pathname":"/facilitator","showColorBends":true}
+[00:00:57.176] Browser LOG     BackgroundLayout: {"pathname":"/facilitator","showColorBends":true}
+[00:00:57.176] Browser LOG     BackgroundLayout: {"pathname":"/facilitator","showColorBends":true}
+[00:00:57.176] Browser LOG     BackgroundLayout: {"pathname":"/facilitator","showColorBends":true}
+[00:00:57.645] Browser LOG     BackgroundLayout: {"pathname":"/facilitator","showColorBends":true}
+[00:00:57.646] Browser LOG     BackgroundLayout: {"pathname":"/facilitator","showColorBends":true}
+[00:00:57.646] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/facilitator color: rgb(120, 120, 120) color: inherit {"dp":"/facilitator","o":"http://localhost:3000/facilitator","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1765819553186}
+[00:00:59.636] Browser LOG     🔄 Auto-checking 2 facilitator(s) for activation...
+[00:01:00.352] Server  LOG     🔍 Checking balance for facilitator fac_CyvBPAYWcu4lqZso (0xF8879BE568e268D4Fd2bDc1debCeA44B835c6e04)
+[00:01:00.577] Server  LOG     🔍 Checking balance for facilitator fac_VNakOT-cohmsnRCF (0xF8879BE568e268D4Fd2bDc1debCeA44B835c6e04)
+[00:01:00.663] Server  LOG     💰 Balance: 0 AVAX
+[00:01:00.663] Server  LOG     ⚠️  Balance insufficient (< 0.1 AVAX), keeping as needs_funding
+[00:01:00.664] Server  LOG     ℹ️  Status unchanged: needs_funding
+[00:01:00.843] Server  LOG     💰 Balance: 0 AVAX
+[00:01:00.844] Server  LOG     ⚠️  Balance insufficient (< 0.1 AVAX), keeping as needs_funding
+[00:01:00.845] Server  LOG     ℹ️  Status unchanged: needs_funding
+[00:01:22.210] Server  LOG     ✅ Deleted facilitator: fac_VNakOT-cohmsnRCF
+[00:01:22.652] Server  LOG     📝 Logged event: status_changed (log_ocvHU1L4k_72nRIT)
+[00:01:22.653] Server  LOG     ✅ Deleted facilitator: fac_VNakOT-cohmsnRCF by 0xeA72D9Fac4Df1C1C7FcC703e1ED73017C41a55d3
+[00:01:27.394] Browser LOG     🔄 Auto-checking 1 facilitator(s) for activation...
+[00:01:27.531] Server  LOG     🔍 Checking balance for facilitator fac_CyvBPAYWcu4lqZso (0xF8879BE568e268D4Fd2bDc1debCeA44B835c6e04)
+[00:01:27.857] Server  LOG     💰 Balance: 0 AVAX
+[00:01:27.857] Server  LOG     ⚠️  Balance insufficient (< 0.1 AVAX), keeping as needs_funding
+[00:01:27.858] Server  LOG     ℹ️  Status unchanged: needs_funding
+[00:01:39.492] Server  LOG     ✅ Deleted facilitator: fac_CyvBPAYWcu4lqZso
+[00:01:39.928] Server  LOG     📝 Logged event: status_changed (log_FHyxTHxLu9zCVsgF)
+[00:01:39.929] Server  LOG     ✅ Deleted facilitator: fac_CyvBPAYWcu4lqZso by 0xeA72D9Fac4Df1C1C7FcC703e1ED73017C41a55d3
+[00:02:06.827] Browser LOG     BackgroundLayout: {"pathname":"/facilitator","showColorBends":true}
+[00:02:06.827] Browser LOG     BackgroundLayout: {"pathname":"/facilitator","showColorBends":true}
+[00:14:22.929] Server  LOG      ○ Compiling /explorer ...
+[00:14:28.229] Browser LOG     BackgroundLayout: {"pathname":"/explorer","showColorBends":true}
+[00:14:28.229] Browser LOG     BackgroundLayout: {"pathname":"/explorer","showColorBends":true}
+[00:14:28.229] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/explorer color: rgb(120, 120, 120) color: inherit {"dp":"/explorer","o":"http://localhost:3000/explorer","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1765820363922}
+[00:14:35.332] Browser LOG     BackgroundLayout: {"pathname":"/facilitator","showColorBends":true}
+[00:14:35.332] Browser LOG     BackgroundLayout: {"pathname":"/facilitator","showColorBends":true}
+[00:14:35.332] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/facilitator color: rgb(120, 120, 120) color: inherit {"dp":"/facilitator","o":"http://localhost:3000/facilitator","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1765820371020}
+[00:14:57.247] Browser LOG     BackgroundLayout: {"pathname":"/","showColorBends":false}
+[00:14:57.247] Browser LOG     BackgroundLayout: {"pathname":"/","showColorBends":false}
+[00:14:57.247] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/ color: rgb(120, 120, 120) color: inherit {"dp":"/","o":"http://localhost:3000/","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1765820392837}
+[00:15:08.858] Browser LOG     BackgroundLayout: {"pathname":"/facilitator","showColorBends":true}
+[00:15:08.858] Browser LOG     BackgroundLayout: {"pathname":"/facilitator","showColorBends":true}
+[00:15:08.858] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/facilitator color: rgb(120, 120, 120) color: inherit {"dp":"/facilitator","o":"http://localhost:3000/facilitator","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1765820404499}
+[00:19:21.957] Server  LOG      ✓ Compiled in 827ms
+[00:19:33.623] Server  LOG      ✓ Compiled in 393ms
+[00:19:43.692] Server  LOG      ✓ Compiled in 587ms
+[00:19:56.482] Server  LOG      ✓ Compiled in 577ms
+[00:20:09.897] Server  LOG      ✓ Compiled in 697ms
+[00:40:55.079] Server  LOG      ✓ Compiled in 2s
+[00:40:56.324] Browser LOG     BackgroundLayout: {"pathname":"/facilitator","showColorBends":true}
+[00:40:56.324] Browser LOG     BackgroundLayout: {"pathname":"/facilitator","showColorBends":true}
+[00:41:36.080] Browser LOG     BackgroundLayout: {"pathname":"/explorer","showColorBends":true}
+[00:41:36.080] Browser LOG     BackgroundLayout: {"pathname":"/explorer","showColorBends":true}
+[00:41:36.080] Browser LOG     BackgroundLayout: {"pathname":"/explorer","showColorBends":true}
+[00:41:36.080] Browser LOG     BackgroundLayout: {"pathname":"/explorer","showColorBends":true}
+[00:41:36.080] Browser LOG     BackgroundLayout: {"pathname":"/explorer","showColorBends":true}
+[00:41:36.080] Browser LOG     BackgroundLayout: {"pathname":"/explorer","showColorBends":true}
+[00:41:36.080] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/explorer color: rgb(120, 120, 120) color: inherit {"dp":"/explorer","o":"http://localhost:3000/explorer","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1765821991784}
+[00:46:07.635] Server  LOG      ✓ Compiled in 431ms
+[00:46:22.859] Server  LOG      ✓ Compiled in 690ms
+[00:46:23.320] Browser ERROR   uncaughtError: ReferenceError: React is not defined
+[00:46:30.705] Server  LOG      ✓ Compiled in 739ms
+[00:46:30.709] Server  WARN     ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+[00:46:32.051] Server  WARN    WalletConnect Core is already initialized. This is probably a mistake and can lead to unexpected behavior. Init() was called 2 times.
+[00:46:32.055] Server  WARN    WalletConnect Core is already initialized. This is probably a mistake and can lead to unexpected behavior. Init() was called 2 times.
+[00:46:32.255] Server  WARN    Multiple versions of Lit loaded. Loading multiple versions is not recommended. See https://lit.dev/msg/multiple-versions for more information.
+[00:46:32.292] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/explorer color: rgb(120, 120, 120) color: inherit {"dp":"/explorer","o":"http://localhost:3000/explorer","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1765822286551}
+[00:46:32.292] Browser LOG     BackgroundLayout: {"pathname":"/explorer","showColorBends":true}
+[00:46:32.292] Browser LOG     BackgroundLayout: {"pathname":"/explorer","showColorBends":true}
+[00:46:32.903] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:46:33.327] Browser LOG     BackgroundLayout: {"pathname":"/explorer","showColorBends":true}
+[00:46:33.327] Browser LOG     BackgroundLayout: {"pathname":"/explorer","showColorBends":true}
+[00:46:34.316] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[00:46:34.316] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/explorer","route":"/explorer"}
+[00:46:34.316] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/explorer color: rgb(120, 120, 120) color: inherit {"dp":"/explorer","o":"http://localhost:3000/explorer","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1765822289140}
+[00:46:34.316] Browser WARN    Lit is in dev mode. Not recommended for production! See https://lit.dev/msg/dev-mode for more information.
+[00:46:41.558] Server  LOG      ✓ Compiled in 271ms
+[01:28:27.227] Browser LOG     BackgroundLayout: {"pathname":"/facilitator","showColorBends":true}
+[01:28:27.227] Browser LOG     BackgroundLayout: {"pathname":"/facilitator","showColorBends":true}
+[01:28:27.227] Browser LOG     BackgroundLayout: {"pathname":"/facilitator","showColorBends":true}
+[01:28:27.227] Browser LOG     BackgroundLayout: {"pathname":"/facilitator","showColorBends":true}
+[01:28:27.378] Browser LOG     BackgroundLayout: {"pathname":"/facilitator","showColorBends":true}
+[01:28:27.378] Browser LOG     BackgroundLayout: {"pathname":"/facilitator","showColorBends":true}
+[01:28:27.378] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/facilitator color: rgb(120, 120, 120) color: inherit {"dp":"/facilitator","o":"http://localhost:3000/facilitator","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1765824803095}
+[01:30:08.666] Browser LOG     ✍️ Creating ERC-3009 authorization...
+[01:30:08.679] Browser LOG     🔍 Payment recipient: 0x9c1e7f1652be26b68355b447a76295df7ba94285
+[01:30:08.680] Browser LOG     🔍 Using facilitator: Default
+[01:30:08.680] Browser LOG     🔍 Your address: 0x9F1bb1f2c196E424c9f77cdE22ac3Bd49e37F96f
+[01:30:08.680] Browser LOG     📝 Authorization created: {"from":"0x9F1bb1f2c196E424c9f77cdE22ac3Bd49e37F96f","nonce":"0x2c9f06ad89ebb4c0099a7ae9d0d5ebbd92f264d4f3b2f56c5914cf0519108f96","to":"0x9c1e7f1652be26b68355b447a76295df7ba94285","validAfter":1765824844,"validBefore":1765825204,"value":1000000}
+[01:30:08.680] Browser LOG     📝 Authorization TO address: 0x9c1e7f1652be26b68355b447a76295df7ba94285
+[01:30:08.680] Browser LOG     📋 Typed data prepared: {"domain":{"chainId":43113,"name":"USD Coin","verifyingContract":"0x5425890298aed601595a70AB815c96711a31Bc65","version":"2"},"message":{"from":"0x9F1bb1f2c196E424c9f77cdE22ac3Bd49e37F96f","nonce":"0x2c9f06ad89ebb4c0099a7ae9d0d5ebbd92f264d4f3b2f56c5914cf0519108f96","to":"0x9c1e7f1652be26b68355b447a76295df7ba94285","validAfter":1765824844,"validBefore":1765825204,"value":1000000},"primaryType":"TransferWithAuthorization","types":{"TransferWithAuthorization":[{"name":"from","type":"address"},{"name":"to","type":"address"},{"name":"value","type":"uint256"},{"name":"validAfter","type":"uint256"},{"name":"validBefore","type":"uint256"},{"name":"nonce","type":"bytes32"}]}}
+[01:30:08.680] Browser LOG     🔐 Requesting signature from wallet...
+[01:30:08.680] Browser LOG     ⚠️ Please sign the message in MetaMask!
+[01:30:13.373] Browser LOG     ✅ Authorization signed: 0xf3d1839bd69052bf1b225fc5a138a0a11bf171e25df13cf09c92163456af76575cc12f95ca8ab7154d96866d9c16855e624acd0a8c10a8e582e1529e15fb15b11c
+[01:30:13.373] Browser LOG     🚀 Submitting payment to x402 facilitator...
+[01:30:13.373] Browser LOG     🔧 Using default facilitator
+[01:30:16.421] Server  LOG      ○ Compiling /api/x402/settle-default ...
+[01:30:17.815] Server  LOG     💰 Default facilitator payment
+[01:30:17.848] Server  LOG     💰 Default facilitator wallet: "0x0fbA21598E179D98730d6267Bd10A2B7173ed80D"
+[01:30:17.877] Server  LOG     📡 Executing transferWithAuthorization...
+[01:30:17.877] Server  LOG       From: "0x9F1bb1f2c196E424c9f77cdE22ac3Bd49e37F96f"
+[01:30:17.877] Server  LOG       To: "0x9c1e7f1652be26b68355b447a76295df7ba94285"
+[01:30:17.878] Server  LOG       Value: "1000000"
+[01:30:17.878] Server  LOG       Facilitator (gas payer): "0x0fbA21598E179D98730d6267Bd10A2B7173ed80D"
+[01:30:19.669] Server  LOG     ⏳ Transaction submitted: "0xa7ffce59b0f06eca093052f4f31aa19185b05328be5dfad9078f5164cc24f572"
+[01:30:25.028] Server  LOG     ✅ Transaction confirmed: "0xa7ffce59b0f06eca093052f4f31aa19185b05328be5dfad9078f5164cc24f572"
+[01:30:25.159] Browser LOG     📦 Settlement result: {
+  "success": true,
+  "txHash": "0xa7ffce59b0f06eca093052f4f31aa19185b05328be5dfad9078f5164cc24f572",
+  "tx": "0xa7ffce59b0f06eca093052f4f31aa19185b05328be5dfad9078f5164cc24f572",
+  "facilitatorWallet": "0x0fbA21598E179D98730d6267Bd10A2B7173ed80D",
+  "networkId": 43113
+}
+[01:30:25.159] Browser LOG     ✅ Payment settled on-chain: 0xa7ffce59b0f06eca093052f4f31aa19185b05328be5dfad9078f5164cc24f572
+[01:30:25.159] Browser LOG     ⏳ Waiting for blockchain confirmation...
+[01:30:28.167] Browser LOG     🔐 Generating x402 payment proof...
+[01:30:28.168] Browser LOG     ✅ x402 payment proof generated
+[01:30:28.168] Browser LOG     🎉 REAL x402 payment complete with ERC-3009!
+[01:30:29.701] Browser LOG     ✅ x402 Payment successful: 0xa7ffce59b0f06eca093052f4f31aa19185b05328be5dfad9078f5164cc24f572
+[01:30:31.290] Browser LOG     ✅ x402 Payment successful: 0xa7ffce59b0f06eca093052f4f31aa19185b05328be5dfad9078f5164cc24f572
+[01:30:31.290] Browser LOG     ⚠️ Creation already in progress, skipping...
+[01:30:31.528] Server  LOG     🔍 Verifying registration payment...
+[01:30:31.555] Server  LOG     🔍 Verifying payment transaction: "0xa7ffce59b0f06eca093052f4f31aa19185b05328be5dfad9078f5164cc24f572"
+[01:30:32.155] Server  LOG       📡 Fetching transaction from blockchain...
+[01:30:32.466] Server  LOG       📄 Fetching transaction receipt...
+[01:30:32.518] Server  LOG       🔓 Decoding transaction data...
+[01:30:32.538] Server  LOG       ✓ Decoded as ERC-3009 transferWithAuthorization
+[01:30:32.539] Server  LOG       ✓ Decoded parameters:
+[01:30:32.539] Server  LOG         From: "0x9F1bb1f2c196E424c9f77cdE22ac3Bd49e37F96f"
+[01:30:32.539] Server  LOG         To: "0x9c1E7F1652BE26B68355B447A76295DF7BA94285"
+[01:30:32.539] Server  LOG         Value: "1000000"
+[01:30:32.540] Server  LOG       🕐 Checking transaction timestamp...
+[01:30:32.885] Server  LOG       ✓ Transaction age: 13 "seconds"
+[01:30:32.886] Server  LOG       ✅ Marking transaction as used...
+[01:30:33.129] Server  LOG       ✓ Transaction marked as used: "0xa7ffce59b0f06eca093052f4f31aa19185b05328be5dfad9078f5164cc24f572"
+[01:30:33.130] Server  LOG     ✅ Payment verification successful!
+[01:30:33.135] Server  LOG     ✅ Registration payment verified: {}
+[01:30:33.921] Server  LOG     ✅ Stored facilitator: fac_VvZrdX8rvpziKfSQ
+[01:30:33.921] Server  LOG     ✅ Created facilitator: fac_VvZrdX8rvpziKfSQ by 0x9F1bb1f2c196E424c9f77cdE22ac3Bd49e37F96f
+[01:30:34.374] Server  LOG     📝 Logged event: facilitator_added (log_-edpIpTHkVCJfoek)
+[01:30:34.375] Server  LOG     🔗 Registering facilitator on-chain...
+[01:30:34.439] Server  WARN    ⚠️ BACKEND_WALLET_PRIVATE_KEY not set, skipping on-chain registration
+[01:30:36.092] Browser LOG     ✅ x402 Payment successful: 0xa7ffce59b0f06eca093052f4f31aa19185b05328be5dfad9078f5164cc24f572
+[01:30:36.092] Browser LOG     ⚠️ Creation already in progress, skipping...
+[01:31:22.028] Browser LOG     ⏸️  Skipping fetch - modal is open or creating facilitator
+[01:31:23.520] Browser LOG     ✅ x402 Payment successful: 0xa7ffce59b0f06eca093052f4f31aa19185b05328be5dfad9078f5164cc24f572
+[01:31:23.520] Browser LOG     ⚠️ Creation already in progress, skipping...
+[01:31:38.845] Browser LOG     ⏸️  Skipping fetch - modal is open or creating facilitator
+[01:31:40.345] Browser LOG     ✅ x402 Payment successful: 0xa7ffce59b0f06eca093052f4f31aa19185b05328be5dfad9078f5164cc24f572
+[01:31:40.346] Browser LOG     ⚠️ Creation already in progress, skipping...
+[01:31:43.891] Server  LOG     🔍 Checking balance for facilitator fac_VvZrdX8rvpziKfSQ (0xA4e3ad75Bc89815481eCD6e7a5CA9581097aEf56)
+[01:31:44.333] Server  LOG     💰 Balance: 0.15 AVAX
+[01:31:44.340] Server  LOG     ✅ Balance sufficient (>= 0.1 AVAX), setting to active
+[01:31:44.894] Browser LOG     ✅ x402 Payment successful: 0xa7ffce59b0f06eca093052f4f31aa19185b05328be5dfad9078f5164cc24f572
+[01:31:44.894] Browser LOG     ⚠️ Creation already in progress, skipping...
+[01:31:45.221] Server  LOG     ✅ Stored facilitator: fac_VvZrdX8rvpziKfSQ
+[01:31:45.221] Server  LOG     ✅ Updated facilitator fac_VvZrdX8rvpziKfSQ status to: active
+[01:31:45.221] Server  LOG     ✅ Status updated: needs_funding → active
+[01:31:45.642] Server  LOG     📝 Logged event: facilitator_activated (log_DtCbDnwHOm-TEgc0)
+[01:31:47.769] Browser LOG     ⏸️  Skipping fetch - modal is open or creating facilitator
+[01:31:49.303] Browser LOG     ✅ x402 Payment successful: 0xa7ffce59b0f06eca093052f4f31aa19185b05328be5dfad9078f5164cc24f572
+[01:31:49.303] Browser LOG     ⚠️ Creation already in progress, skipping...
+[01:31:50.064] Browser LOG     ⏸️  Skipping fetch - modal is open or creating facilitator
+[01:31:53.163] Browser LOG     ✅ x402 Payment successful: 0xa7ffce59b0f06eca093052f4f31aa19185b05328be5dfad9078f5164cc24f572
+[01:32:00.119] Server  WARN    WalletConnect Core is already initialized. This is probably a mistake and can lead to unexpected behavior. Init() was called 3 times.
+[01:32:00.120] Server  WARN    WalletConnect Core is already initialized. This is probably a mistake and can lead to unexpected behavior. Init() was called 3 times.
+[01:32:00.431] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[01:32:00.725] Browser LOG     BackgroundLayout: {"pathname":"/facilitator","showColorBends":true}
+[01:32:00.725] Browser LOG     BackgroundLayout: {"pathname":"/facilitator","showColorBends":true}
+[01:32:00.963] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[01:32:00.963] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/facilitator","route":"/facilitator"}
+[01:32:00.963] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/facilitator color: rgb(120, 120, 120) color: inherit {"dp":"/facilitator","o":"http://localhost:3000/facilitator","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1765825016590}
+[01:32:01.089] Browser WARN    Lit is in dev mode. Not recommended for production! See https://lit.dev/msg/dev-mode for more information.
+[01:32:09.215] Browser LOG     BackgroundLayout: {"pathname":"/explorer","showColorBends":true}
+[01:32:09.215] Browser LOG     BackgroundLayout: {"pathname":"/explorer","showColorBends":true}
+[01:32:09.215] Browser LOG     BackgroundLayout: {"pathname":"/explorer","showColorBends":true}
+[01:32:09.215] Browser LOG     BackgroundLayout: {"pathname":"/explorer","showColorBends":true}
+[01:32:09.215] Browser LOG     BackgroundLayout: {"pathname":"/explorer","showColorBends":true}
+[01:32:09.215] Browser LOG     BackgroundLayout: {"pathname":"/explorer","showColorBends":true}
+[01:32:09.215] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/explorer color: rgb(120, 120, 120) color: inherit {"dp":"/explorer","o":"http://localhost:3000/explorer","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1765825024931}
+[01:34:23.450] Browser LOG     BackgroundLayout: {"pathname":"/facilitator","showColorBends":true}
+[01:34:23.450] Browser LOG     BackgroundLayout: {"pathname":"/facilitator","showColorBends":true}
+[01:34:23.450] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/facilitator color: rgb(120, 120, 120) color: inherit {"dp":"/facilitator","o":"http://localhost:3000/facilitator","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1765825159166}
+[01:34:26.527] Browser LOG     BackgroundLayout: {"pathname":"/","showColorBends":false}
+[01:34:26.527] Browser LOG     BackgroundLayout: {"pathname":"/","showColorBends":false}
+[01:34:26.527] Browser LOG     BackgroundLayout: {"pathname":"/","showColorBends":false}
+[01:34:26.527] Browser LOG     BackgroundLayout: {"pathname":"/","showColorBends":false}
+[01:34:26.527] Browser LOG     BackgroundLayout: {"pathname":"/","showColorBends":false}
+[01:34:26.527] Browser LOG     BackgroundLayout: {"pathname":"/","showColorBends":false}
+[01:34:26.527] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/ color: rgb(120, 120, 120) color: inherit {"dp":"/","o":"http://localhost:3000/","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1765825162127}
