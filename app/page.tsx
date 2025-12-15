@@ -8,6 +8,7 @@ import { ComparisonTableSection } from "@/components/pages/home/comparison"
 import { ProductsSection } from "@/components/pages/home/products"
 import { WaysToUseSection } from "@/components/pages/home/ways-to-use"
 import { WaitlistSection } from "@/components/pages/home/waitlist"
+import { VendorBenefitsSection } from "@/components/pages/home/vendor-benefits"
 import { Footer } from "@/components/layout/footer"
 
 import { HERO_DATA } from "@/lib/data/home/hero"
@@ -93,7 +94,10 @@ export default function HomePage() {
         {/* 6. Ways to Use */}
         <WaysToUseSection data={WAYS_TO_USE_DATA} />
 
-        {/* 7. Waitlist */}
+        {/* 7. Vendor Benefits */}
+        <VendorBenefitsSection />
+
+        {/* 8. Waitlist */}
         <WaitlistSection />
       </div>
 

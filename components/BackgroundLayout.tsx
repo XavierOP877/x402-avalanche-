@@ -10,6 +10,13 @@ export function BackgroundLayout() {
   const showColorBends = pathname !== '/' && !pathname.startsWith('/docs');
   console.log('BackgroundLayout:', { pathname, showColorBends });
 
+  // 1. Docs: Plain Black (No shader, no stars)
+  if (pathname?.startsWith('/docs')) {
+    return <div className="fixed inset-0 bg-black z-[-1]" />;
+  }
+
+  // 2. Default Pages: ColorBends Shader
+  if (showColorBends) {
     return (
       <div 
         style={{ 
@@ -48,6 +55,7 @@ export function BackgroundLayout() {
         />
       </div>
     );
+  }
 
   // Fallback / Default Background (e.g. Stars for Home)
   return (

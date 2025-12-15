@@ -8,8 +8,8 @@ export default function DocsLayout({
   children: React.ReactNode
 }) {
   return (
-    <div className="relative min-h-screen">
-
+    <div className="relative min-h-screen bg-black">
+      
       <div className="relative z-10">
         <DocsHeader />
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
