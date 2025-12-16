@@ -12,6 +12,8 @@
  */
 
 import { ShieldCheck, Landmark, MessageSquareText, LucideIcon, Check } from "lucide-react"
+import VariableProximity from "@/components/ui/VariableProximity"
+import { useRef } from "react"
 
 // Mapping string names from data to actual React Components
 // This allows the data file to store "ShieldCheck" as a string.
@@ -37,6 +39,7 @@ interface FacilitatorSectionProps {
 }
 
 export function FacilitatorSection({ data }: FacilitatorSectionProps) {
+  const descriptionRef = useRef<HTMLDivElement>(null)
 
   return (
     <section className="py-24 relative bg-transparent border-t border-white/5">
@@ -99,9 +102,17 @@ export function FacilitatorSection({ data }: FacilitatorSectionProps) {
             <h2 className="text-3xl md:text-4xl font-bold text-white mb-6 uppercase tracking-tight font-mono">
               {data.title}
             </h2>
-            <p className="text-lg md:text-xl text-white/60 leading-relaxed font-light font-mono">
-              {data.description}
-            </p>
+            <div ref={descriptionRef} style={{ cursor: 'text' }}>
+              <VariableProximity
+                label={data.description}
+                className="text-lg md:text-xl text-white/60 leading-relaxed font-light font-mono block"
+                fromFontVariationSettings="'wght' 300, 'opsz' 9"
+                toFontVariationSettings="'wght' 700, 'opsz' 40"
+                containerRef={descriptionRef}
+                radius={100}
+                falloff="linear"
+              />
+            </div>
           </div>
 
         </div>

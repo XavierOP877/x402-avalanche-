@@ -3,10 +3,11 @@ export const HERO_DATA = {
   title: "FACINET",
   subtitle: "Distributed Facilitator Network",
   description:
-    "The infrastructure layer connecting autonomous agents to a decentralized network of facilitators, enabling secure coordination and value exchange in the agent economy.",
+    "An infrastructure layer for X402 and the agent economy that brings verifiability and gas abstraction through a distributed facilitator network enabling secure coordination and crypto payments across chains while delivering Web2 UX in Web3.",
   ctaPrimary: {
     text: "Get Demo",
     icon: "ArrowRight",
+    href: "/demo",
   },
   ctaSecondary: {
     text: "Watch Demo",

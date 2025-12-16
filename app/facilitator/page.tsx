@@ -7,6 +7,8 @@ import { useAccount } from "wagmi"
 import { ConnectButton } from "@rainbow-me/rainbowkit"
 import { ethers } from "ethers"
 import { X402PaymentModal } from "@/components/X402PaymentModal"
+import VariableProximity from "@/components/ui/VariableProximity"
+import { useRef } from "react"
 
 interface Facilitator {
   id: string
@@ -23,6 +25,7 @@ interface Facilitator {
 
 export default function FacilitatorPage() {
   const { address, isConnected } = useAccount()
+  const descriptionRef = useRef<HTMLDivElement>(null)
   const [showDeployModal, setShowDeployModal] = useState(false)
   const [deployStep, setDeployStep] = useState(1)
   const [facilitatorName, setFacilitatorName] = useState("")
@@ -433,19 +436,141 @@ export default function FacilitatorPage() {
           <h1 className="text-4xl md:text-5xl font-bold font-mono text-white uppercase tracking-tight">
             Facilitator Network
           </h1>
-          <p className="text-xl text-white/50 max-w-2xl font-light leading-relaxed">
-            The backbone of the autonomous economy. Run a node, earn fees, and secure agent transactions.
-          </p>
+          <div ref={descriptionRef} className="max-w-2xl" style={{ cursor: 'text' }}>
+            <VariableProximity
+              label="The backbone of the autonomous economy. Run a node, earn fees, and secure agent transactions."
+              className="text-xl text-white/50 font-light leading-relaxed block"
+              fromFontVariationSettings="'wght' 300, 'opsz' 9"
+              toFontVariationSettings="'wght' 700, 'opsz' 40"
+              containerRef={descriptionRef}
+              radius={80}
+              falloff="linear"
+            />
+          </div>
         </div>
 
         {/* WALLET CONNECTION PROMPT */}
         {!isConnected && (
-          <div className="mb-8 p-6 rounded-xl border border-primary/20 bg-primary/5 flex items-center justify-between">
-            <div>
-              <h3 className="text-white font-mono font-bold mb-1">Connect Your Wallet</h3>
-              <p className="text-white/60 text-sm">Connect to view and manage your facilitators</p>
+          <div className="relative mb-12 group overflow-hidden rounded-2xl border border-white/10 bg-white/5 p-8 transition-all hover:border-white/20">
+            {/* Background Gradient */}
+            <div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 via-purple-500/5 to-transparent opacity-50 group-hover:opacity-100 transition-opacity" />
+            
+            <div className="relative flex flex-col md:flex-row items-center justify-between gap-6">
+              <div className="flex items-center gap-6">
+                <div className="hidden md:flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-500/20 to-purple-500/20 border border-white/10 shadow-lg shadow-blue-500/5 group-hover:scale-110 transition-transform duration-500">
+                  <Wallet className="h-8 w-8 text-white" />
+                </div>
+                <div className="space-y-2 text-center md:text-left">
+                  <h3 className="text-2xl font-bold text-white font-mono uppercase tracking-tight">
+                    Connect Your Wallet
+                  </h3>
+                  <p className="text-white/60 font-light max-w-md">
+                    Access the dashboard to deploy facilitators, manage nodes, and track your network earnings.
+                  </p>
+                </div>
+              </div>
+
+              <div className="relative">
+                <div className="absolute -inset-1 rounded-xl bg-gradient-to-r from-blue-500 to-purple-500 opacity-20 blur transition-opacity group-hover:opacity-40" />
+                <ConnectButton.Custom>
+                  {({
+                    account,
+                    chain,
+                    openAccountModal,
+                    openChainModal,
+                    openConnectModal,
+                    authenticationStatus,
+                    mounted,
+                  }) => {
+                    const ready = mounted && authenticationStatus !== 'loading';
+                    const connected =
+                      ready &&
+                      account &&
+                      chain &&
+                      (!authenticationStatus ||
+                        authenticationStatus === 'authenticated');
+
+                    return (
+                      <div
+                        {...(!ready && {
+                          'aria-hidden': true,
+                          'style': {
+                            opacity: 0,
+                            pointerEvents: 'none',
+                            userSelect: 'none',
+                          },
+                        })}
+                      >
+                        {(() => {
+                          if (!connected) {
+                            return (
+                              <button 
+                                onClick={openConnectModal} 
+                                type="button" 
+                                className="group relative px-8 py-4 overflow-hidden rounded-xl bg-blue-600/20 border border-blue-500/50 hover:bg-blue-600/30 transition-all hover:scale-105 active:scale-95 hover:shadow-[0_0_30px_rgba(37,99,235,0.4)]"
+                              >
+                                <div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 via-purple-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                                <span className="relative text-white font-mono font-bold uppercase tracking-wider">
+                                  Connect Wallet
+                                </span>
+                              </button>
+                            );
+                          }
+
+                          if (chain.unsupported) {
+                            return (
+                              <button onClick={openChainModal} type="button" className="relative px-6 py-3 bg-red-500/10 text-red-400 border border-red-500/20 font-bold font-mono uppercase tracking-wider rounded-xl hover:bg-red-500/20 transition-all">
+                                Wrong network
+                              </button>
+                            );
+                          }
+
+                          return (
+                            <div style={{ display: 'flex', gap: 12 }}>
+                              <button
+                                onClick={openChainModal}
+                                style={{ display: 'flex', alignItems: 'center' }}
+                                type="button"
+                                className="px-4 py-2 bg-white/5 border border-white/10 rounded-lg text-white font-mono hover:bg-white/10 transition-colors"
+                              >
+                                {chain.hasIcon && (
+                                  <div
+                                    style={{
+                                      background: chain.iconBackground,
+                                      width: 12,
+                                      height: 12,
+                                      borderRadius: 999,
+                                      overflow: 'hidden',
+                                      marginRight: 4,
+                                    }}
+                                  >
+                                    {chain.iconUrl && (
+                                      <img
+                                        alt={chain.name ?? 'Chain icon'}
+                                        src={chain.iconUrl}
+                                        style={{ width: 12, height: 12 }}
+                                      />
+                                    )}
+                                  </div>
+                                )}
+                                {chain.name}
+                              </button>
+
+                              <button onClick={openAccountModal} type="button" className="px-4 py-2 bg-white/10 border border-white/10 rounded-lg text-white font-mono hover:bg-white/20 transition-colors">
+                                {account.displayName}
+                                {account.displayBalance
+                                  ? ` (${account.displayBalance})`
+                                  : ''}
+                              </button>
+                            </div>
+                          );
+                        })()}
+                      </div>
+                    );
+                  }}
+                </ConnectButton.Custom>
+              </div>
             </div>
-            <ConnectButton />
           </div>
         )}
 
@@ -620,9 +745,22 @@ export default function FacilitatorPage() {
                  </div>
                </>
              ) : (
-               <div className="p-12 rounded-xl border border-white/10 bg-white/5 text-center space-y-4">
-                 <p className="text-white/60">You don't have any facilitators yet.</p>
-                 <p className="text-sm text-white/40">Select an option above to get started.</p>
+               <div className="flex flex-col items-center justify-center p-12 rounded-xl border border-white/10 bg-white/5 text-center space-y-6">
+                 <div className="space-y-2">
+                   <p className="text-white/60 text-lg">You don't have any facilitators yet.</p>
+                   <p className="text-sm text-white/40">Deploy a node to start earning rewards.</p>
+                 </div>
+                 
+                 <button
+                   onClick={() => setShowDeployModal(true)}
+                   className="group relative px-8 py-3 overflow-hidden rounded-xl bg-blue-600/20 border border-blue-500/50 hover:bg-blue-600/30 transition-all hover:scale-105 active:scale-95 hover:shadow-[0_0_30px_rgba(37,99,235,0.4)]"
+                 >
+                   <div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 via-purple-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                   <span className="relative flex items-center gap-2 text-white font-mono font-bold uppercase tracking-wider">
+                     <Cloud size={18} className="text-blue-400 group-hover:text-blue-300 transition-colors" />
+                     Deploy Facilitator
+                   </span>
+                 </button>
                </div>
              )}
           </div>
@@ -1032,15 +1170,18 @@ export default function FacilitatorPage() {
 
 function StatCard({ label, value, icon: Icon, color }: { label: string, value: string, icon: any, color: string }) {
   return (
-    <div className="p-6 rounded-xl border border-white/10 bg-white/5 backdrop-blur-sm">
-      <div className="flex items-center gap-3 mb-4">
-         <div className={`p-2 rounded-lg bg-white/5 ${color}`}>
-            <Icon size={18} />
-         </div>
-         <span className="text-xs font-mono text-white/40 uppercase tracking-widest">{label}</span>
-      </div>
-      <div className="text-3xl font-bold text-white font-mono tracking-tighter">
-        {value}
+    <div className="group relative p-6 rounded-xl border border-white/10 bg-white/5 backdrop-blur-md transition-all hover:bg-white/10 hover:border-white/20 hover:shadow-[0_0_30px_rgba(100,100,255,0.1)] overflow-hidden">
+      <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+      <div className="relative z-10">
+        <div className="flex items-center gap-3 mb-4">
+           <div className={`p-2 rounded-lg bg-white/5 ${color} group-hover:scale-110 transition-transform duration-300`}>
+              <Icon size={18} />
+           </div>
+           <span className="text-xs font-mono text-white/40 uppercase tracking-widest">{label}</span>
+        </div>
+        <div className="text-3xl font-bold text-white font-mono tracking-tighter shadow-glow">
+          {value}
+        </div>
       </div>
     </div>
   )

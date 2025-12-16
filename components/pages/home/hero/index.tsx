@@ -16,8 +16,11 @@ import { useEffect, useRef } from "react"
 import { Button } from "@/components/ui/button"
 import { GlowingBorderBtn } from "@/components/ui/glowing-border-btn"
 import { WebGLShader } from "@/components/ui/web-gl-shader"
+import VariableProximity from "@/components/ui/VariableProximity"
 import { gsap } from "gsap"
 import { ArrowRight, Play, LucideIcon } from "lucide-react"
+
+import Link from "next/link"
 
 // Map string keys to actual Icon components to allow dynamic data loading
 const ICON_MAP: Record<string, LucideIcon> = {
@@ -34,6 +37,7 @@ interface HeroSectionProps {
     ctaPrimary: {
       text: string
       icon: string
+      href?: string
     }
     ctaSecondary: {
       text: string
@@ -97,15 +101,29 @@ export function HeroSection({ data }: HeroSectionProps) {
               </span>
             </h1>
 
-            <p ref={subtitleRef} className="mb-8 text-lg font-light text-white/60 md:text-xl max-w-2xl mx-auto font-sans leading-relaxed">
-              {data.description}
-            </p>
+            <div 
+              ref={subtitleRef} 
+              className="relative mb-8 max-w-2xl mx-auto"
+              style={{ cursor: 'pointer' }}
+            >
+              <VariableProximity
+                label={data.description as string}
+                className="text-lg font-light text-white/60 md:text-xl font-sans leading-relaxed text-center block"
+                fromFontVariationSettings="'wght' 400, 'opsz' 9"
+                toFontVariationSettings="'wght' 900, 'opsz' 40"
+                containerRef={subtitleRef}
+                radius={100}
+                falloff="linear"
+              />
+            </div>
             
             {/* Call to Actions */}
             <div className="flex flex-col sm:flex-row items-center gap-4 justify-center w-full z-20 pointer-events-auto"> 
-                <GlowingBorderBtn>
-                  {data.ctaPrimary.text}
-                </GlowingBorderBtn>
+                <Link href={data.ctaPrimary.href || "/demo"}>
+                  <GlowingBorderBtn>
+                    {data.ctaPrimary.text}
+                  </GlowingBorderBtn>
+                </Link>
                 
                 <Button variant="ghost" className="rounded-full bg-white/5 backdrop-blur-sm border border-white/10 gap-2 text-white/80 hover:text-white hover:bg-white/10 transition-all duration-300 h-auto py-3 px-6 text-sm font-medium">
                   <SecondaryIcon className="w-4 h-4" />

@@ -84,7 +84,7 @@ export function HowItWorksSection() {
            </div>
 
            {/* Content Area */}
-           <div className="p-8 md:p-16 min-h-[400px] flex items-center justify-center relative bg-grid-white/[0.02]">
+           <div className="p-6 md:p-16 min-h-[300px] md:min-h-[400px] flex items-center justify-center relative bg-grid-white/[0.02]">
               {/* Animated Content Switcher */}
               <div className="w-full">
                  {activeTab === 'facilitator' ? (
