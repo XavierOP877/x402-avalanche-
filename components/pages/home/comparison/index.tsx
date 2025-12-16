@@ -14,6 +14,8 @@
 
 import { Check, X } from "lucide-react"
 import { cn } from "@/lib/utils"
+import VariableProximity from "@/components/ui/VariableProximity"
+import { useRef } from "react"
 
 interface ComparisonTableSectionProps {
   data: {
@@ -29,6 +31,7 @@ interface ComparisonTableSectionProps {
 }
 
 export function ComparisonTableSection({ data }: ComparisonTableSectionProps) {
+  const descriptionRef = useRef<HTMLDivElement>(null)
   
   // Helper to render cell content with icons
   // Takes string like "✅ Safe" and renders a Check icon + "Safe"
@@ -61,9 +64,17 @@ export function ComparisonTableSection({ data }: ComparisonTableSectionProps) {
             <h2 className="text-3xl md:text-4xl font-bold text-white mb-4 uppercase tracking-tight">
               {data.title}
             </h2>
-            <p className="text-white/50 max-w-2xl mx-auto font-light">
-              {data.description}
-            </p>
+            <div ref={descriptionRef} className="max-w-3xl mx-auto" style={{ cursor: 'text' }}>
+              <VariableProximity
+                label={data.description}
+                className="text-white/50 font-light block"
+                fromFontVariationSettings="'wght' 300, 'opsz' 9"
+                toFontVariationSettings="'wght' 600, 'opsz' 40"
+                containerRef={descriptionRef}
+                radius={80}
+                falloff="linear"
+              />
+            </div>
           </div>
 
           {/* Table Container - Overflow hidden for rounded corners */}

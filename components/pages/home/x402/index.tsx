@@ -12,6 +12,8 @@
  */
 
 import { CodeWindow } from "@/components/ui/code-window"
+import VariableProximity from "@/components/ui/VariableProximity"
+import { useRef } from "react"
 
 interface X402SectionProps {
   data: {
@@ -26,6 +28,7 @@ interface X402SectionProps {
 }
 
 export function X402Section({ data }: X402SectionProps) {
+  const descriptionRef = useRef<HTMLDivElement>(null)
 
   return (
     <section className="py-24 relative bg-transparent border-t border-white/5">
@@ -36,9 +39,17 @@ export function X402Section({ data }: X402SectionProps) {
             <h2 className="text-3xl md:text-4xl font-bold text-white mb-6 uppercase tracking-tight font-mono">
               {data.title}
             </h2>
-            <p className="text-xl text-white/60 leading-relaxed font-light font-mono">
-              {data.description}
-            </p>
+            <div ref={descriptionRef} style={{ cursor: 'text' }}>
+              <VariableProximity
+                label={data.description}
+                className="text-xl text-white/60 leading-relaxed font-light font-mono block"
+                fromFontVariationSettings="'wght' 300, 'opsz' 9"
+                toFontVariationSettings="'wght' 700, 'opsz' 40"
+                containerRef={descriptionRef}
+                radius={100}
+                falloff="linear"
+              />
+            </div>
           </div>
 
           {/* Right Column: Code Card */}

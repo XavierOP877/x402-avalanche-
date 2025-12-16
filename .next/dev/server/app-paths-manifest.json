@@ -1,12 +1,5 @@
 {
-  "/api/explorer/logs/route": "app/api/explorer/logs/route.js",
-  "/api/facilitator/balance/route": "app/api/facilitator/balance/route.js",
-  "/api/facilitator/check-and-activate/route": "app/api/facilitator/check-and-activate/route.js",
-  "/api/facilitator/create/route": "app/api/facilitator/create/route.js",
-  "/api/facilitator/delete/route": "app/api/facilitator/delete/route.js",
   "/api/facilitator/list/route": "app/api/facilitator/list/route.js",
-  "/api/x402/settle-default/route": "app/api/x402/settle-default/route.js",
-  "/explorer/page": "app/explorer/page.js",
-  "/facilitator/page": "app/facilitator/page.js",
+  "/demo/page": "app/demo/page.js",
   "/page": "app/page.js"
 }

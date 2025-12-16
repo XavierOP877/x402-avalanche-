@@ -19,6 +19,8 @@ import {
   LucideIcon
 } from "lucide-react"
 import Link from "next/link"
+import VariableProximity from "@/components/ui/VariableProximity"
+import { useRef } from "react"
 
 const ICON_MAP: Record<string, LucideIcon> = {
   Cloud,
@@ -40,6 +42,7 @@ interface ProductsSectionProps {
 }
 
 export function ProductsSection({ data }: ProductsSectionProps) {
+  const descriptionRef = useRef<HTMLDivElement>(null)
   return (
     <section className="py-16 relative bg-transparent border-t border-white/5">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -49,9 +52,17 @@ export function ProductsSection({ data }: ProductsSectionProps) {
             <h2 className="text-3xl md:text-4xl font-bold text-white mb-4 uppercase tracking-tight">
               {data.title}
             </h2>
-            <p className="text-white/50 max-w-2xl mx-auto font-light">
-              {data.description}
-            </p>
+            <div ref={descriptionRef} className="max-w-2xl mx-auto" style={{ cursor: 'text' }}>
+              <VariableProximity
+                label={data.description}
+                className="text-white/50 font-light block"
+                fromFontVariationSettings="'wght' 300, 'opsz' 9"
+                toFontVariationSettings="'wght' 700, 'opsz' 40"
+                containerRef={descriptionRef}
+                radius={80}
+                falloff="linear"
+              />
+            </div>
           </div>
 
           {/* Grid Layout */}

@@ -7,11 +7,13 @@ import TrueFocus from '@/components/ui/TrueFocus';
 import { MagicBentoGrid, MagicCard } from '../../components/ui/MagicBento';
 import { HowItWorksSection } from '@/components/pages/chain/how-it-works';
 import { useRouter } from 'next/navigation';
+import VariableProximity from '@/components/ui/VariableProximity';
 
 export default function ChainPage() {
   const router = useRouter();
   const [isExpanded, setIsExpanded] = React.useState(false);
   const words = ["Mainnet", "Testnet", "Devnet"];
+  const descriptionRef = React.useRef<HTMLDivElement>(null);
 
   React.useEffect(() => {
     // Start animation sequence after mount
@@ -31,15 +33,15 @@ export default function ChainPage() {
   };
 
   return (
-    <div className="relative py-12 md:py-20 space-y-12">
+    <div className="relative py-6 md:py-12 space-y-8">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* 1. HERO SECTION */}
-        <div className="min-h-[85vh] flex flex-col items-center justify-center text-center -mt-24 mb-12">
+        <div className="min-h-[60vh] md:min-h-[70vh] flex flex-col items-center justify-center text-center -mt-12 mb-8">
           
           {/* Animated FACINET -> FACILITATOR NETWORK Title */}
           <div className="group cursor-default flex flex-col items-center gap-4 select-none">
-             <div className="flex items-center text-5xl md:text-8xl font-bold font-mono tracking-widest italic transform -skew-x-12 text-white transition-all duration-500">
+             <div className="flex items-center text-4xl sm:text-6xl md:text-8xl font-bold font-mono tracking-widest italic transform -skew-x-12 text-white transition-all duration-500">
                 {/* PART 1: FACI -> FACILITATOR */}
                 <div className="flex">
                    <span className={`transition-colors duration-500 ${isExpanded ? 'text-blue-400' : 'text-white group-hover:text-blue-400'}`}>FACI</span>
@@ -83,9 +85,21 @@ export default function ChainPage() {
              </div>
           </div>
 
-          <p className="text-xl text-white/60 font-light leading-relaxed max-w-3xl mx-auto mt-12">
-            Facinet Chain provides a single, verifiable source of truth for decentralized X402 execution across chains. By separating execution from accountability, it makes gasless, multi-chain payments scalable, transparent, and trust-minimized.
-          </p>
+           <div 
+             ref={descriptionRef}
+             className="relative max-w-3xl mx-auto mt-12"
+             style={{ cursor: 'text' }}
+           >
+             <VariableProximity
+               label="Facinet Chain provides a single, verifiable source of truth for decentralized X402 execution across chains. By separating execution from accountability, it makes gasless, multi-chain payments scalable, transparent, and trust-minimized."
+               className="text-xl text-white/60 font-light leading-relaxed text-center block"
+               fromFontVariationSettings="'wght' 300, 'opsz' 9"
+               toFontVariationSettings="'wght' 700, 'opsz' 40"
+               containerRef={descriptionRef}
+               radius={100}
+               falloff="linear"
+             />
+           </div>
         </div>
 
         {/* 2. WHAT THIS LAYER DOES / DOES NOT DO - BENTO GRID */}

@@ -20,6 +20,8 @@ import {
   LucideIcon,
   CheckCircle2
 } from "lucide-react"
+import VariableProximity from "@/components/ui/VariableProximity"
+import { useRef } from "react"
 
 const ICON_MAP: Record<string, LucideIcon> = {
   Cpu,
@@ -42,6 +44,7 @@ interface WaysToUseSectionProps {
 }
 
 export function WaysToUseSection({ data }: WaysToUseSectionProps) {
+  const descriptionRef = useRef<HTMLDivElement>(null)
   return (
     <section className="py-24 relative bg-transparent border-t border-white/5">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -53,9 +56,17 @@ export function WaysToUseSection({ data }: WaysToUseSectionProps) {
               <h2 className="text-3xl md:text-4xl font-bold text-white uppercase tracking-tight">
                 {data.title}
               </h2>
-              <p className="text-white/50 max-w-xl font-light">
-                {data.description}
-              </p>
+              <div ref={descriptionRef} style={{ cursor: 'text' }}>
+                <VariableProximity
+                  label={data.description}
+                  className="text-white/50 max-w-xl font-light block"
+                  fromFontVariationSettings="'wght' 300, 'opsz' 9"
+                  toFontVariationSettings="'wght' 700, 'opsz' 40"
+                  containerRef={descriptionRef}
+                  radius={80}
+                  falloff="linear"
+                />
+              </div>
             </div>
 
             <div className="space-y-6">
