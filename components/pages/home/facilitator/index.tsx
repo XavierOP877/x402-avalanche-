@@ -12,8 +12,6 @@
  */
 
 import { ShieldCheck, Landmark, MessageSquareText, LucideIcon, Check } from "lucide-react"
-import VariableProximity from "@/components/ui/VariableProximity"
-import { useRef } from "react"
 
 // Mapping string names from data to actual React Components
 // This allows the data file to store "ShieldCheck" as a string.
@@ -39,7 +37,6 @@ interface FacilitatorSectionProps {
 }
 
 export function FacilitatorSection({ data }: FacilitatorSectionProps) {
-  const descriptionRef = useRef<HTMLDivElement>(null)
 
   return (
     <section className="py-24 relative bg-transparent border-t border-white/5">
@@ -49,12 +46,12 @@ export function FacilitatorSection({ data }: FacilitatorSectionProps) {
         <div className="grid lg:grid-cols-2 gap-16 items-center">
           
           {/* Left: Infographic / Network Visual */}
-          <div className="relative h-[320px] w-full rounded-2xl border border-white/10 bg-black/40 backdrop-blur-sm overflow-hidden flex items-center justify-center">
+          <div className="relative h-[250px] sm:h-[320px] w-full rounded-2xl border border-white/10 bg-black/40 backdrop-blur-sm overflow-hidden flex items-center justify-center">
             {/* Background Grid */}
             <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:24px_24px] opacity-50" />
             
-            {/* Network Nodes Visualization */}
-            <div className="relative z-10 flex items-center gap-8 md:gap-12">
+            {/* Network Nodes Visualization - Scaled Down on Mobile */}
+            <div className="relative z-10 flex items-center gap-4 md:gap-12 transform scale-[0.65] sm:scale-100 origin-center">
               
               {/* Node 1: Client */}
               <div className="flex flex-col items-center gap-3">
@@ -67,7 +64,7 @@ export function FacilitatorSection({ data }: FacilitatorSectionProps) {
 
               {/* Arrow 1 */}
               <div className="flex flex-col items-center gap-1">
-                 <div className="h-0.5 w-12 bg-gradient-to-r from-white/10 to-white/50" />
+                 <div className="h-0.5 w-8 md:w-12 bg-gradient-to-r from-white/10 to-white/50" />
                  <span className="text-[10px] font-mono text-white/30">REQ</span>
               </div>
 
@@ -82,7 +79,7 @@ export function FacilitatorSection({ data }: FacilitatorSectionProps) {
 
               {/* Arrow 2 */}
               <div className="flex flex-col items-center gap-1">
-                 <div className="h-0.5 w-12 bg-gradient-to-r from-white/50 to-white/10" />
+                 <div className="h-0.5 w-8 md:w-12 bg-gradient-to-r from-white/50 to-white/10" />
                  <span className="text-[10px] font-mono text-white/30">SETTLE</span>
               </div>
 
@@ -102,17 +99,9 @@ export function FacilitatorSection({ data }: FacilitatorSectionProps) {
             <h2 className="text-3xl md:text-4xl font-bold text-white mb-6 uppercase tracking-tight font-mono">
               {data.title}
             </h2>
-            <div ref={descriptionRef} style={{ cursor: 'text' }}>
-              <VariableProximity
-                label={data.description}
-                className="text-lg md:text-xl text-white/60 leading-relaxed font-light font-mono block"
-                fromFontVariationSettings="'wght' 300, 'opsz' 9"
-                toFontVariationSettings="'wght' 700, 'opsz' 40"
-                containerRef={descriptionRef}
-                radius={100}
-                falloff="linear"
-              />
-            </div>
+            <p className="text-lg md:text-xl text-white/60 leading-relaxed font-light font-mono">
+              {data.description}
+            </p>
           </div>
 
         </div>

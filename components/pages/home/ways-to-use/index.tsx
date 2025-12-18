@@ -20,8 +20,6 @@ import {
   LucideIcon,
   CheckCircle2
 } from "lucide-react"
-import VariableProximity from "@/components/ui/VariableProximity"
-import { useRef } from "react"
 
 const ICON_MAP: Record<string, LucideIcon> = {
   Cpu,
@@ -44,29 +42,20 @@ interface WaysToUseSectionProps {
 }
 
 export function WaysToUseSection({ data }: WaysToUseSectionProps) {
-  const descriptionRef = useRef<HTMLDivElement>(null)
   return (
-    <section className="py-24 relative bg-transparent border-t border-white/5">
+    <section className="pt-24 pb-12 relative bg-transparent border-t border-white/5">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+        <div className="flex flex-col-reverse lg:grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
           
           {/* Left Column: Text Content List */}
-          <div className="space-y-8">
+          <div className="space-y-8 w-full">
             <div className="space-y-4">
               <h2 className="text-3xl md:text-4xl font-bold text-white uppercase tracking-tight">
                 {data.title}
               </h2>
-              <div ref={descriptionRef} style={{ cursor: 'text' }}>
-                <VariableProximity
-                  label={data.description}
-                  className="text-white/50 max-w-xl font-light block"
-                  fromFontVariationSettings="'wght' 300, 'opsz' 9"
-                  toFontVariationSettings="'wght' 700, 'opsz' 40"
-                  containerRef={descriptionRef}
-                  radius={80}
-                  falloff="linear"
-                />
-              </div>
+              <p className="text-white/50 max-w-xl font-light">
+                {data.description}
+              </p>
             </div>
 
             <div className="space-y-6">

@@ -1,5 +1,9 @@
 {
+  "/api/explorer/logs/route": "app/api/explorer/logs/route.js",
   "/api/facilitator/list/route": "app/api/facilitator/list/route.js",
-  "/demo/page": "app/demo/page.js",
+  "/chain/page": "app/chain/page.js",
+  "/explorer/page": "app/explorer/page.js",
+  "/facilitator/page": "app/facilitator/page.js",
+  "/institution/page": "app/institution/page.js",
   "/page": "app/page.js"
 }

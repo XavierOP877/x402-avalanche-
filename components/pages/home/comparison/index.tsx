@@ -14,8 +14,6 @@
 
 import { Check, X } from "lucide-react"
 import { cn } from "@/lib/utils"
-import VariableProximity from "@/components/ui/VariableProximity"
-import { useRef } from "react"
 
 interface ComparisonTableSectionProps {
   data: {
@@ -31,7 +29,6 @@ interface ComparisonTableSectionProps {
 }
 
 export function ComparisonTableSection({ data }: ComparisonTableSectionProps) {
-  const descriptionRef = useRef<HTMLDivElement>(null)
   
   // Helper to render cell content with icons
   // Takes string like "✅ Safe" and renders a Check icon + "Safe"
@@ -64,21 +61,13 @@ export function ComparisonTableSection({ data }: ComparisonTableSectionProps) {
             <h2 className="text-3xl md:text-4xl font-bold text-white mb-4 uppercase tracking-tight">
               {data.title}
             </h2>
-            <div ref={descriptionRef} className="max-w-3xl mx-auto" style={{ cursor: 'text' }}>
-              <VariableProximity
-                label={data.description}
-                className="text-white/50 font-light block"
-                fromFontVariationSettings="'wght' 300, 'opsz' 9"
-                toFontVariationSettings="'wght' 600, 'opsz' 40"
-                containerRef={descriptionRef}
-                radius={80}
-                falloff="linear"
-              />
-            </div>
+            <p className="text-white/50 max-w-2xl mx-auto font-light">
+              {data.description}
+            </p>
           </div>
 
-          {/* Table Container - Overflow hidden for rounded corners */}
-          <div className="rounded-xl border border-white/10 overflow-hidden bg-black/40 backdrop-blur-sm shadow-2xl">
+          {/* Table Container - Desktop & Tablet */}
+          <div className="hidden md:block rounded-xl border border-white/10 overflow-hidden bg-black/40 backdrop-blur-sm shadow-2xl">
             <div className="overflow-x-auto">
               <table className="w-full text-left border-collapse">
                 <thead>
@@ -123,6 +112,34 @@ export function ComparisonTableSection({ data }: ComparisonTableSectionProps) {
                 </tbody>
               </table>
             </div>
+          </div>
+
+          {/* Cards Container - Mobile Only */}
+          <div className="md:hidden space-y-4">
+             {data.rows.map((row, i) => (
+               <div key={i} className="p-4 rounded-xl border border-white/10 bg-white/5 backdrop-blur-sm space-y-4">
+                  {/* Feature Title */}
+                  <div className="text-xs font-mono font-bold text-white/40 uppercase tracking-widest border-b border-white/5 pb-2">
+                    {row.feature}
+                  </div>
+                  
+                  {/* Comparison Grid */}
+                  <div className="grid grid-cols-2 gap-4">
+                     {/* Current State */}
+                     <div className="space-y-1">
+                        <div className="text-[10px] text-white/30 font-mono uppercase">Current</div>
+                        <div className="text-sm text-white/60 font-mono">{renderCell(row.current)}</div>
+                     </div>
+
+                     {/* Facinet State */}
+                     <div className="relative p-3 rounded-lg bg-primary/5 border border-primary/20">
+                        <div className="absolute top-0 right-0 w-2 h-2 bg-primary/50 rounded-bl-lg"></div>
+                        <div className="text-[10px] text-primary/50 font-mono uppercase mb-1">Facinet</div>
+                        <div className="text-sm font-bold text-white font-mono">{renderCell(row.facinet)}</div>
+                     </div>
+                  </div>
+               </div>
+             ))}
           </div>
         </div>
       </div>

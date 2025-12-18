@@ -2,6 +2,8 @@
 
 import Link from 'next/link'
 import { ConnectButton } from '@rainbow-me/rainbowkit'
+import { Menu, X, Wallet } from 'lucide-react'
+import React from 'react'
 
 interface HeroAsciiWrapperProps {
   children?: React.ReactNode
@@ -9,6 +11,8 @@ interface HeroAsciiWrapperProps {
 // ... (rest is same)
 
 export default function HeroAsciiWrapper({ children }: HeroAsciiWrapperProps) {
+
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false)
 
   return (
     <main className="relative min-h-screen overflow-x-hidden bg-transparent text-white selection:bg-white/20">
@@ -24,9 +28,9 @@ export default function HeroAsciiWrapper({ children }: HeroAsciiWrapperProps) {
             <div className="h-3 lg:h-4 w-px bg-white/40"></div>
             <span className="text-white/60 text-[8px] lg:text-[9px] font-mono">EST. 2025</span>
             
-            {/* Nav Links */}
+            {/* Nav Links (Desktop) */}
             <div className="hidden lg:flex items-center gap-6 ml-8">
-               {['Home', 'Facilitator', 'Institution', 'Explorer', 'Chain', 'Docs'].map((item) => (
+               {['Home', 'Facilitator', 'Chain', 'Explorer', 'Institution', 'Docs'].map((item) => (
                  <Link 
                    key={item} 
                    href={
@@ -87,8 +91,97 @@ export default function HeroAsciiWrapper({ children }: HeroAsciiWrapperProps) {
               <span>TPS: 0</span>
             </div>
           </div>
+
+          {/* Mobile Hamburger Button */}
+          <button 
+            className="lg:hidden p-2 text-white/80 hover:text-white"
+            onClick={() => setIsMobileMenuOpen(true)}
+          >
+            <Menu className="w-6 h-6" />
+          </button>
         </div>
       </div>
+
+      {/* Mobile Menu Overlay */}
+      {isMobileMenuOpen && (
+        <div className="fixed inset-0 z-[100] bg-black/95 backdrop-blur-xl flex flex-col p-6 animate-in fade-in duration-200">
+          <div className="flex items-center justify-between mb-12">
+            <div className="font-mono text-white text-2xl font-bold tracking-widest italic transform -skew-x-12">
+              FACINET
+            </div>
+            <button 
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="p-2 rounded-full border border-white/10 bg-white/5 text-white/80 hover:bg-white/10 transition-colors"
+            >
+              <X className="w-6 h-6" />
+            </button>
+          </div>
+
+          <div className="flex-1 flex flex-col gap-8">
+             {/* Wallet Status Section (Prominent) */}
+             <ConnectButton.Custom>
+              {({
+                account,
+                chain,
+                openAccountModal,
+                openConnectModal,
+                mounted,
+              }) => {
+                const connected = mounted && account && chain;
+                return (
+                  <div className="p-6 rounded-2xl bg-white/5 border border-white/10 flex flex-col items-center justify-center gap-4 text-center">
+                    <div className={`relative p-4 rounded-full border-2 ${connected ? 'border-green-500 bg-green-500/10' : 'border-red-500 bg-red-500/10'}`}>
+                      <Wallet className={`w-8 h-8 ${connected ? 'text-green-400' : 'text-red-400'}`} />
+                      {connected && <div className="absolute top-0 right-0 w-3 h-3 bg-green-500 rounded-full animate-pulse border-2 border-black" />}
+                    </div>
+                    
+                    <div className="space-y-1">
+                      <h3 className="text-xl font-bold font-mono text-white tracking-wide">
+                        {connected ? 'WALLET CONNECTED' : 'NOT CONNECTED'}
+                      </h3>
+                      <p className="text-sm font-mono text-white/50">
+                        {connected ? account.displayName : 'Connect to access full features'}
+                      </p>
+                    </div>
+
+                    <button
+                      onClick={connected ? openAccountModal : openConnectModal}
+                      className={`w-full py-3 rounded-lg font-mono font-bold uppercase tracking-wider text-sm transition-all ${
+                        connected 
+                          ? 'bg-white/10 text-white hover:bg-white/20' 
+                          : 'bg-white text-black hover:bg-white/90'
+                      }`}
+                    >
+                      {connected ? 'Manage Wallet' : 'Connect Now'}
+                    </button>
+                  </div>
+                );
+              }}
+            </ConnectButton.Custom>
+
+            {/* Navigation Links */}
+            <nav className="flex flex-col gap-4">
+              {['Home', 'Facilitator', 'Chain', 'Explorer', 'Institution', 'Docs'].map((item) => (
+                <Link 
+                  key={item} 
+                  href={item === 'Home' ? '/' : `/${item.toLowerCase()}`}
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="text-2xl font-mono font-light text-white/80 hover:text-white hover:pl-4 transition-all"
+                >
+                  {item}
+                </Link>
+              ))}
+            </nav>
+          </div>
+
+          <div className="mt-auto border-t border-white/10 pt-6">
+            <div className="flex justify-between text-xs font-mono text-white/40 uppercase tracking-widest">
+              <span>Net: Active</span>
+              <span>v1.0.0</span>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Corner Frame Accents (Fixed) */}
       <div className="fixed top-20 left-4 lg:top-24 lg:left-8 w-8 h-8 lg:w-12 lg:h-12 border-t-2 border-l-2 border-white/10 z-40 pointer-events-none"></div>
