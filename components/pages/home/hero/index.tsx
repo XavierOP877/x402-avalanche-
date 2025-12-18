@@ -12,15 +12,12 @@
  *   automatically when the component unmounts, preventing memory leaks or double-animations.
  */
 
-import { useEffect, useRef } from "react"
+import { useEffect, useState } from "react"
 import { Button } from "@/components/ui/button"
 import { GlowingBorderBtn } from "@/components/ui/glowing-border-btn"
 import { WebGLShader } from "@/components/ui/web-gl-shader"
-import VariableProximity from "@/components/ui/VariableProximity"
-import { gsap } from "gsap"
 import { ArrowRight, Play, LucideIcon } from "lucide-react"
-
-import Link from "next/link"
+import { cn } from "@/lib/utils"
 
 // Map string keys to actual Icon components to allow dynamic data loading
 const ICON_MAP: Record<string, LucideIcon> = {
@@ -37,7 +34,6 @@ interface HeroSectionProps {
     ctaPrimary: {
       text: string
       icon: string
-      href?: string
     }
     ctaSecondary: {
       text: string
@@ -51,36 +47,30 @@ interface HeroSectionProps {
 }
 
 export function HeroSection({ data }: HeroSectionProps) {
-  // Refs for animation targets
-  const containerRef = useRef<HTMLDivElement>(null)
-  const titleRef = useRef<HTMLHeadingElement>(null)
-  const subtitleRef = useRef<HTMLParagraphElement>(null)
+  // State for auto-expansion animation
+  const [isAutoExpanded, setIsAutoExpanded] = useState(false)
 
   useEffect(() => {
-    // GSAP Context: Scopes all selectors to `containerRef` and handles cleanup
-    const ctx = gsap.context(() => {
-      const timeline = gsap.timeline({ defaults: { ease: "power3.out" } })
-
-      // Animate elements in sequence
-      timeline
-        .fromTo(titleRef.current, { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 1 })
-        .fromTo(subtitleRef.current, { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.8 }, "-=0.5")
-    }, containerRef)
-
-    // Cleanup function called when component unmounts
-    return () => ctx.revert()
+    // Sequence: Wait 500ms -> Expand -> Wait 2s -> Collapse
+    const expandTimer = setTimeout(() => setIsAutoExpanded(true), 500)
+    const collapseTimer = setTimeout(() => setIsAutoExpanded(false), 2500)
+    
+    return () => {
+      clearTimeout(expandTimer)
+      clearTimeout(collapseTimer)
+    }
   }, [])
 
   const PrimaryIcon = ICON_MAP[data.ctaPrimary.icon] || ArrowRight
   const SecondaryIcon = ICON_MAP[data.ctaSecondary.icon] || Play
 
   return (
-    <section ref={containerRef} className="relative min-h-[90vh] flex items-center justify-center overflow-hidden">
+    <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden">
       {/* Background Shader Effect - Keeps the main thread free by using WebGL */}
       <WebGLShader />
       
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full mt-20">
-        <div className="relative border border-[#27272a] p-2 w-full mx-auto max-w-3xl z-10 bg-black/40 backdrop-blur-sm rounded-xl">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full mt-12 sm:mt-20">
+        <div className="relative border border-[#27272a] p-2 w-full mx-auto max-w-[52rem] z-10 bg-black/40 backdrop-blur-sm rounded-xl">
           <main className="relative border border-[#27272a] py-8 md:py-12 overflow-hidden rounded-lg flex flex-col items-center text-center">
             
             {/* Animated Badge */}
@@ -95,35 +85,65 @@ export function HeroSection({ data }: HeroSectionProps) {
             )}
 
             {/* Main Title with Hover Effect */}
-            <h1 ref={titleRef} className="mb-4 text-white text-5xl md:text-7xl font-bold tracking-tighter uppercase leading-none">
-              <span className="inline-block transition-all duration-300 hover:drop-shadow-[0_0_35px_rgba(255,255,255,0.8)] cursor-default">
-                {data.title}
-              </span>
+            <h1 className="mb-4 text-white text-5xl md:text-7xl font-bold tracking-tighter uppercase leading-none select-none">
+              {data.title === "FACINET" ? (
+                <span className="group relative inline-flex items-center justify-center cursor-default">
+                  {/* F A C I */}
+                  <span className={cn(
+                    "transition-all duration-300",
+                    isAutoExpanded 
+                      ? "text-white drop-shadow-[0_0_10px_rgba(255,255,255,0.5)]" 
+                      : "group-hover:text-white group-hover:drop-shadow-[0_0_10px_rgba(255,255,255,0.5)]"
+                  )}>
+                    FACI
+                  </span>
+                  
+                  {/* LITATOR */}
+                  <span className={cn(
+                    "overflow-hidden transition-all duration-700 ease-[cubic-bezier(0.25,1,0.5,1)] whitespace-pre text-blue-400 origin-left",
+                    isAutoExpanded 
+                      ? "max-w-full md:max-w-[4.5em] opacity-100 drop-shadow-[0_0_15px_rgba(96,165,250,0.8)]" 
+                      : "max-w-0 opacity-0 group-hover:max-w-full md:group-hover:max-w-[4.5em] group-hover:opacity-100 group-hover:drop-shadow-[0_0_15px_rgba(96,165,250,0.8)]"
+                  )}>
+                    LITATOR&nbsp;
+                  </span>
+
+                  {/* N E T */}
+                  <span className={cn(
+                    "transition-all duration-300",
+                    isAutoExpanded 
+                      ? "text-white drop-shadow-[0_0_10px_rgba(255,255,255,0.5)]" 
+                      : "group-hover:text-white group-hover:drop-shadow-[0_0_10px_rgba(255,255,255,0.5)]"
+                  )}>
+                    NET
+                  </span>
+
+                  {/* WORK */}
+                  <span className={cn(
+                    "overflow-hidden transition-all duration-700 ease-[cubic-bezier(0.25,1,0.5,1)] text-blue-400 origin-left",
+                    isAutoExpanded 
+                      ? "max-w-full md:max-w-[3.5em] opacity-100 drop-shadow-[0_0_15px_rgba(96,165,250,0.8)]" 
+                      : "max-w-0 opacity-0 group-hover:max-w-full md:group-hover:max-w-[3.5em] group-hover:opacity-100 group-hover:drop-shadow-[0_0_15px_rgba(96,165,250,0.8)]"
+                  )}>
+                    WORK
+                  </span>
+                </span>
+              ) : (
+                <span className="inline-block transition-all duration-300 hover:drop-shadow-[0_0_35px_rgba(255,255,255,0.8)] cursor-default">
+                  {data.title}
+                </span>
+              )}
             </h1>
 
-            <div 
-              ref={subtitleRef} 
-              className="relative mb-8 max-w-2xl mx-auto"
-              style={{ cursor: 'pointer' }}
-            >
-              <VariableProximity
-                label={data.description as string}
-                className="text-lg font-light text-white/60 md:text-xl font-sans leading-relaxed text-center block"
-                fromFontVariationSettings="'wght' 400, 'opsz' 9"
-                toFontVariationSettings="'wght' 900, 'opsz' 40"
-                containerRef={subtitleRef}
-                radius={100}
-                falloff="linear"
-              />
-            </div>
+            <p className="mb-8 text-lg font-light text-white/60 md:text-xl max-w-2xl mx-auto font-sans leading-relaxed">
+              {data.description}
+            </p>
             
             {/* Call to Actions */}
             <div className="flex flex-col sm:flex-row items-center gap-4 justify-center w-full z-20 pointer-events-auto"> 
-                <Link href={data.ctaPrimary.href || "/demo"}>
-                  <GlowingBorderBtn>
-                    {data.ctaPrimary.text}
-                  </GlowingBorderBtn>
-                </Link>
+                <GlowingBorderBtn>
+                  {data.ctaPrimary.text}
+                </GlowingBorderBtn>
                 
                 <Button variant="ghost" className="rounded-full bg-white/5 backdrop-blur-sm border border-white/10 gap-2 text-white/80 hover:text-white hover:bg-white/10 transition-all duration-300 h-auto py-3 px-6 text-sm font-medium">
                   <SecondaryIcon className="w-4 h-4" />
@@ -132,11 +152,11 @@ export function HeroSection({ data }: HeroSectionProps) {
             </div> 
 
             {/* Stats Grid */}
-            <div className="grid grid-cols-3 gap-8 pt-8 w-full max-w-lg mx-auto border-t border-white/5 mt-8">
+            <div className="grid grid-cols-3 gap-2 sm:gap-8 pt-8 w-full max-w-lg mx-auto border-t border-white/5 mt-8 px-2 sm:px-0">
               {data.stats.map((stat, index) => (
                 <div key={index} className="space-y-0.5">
-                  <div className="text-lg md:text-xl font-bold text-white/90">{stat.value}</div>
-                  <div className="text-xs uppercase tracking-wider text-white/40 font-mono">{stat.label}</div>
+                  <div className="text-sm sm:text-lg md:text-xl font-bold text-white/90">{stat.value}</div>
+                  <div className="text-[10px] sm:text-xs uppercase tracking-wider text-white/40 font-mono break-words">{stat.label}</div>
                 </div>
               ))}
             </div>

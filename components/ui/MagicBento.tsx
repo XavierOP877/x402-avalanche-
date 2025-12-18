@@ -1,26 +1,31 @@
 import React, { useRef, useEffect, useState, useCallback } from 'react';
 import { gsap } from 'gsap';
 
-export interface MagicCardProps {
-  children: React.ReactNode;
-  className?: string;
+export interface BentoCardProps {
+  color?: string;
+  title?: string;
+  description?: string;
+  label?: string;
+  textAutoHide?: boolean;
   disableAnimations?: boolean;
-  style?: React.CSSProperties;
-  particleCount?: number;
-  glowColor?: string;
-  enableTilt?: boolean;
-  clickEffect?: boolean;
-  enableMagnetism?: boolean;
-  enableStars?: boolean;
-  enableBorderGlow?: boolean;
+  className?: string;
+  icon?: React.ReactNode;
 }
 
-export interface MagicGridProps {
-  children: React.ReactNode;
-  className?: string;
+export interface BentoProps {
+  items?: BentoCardProps[];
+  textAutoHide?: boolean;
+  enableStars?: boolean;
   enableSpotlight?: boolean;
+  enableBorderGlow?: boolean;
+  disableAnimations?: boolean;
   spotlightRadius?: number;
+  particleCount?: number;
+  enableTilt?: boolean;
   glowColor?: string;
+  clickEffect?: boolean;
+  enableMagnetism?: boolean;
+  children?: React.ReactNode;
 }
 
 const DEFAULT_PARTICLE_COUNT = 12;
@@ -62,7 +67,19 @@ const updateCardGlowProperties = (card: HTMLElement, mouseX: number, mouseY: num
   card.style.setProperty('--glow-radius', `${radius}px`);
 };
 
-const MagicCard: React.FC<MagicCardProps> = ({
+export const MagicCard: React.FC<{
+  children: React.ReactNode;
+  className?: string;
+  disableAnimations?: boolean;
+  style?: React.CSSProperties;
+  particleCount?: number;
+  glowColor?: string;
+  enableTilt?: boolean;
+  clickEffect?: boolean;
+  enableMagnetism?: boolean;
+  enableStars?: boolean;
+  enableBorderGlow?: boolean;
+}> = ({
   children,
   className = '',
   disableAnimations = false,
@@ -113,14 +130,14 @@ const MagicCard: React.FC<MagicCardProps> = ({
   }, []);
 
   const animateParticles = useCallback(() => {
-    if (!cardRef.current || !isHoveredRef.current || !enableStars) return;
+    if (!cardRef.current || !isHoveredRef.current) return;
 
     if (!particlesInitialized.current) {
       initializeParticles();
     }
 
     memoizedParticles.current.forEach((particle, index) => {
-      const timeoutId = window.setTimeout(() => {
+      const timeoutId = setTimeout(() => {
         if (!isHoveredRef.current || !cardRef.current) return;
 
         const clone = particle.cloneNode(true) as HTMLDivElement;
@@ -150,7 +167,7 @@ const MagicCard: React.FC<MagicCardProps> = ({
 
       timeoutsRef.current.push(timeoutId);
     });
-  }, [initializeParticles, enableStars]);
+  }, [initializeParticles]);
 
   useEffect(() => {
     if (disableAnimations || !cardRef.current) return;
@@ -158,8 +175,10 @@ const MagicCard: React.FC<MagicCardProps> = ({
     const element = cardRef.current;
 
     const handleMouseEnter = () => {
-      isHoveredRef.current = true;
-      animateParticles();
+      if (enableStars) {
+        isHoveredRef.current = true;
+        animateParticles();
+      }
 
       if (enableTilt) {
         gsap.to(element, {
@@ -173,8 +192,10 @@ const MagicCard: React.FC<MagicCardProps> = ({
     };
 
     const handleMouseLeave = () => {
-      isHoveredRef.current = false;
-      clearAllParticles();
+      if (enableStars) {
+        isHoveredRef.current = false;
+        clearAllParticles();
+      }
 
       if (enableTilt) {
         gsap.to(element, {
@@ -290,26 +311,27 @@ const MagicCard: React.FC<MagicCardProps> = ({
     };
   }, [animateParticles, clearAllParticles, disableAnimations, enableTilt, enableMagnetism, clickEffect, glowColor, enableStars]);
 
-  const baseClassName = `card flex flex-col justify-between relative overflow-hidden transition-all duration-300 ease-in-out hover:-translate-y-0.5 hover:shadow-[0_8px_25px_rgba(0,0,0,0.15)] ${
-    enableBorderGlow ? 'card--border-glow' : ''
-  } ${className}`;
-
-  // Merge provided style with card required styles
-  const cardStyle = {
-    ...style,
-    '--glow-x': '50%',
-    '--glow-y': '50%',
-    '--glow-intensity': '0',
-    '--glow-radius': '200px'
-  } as React.CSSProperties;
+  const baseClassName = `${className} relative overflow-hidden ${enableBorderGlow ? 'card--border-glow' : ''}`;
 
   return (
     <div
       ref={cardRef}
       className={baseClassName}
-      style={cardStyle}
+      style={{ 
+        ...style,
+        position: 'relative',
+        overflow: 'hidden',
+        // Default glow variables, can be overridden by Spotlight
+        '--glow-x': '50%',
+        '--glow-y': '50%',
+        '--glow-intensity': '0',
+        '--glow-radius': '200px'
+      } as React.CSSProperties}
     >
-      {children}
+        {/* Make sure we add the 'card' class for the spotlight to find it if not present */}
+      <div className="card h-full w-full">
+         {children}
+      </div>
     </div>
   );
 };
@@ -366,7 +388,15 @@ const GlobalSpotlight: React.FC<{
         rect && e.clientX >= rect.left && e.clientX <= rect.right && e.clientY >= rect.top && e.clientY <= rect.bottom;
 
       isInsideSection.current = mouseInside || false;
-      const cards = gridRef.current.querySelectorAll('.card');
+      // We look for .card-wrapper or .card. But actually the MagicCard wraps content in a div. 
+      // The updateCardGlowProperties expects the element that has the CSS variables
+      // My MagicCard puts styles on the outer div. 
+      // But I added 'card' class to the inner div.
+      // Wait, updateCardGlowProperties sets style on the element.
+      // If MagicCard sets styles on outer div, we should target outer div.
+      // Let's make sure MagicCard adds 'card' class to OUTER div if possible or handled here.
+      
+      const cards = gridRef.current.querySelectorAll('.magic-card');
 
       if (!mouseInside) {
         gsap.to(spotlightRef.current, {
@@ -427,7 +457,7 @@ const GlobalSpotlight: React.FC<{
 
     const handleMouseLeave = () => {
       isInsideSection.current = false;
-      gridRef.current?.querySelectorAll('.card').forEach(card => {
+      gridRef.current?.querySelectorAll('.magic-card').forEach(card => {
         (card as HTMLElement).style.setProperty('--glow-intensity', '0');
       });
       if (spotlightRef.current) {
@@ -452,6 +482,74 @@ const GlobalSpotlight: React.FC<{
   return null;
 };
 
+// Exporting a configured grid component for easier usage
+export const MagicBentoGrid: React.FC<{
+  children: React.ReactNode;
+  className?: string;
+  glowColor?: string;
+  enableSpotlight?: boolean;
+}> = ({ children, className = '', glowColor = DEFAULT_GLOW_COLOR, enableSpotlight = true }) => {
+  const gridRef = useRef<HTMLDivElement>(null);
+  const isMobile = useMobileDetection();
+  
+  return (
+    <div className="bento-section select-none relative" ref={gridRef}>
+      <style>
+        {`
+          .bento-section {
+            --glow-color: ${glowColor};
+            --border-color: #392e4e;
+            --background-dark: #060010;
+          }
+          
+          .magic-card.card--border-glow::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            padding: 2px; /* Thinner border for cleaner look */
+            background: radial-gradient(var(--glow-radius) circle at var(--glow-x) var(--glow-y),
+                rgba(${glowColor}, calc(var(--glow-intensity) * 1)) 0%, 
+                rgba(${glowColor}, calc(var(--glow-intensity) * 0.2)) 30%,
+                transparent 50%);
+            border-radius: inherit;
+            /* Mask approach to show gradient only on border */
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask-composite: exclude;
+            pointer-events: none;
+            opacity: 1;
+            transition: opacity 0.3s ease;
+            z-index: 10;
+          }
+          
+          .particle::before {
+            content: '';
+            position: absolute;
+            top: -2px; left: -2px; right: -2px; bottom: -2px;
+            background: rgba(${glowColor}, 0.2);
+            border-radius: 50%;
+            z-index: -1;
+          }
+        `}
+      </style>
+      
+      {enableSpotlight && (
+        <GlobalSpotlight
+          gridRef={gridRef}
+          disableAnimations={isMobile}
+          enabled={enableSpotlight}
+          glowColor={glowColor}
+        />
+      )}
+      
+      <div className={className}>
+        {children}
+      </div>
+    </div>
+  );
+};
+
 const useMobileDetection = () => {
   const [isMobile, setIsMobile] = useState(false);
 
@@ -467,78 +565,94 @@ const useMobileDetection = () => {
   return isMobile;
 };
 
-export const MagicBentoGrid: React.FC<MagicGridProps> = ({ 
-  children, 
-  className = '',
+const MagicBento: React.FC<BentoProps> = ({
+  items = [],
+  textAutoHide = true,
+  enableStars = true,
   enableSpotlight = true,
+  enableBorderGlow = true,
+  disableAnimations = false,
   spotlightRadius = DEFAULT_SPOTLIGHT_RADIUS,
+  particleCount = DEFAULT_PARTICLE_COUNT,
+  enableTilt = false,
   glowColor = DEFAULT_GLOW_COLOR,
+  clickEffect = true,
+  enableMagnetism = true
 }) => {
   const gridRef = useRef<HTMLDivElement>(null);
   const isMobile = useMobileDetection();
-  
-  // Create a unique identifier for scoping CSS
-  const uniqueId = "bento-" + Math.random().toString(36).substr(2, 9);
-  
+  const shouldDisableAnimations = disableAnimations || isMobile;
+
   return (
-      <div id={uniqueId} className={`bento-section relative ${className}`} ref={gridRef}>
-        <style>
-          {`
-            #${uniqueId}.bento-section {
-              --glow-x: 50%;
-              --glow-y: 50%;
-              --glow-intensity: 0;
-              --glow-radius: 200px;
-            }
-            #${uniqueId} .card--border-glow::after {
-              content: '';
-              position: absolute;
-              inset: 0;
-              padding: 2px;
-              background: radial-gradient(var(--glow-radius) circle at var(--glow-x) var(--glow-y),
-                  rgba(${glowColor}, calc(var(--glow-intensity) * 0.8)) 0%,
-                  rgba(${glowColor}, calc(var(--glow-intensity) * 0.4)) 30%,
-                  transparent 60%);
-              border-radius: inherit;
-              -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-              -webkit-mask-composite: xor;
-              mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-              mask-composite: exclude;
-              pointer-events: none;
-              opacity: 1;
-              transition: opacity 0.3s ease;
-              z-index: 10;
-            }
-            
-            #${uniqueId} .card--border-glow:hover::after {
-              opacity: 1;
-            }
-            
-            #${uniqueId} .particle::before {
-              content: '';
-              position: absolute;
-              top: -2px;
-              left: -2px;
-              right: -2px;
-              bottom: -2px;
-              background: rgba(${glowColor}, 0.2);
-              border-radius: 50%;
-              z-index: -1;
-            }
-          `}
-        </style>
-        {enableSpotlight && (
-          <GlobalSpotlight 
-             gridRef={gridRef} 
-             enabled={enableSpotlight} 
-             spotlightRadius={spotlightRadius}
-             glowColor={glowColor}
-             disableAnimations={isMobile}
-          />
-        )}
-        {children}
+    <>
+      <style>
+        {`
+          .bento-section {
+            --glow-color: ${glowColor};
+          }
+           /* Original MagicBento styles maintained for backward compat */
+           .card--border-glow::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            padding: 6px;
+            background: radial-gradient(var(--glow-radius) circle at var(--glow-x) var(--glow-y),
+                rgba(${glowColor}, calc(var(--glow-intensity) * 0.8)) 0%,
+                rgba(${glowColor}, calc(var(--glow-intensity) * 0.4)) 30%,
+                transparent 60%);
+            border-radius: inherit;
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask-composite: exclude;
+            pointer-events: none;
+            opacity: 1;
+            transition: opacity 0.3s ease;
+            z-index: 1;
+          }
+          /* ... other styles simplified for legacy compat ... */
+        `}
+      </style>
+
+      {enableSpotlight && (
+        <GlobalSpotlight
+          gridRef={gridRef}
+          disableAnimations={shouldDisableAnimations}
+          enabled={enableSpotlight}
+          spotlightRadius={spotlightRadius}
+          glowColor={glowColor}
+        />
+      )}
+      
+      {/* Container logic... kept minimal for compat */}
+      <div className="bento-section grid gap-2 p-3 max-w-[54rem] relative" ref={gridRef}>
+         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+          {items.map((card, index) => (
+             <MagicCard
+               key={index}
+               className={`magic-card flex flex-col justify-between relative min-h-[200px] p-5 rounded-[20px] border border-white/10 bg-[#060010] text-white ${card.className || ''}`}
+               enableStars={enableStars}
+               enableTilt={enableTilt}
+               enableMagnetism={enableMagnetism}
+               clickEffect={clickEffect}
+               particleCount={particleCount}
+               glowColor={glowColor}
+               enableBorderGlow={enableBorderGlow}
+             >
+                 <div className="flex justify-between gap-3 relative z-10">
+                    {card.icon && <div className="mb-2">{card.icon}</div>}
+                    {card.label && <span className="opacity-60 text-sm">{card.label}</span>}
+                 </div>
+                 <div className="flex flex-col relative z-10">
+                    <h3 className="font-bold mb-1">{card.title}</h3>
+                    <p className="text-sm opacity-80">{card.description}</p>
+                 </div>
+             </MagicCard>
+          ))}
+         </div>
       </div>
+    </>
   );
 };
 
-export { MagicCard };
+export default MagicBento;

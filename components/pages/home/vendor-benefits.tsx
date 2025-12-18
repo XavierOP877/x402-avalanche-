@@ -1,12 +1,26 @@
 import React from 'react';
-import { Layers, Activity } from 'lucide-react';
+import { Layers, Activity, ArrowRight, Shield, Zap } from "lucide-react"
+import { AnimatedArchitectureFlow } from '@/components/ui/architecture-flow';
+import { VENDOR_FLOW } from '@/lib/data/whitepaper';
 
-export const VendorBenefitsSection = () => {
+export function VendorBenefitsSection() {
   return (
-    <section className="py-16 md:py-24 relative z-10 border-t border-white/5">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="grid md:grid-cols-2 gap-12 items-center">
-                <div className="space-y-8">
+    <section className="pt-12 pb-24 relative overflow-hidden">
+      <div className="container px-4 md:px-6 mx-auto relative z-10">
+        
+        {/* Vendor Integration Flow (Moved from Chain Page) */}
+        <div className="mb-24">
+
+           <AnimatedArchitectureFlow 
+              title="Vendor Integration" 
+              description="How APIs and Apps integrate the SDK."
+              steps={VENDOR_FLOW.steps}
+              edges={VENDOR_FLOW.edges}
+           />
+        </div>
+
+        <div className="grid md:grid-cols-2 gap-12 items-center">
+            <div className="space-y-8">
                     <h2 className="text-3xl font-bold font-mono text-white uppercase tracking-tight">Why This Matters for Vendors</h2>
                     <div className="space-y-6">
                     <div className="flex gap-4">

@@ -1,8 +1,7 @@
 "use client"
 
 import React, { useState, useEffect } from "react"
-import { ArrowRight } from "lucide-react"
-import Link from "next/link"
+import { Activity, ArrowRight } from "lucide-react"
 
 interface ExplorerLog {
   id: string
@@ -117,31 +116,27 @@ export default function ExplorerPage() {
   }, [filter, logs])
 
   return (
-    <div className="relative py-12 md:py-24">
+    <div className="relative py-8 md:py-12">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
-        <div className="space-y-6 mb-16">
+        <div className="space-y-4 mb-16">
           <div className="flex items-center gap-3 text-primary mb-4">
-            <div className="h-px w-8 bg-primary/50" />
-            <span className="text-xs font-mono uppercase tracking-widest text-primary/80">Network Explorer</span>
+             <div className="h-px w-12 bg-primary" />
+             <span className="text-sm font-mono uppercase tracking-widest text-primary font-bold">Network Explorer</span>
           </div>
-          <div className="flex items-center justify-between">
-            <div>
-              <h1 className="text-4xl md:text-5xl font-bold font-mono text-white uppercase tracking-tight">
-                Explorer
-              </h1>
-              <p className="text-xl text-white/50 max-w-2xl font-light leading-relaxed mt-4">
-                Real-time activity from active facilitators on the x402 network
-              </p>
+          <h1 className="text-4xl md:text-5xl font-bold font-mono text-white uppercase tracking-tight flex items-center gap-4">
+            Explorer
+            <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-green-500/10 border border-green-500/20 text-xs font-bold text-green-400 uppercase tracking-wider">
+                <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse shadow-[0_0_10px_rgba(34,197,94,0.5)]" />
+                LIVE
             </div>
-            <Link
-              href="/facilitator"
-              className="px-4 py-2 rounded-lg bg-white/5 border border-white/10 text-white hover:bg-white/10 transition-colors font-mono text-sm"
-            >
-              ← Back to Facilitators
-            </Link>
-          </div>
+          </h1>
+          <p className="text-xl text-white/50 max-w-none font-light leading-relaxed">
+            Real-time activity from active facilitators on the x402 network
+          </p>
         </div>
+
+        <div className="border-t border-white/5 mb-12" />
 
         {/* Filters */}
         <div className="flex gap-2 mb-8 overflow-x-auto">
@@ -162,8 +157,8 @@ export default function ExplorerPage() {
 
         {/* Logs Table */}
         <div className="space-y-4">
-          {/* Table Header */}
-          <div className="grid grid-cols-12 gap-4 px-4 py-3 bg-white/5 rounded-t-lg border border-white/10 font-mono text-xs text-white/40 uppercase tracking-wider">
+          {/* Table Header - Desktop Only */}
+          <div className="hidden md:grid grid-cols-12 gap-4 px-4 py-3 bg-white/5 rounded-t-lg border border-white/10 font-mono text-xs text-white/40 uppercase tracking-wider">
             <div className="col-span-2">Time</div>
             <div className="col-span-3">Event Type</div>
             <div className="col-span-3">Facilitator</div>
@@ -177,45 +172,87 @@ export default function ExplorerPage() {
               <div className="text-center py-12 text-white/40">Loading logs...</div>
             ) : filteredLogs.length > 0 ? (
               filteredLogs.map((log) => (
-                <div
-                  key={log.id}
-                  className="grid grid-cols-12 gap-4 px-4 py-4 rounded-lg border border-white/5 hover:border-white/20 hover:bg-white/[0.02] transition-colors items-center"
-                >
-                  <div className="col-span-2 text-xs text-white/60 font-mono">
-                    {formatTimestamp(log.timestamp)}
+                <React.Fragment key={log.id}>
+                  {/* Desktop Row */}
+                  <div className="hidden md:grid grid-cols-12 gap-4 px-4 py-4 rounded-lg border border-white/5 hover:border-white/20 hover:bg-white/[0.02] transition-colors items-center">
+                    <div className="col-span-2 text-xs text-white/60 font-mono">
+                      {formatTimestamp(log.timestamp)}
+                    </div>
+                    <div className="col-span-3">
+                      <span className={`inline-flex px-2 py-1 rounded text-[10px] font-mono font-bold uppercase border ${getEventTypeColor(log.eventType)}`}>
+                        {formatEventType(log.eventType)}
+                      </span>
+                    </div>
+                    <div className="col-span-3 text-sm text-white/80 font-mono truncate">
+                      {log.facilitatorName || log.facilitatorId?.slice(0, 12) || 'Network'}
+                    </div>
+                    <div className="col-span-2">
+                      <span className={`inline-flex px-2 py-1 rounded text-[10px] font-mono font-bold uppercase ${
+                        log.status === 'success'
+                          ? 'text-green-400 bg-green-500/10'
+                          : log.status === 'failed'
+                          ? 'text-red-400 bg-red-500/10'
+                          : 'text-yellow-400 bg-yellow-500/10'
+                      }`}>
+                        {log.status}
+                      </span>
+                    </div>
+                    <div className="col-span-2 text-right">
+                      {log.txHash && (
+                        <a
+                          href={`https://testnet.snowtrace.io/tx/${log.txHash}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-xs text-blue-400 hover:text-blue-300 font-mono flex items-center gap-1 justify-end"
+                        >
+                          View TX <ArrowRight size={12} />
+                        </a>
+                      )}
+                    </div>
                   </div>
-                  <div className="col-span-3">
-                    <span className={`inline-flex px-2 py-1 rounded text-[10px] font-mono font-bold uppercase border ${getEventTypeColor(log.eventType)}`}>
-                      {formatEventType(log.eventType)}
-                    </span>
+
+                  {/* Mobile Card */}
+                  <div className="md:hidden p-4 rounded-xl border border-white/10 bg-white/5 backdrop-blur-sm space-y-3">
+                     <div className="flex items-center justify-between">
+                        <span className={`inline-flex px-2 py-1 rounded text-[10px] font-mono font-bold uppercase border ${getEventTypeColor(log.eventType)}`}>
+                          {formatEventType(log.eventType)}
+                        </span>
+                        <span className="text-[10px] text-white/40 font-mono">{formatTimestamp(log.timestamp)}</span>
+                     </div>
+                     
+                     <div className="space-y-1">
+                        <div className="text-[10px] text-white/30 font-mono uppercase tracking-widest">Facilitator</div>
+                        <div className="text-sm text-white/80 font-mono truncate">
+                           {log.facilitatorName || log.facilitatorId?.slice(0, 12) || 'Network'}
+                        </div>
+                     </div>
+
+                     <div className="flex items-center justify-between pt-2 border-t border-white/5">
+                        <div className="flex items-center gap-2">
+                           <div className="text-[10px] text-white/30 font-mono uppercase">Status</div>
+                           <span className={`inline-flex px-1.5 py-0.5 rounded text-[10px] font-mono font-bold uppercase ${
+                              log.status === 'success'
+                                ? 'text-green-400 bg-green-500/10'
+                                : log.status === 'failed'
+                                ? 'text-red-400 bg-red-500/10'
+                                : 'text-yellow-400 bg-yellow-500/10'
+                           }`}>
+                             {log.status}
+                           </span>
+                        </div>
+                        {log.txHash && (
+                          <a
+                            href={`https://testnet.snowtrace.io/tx/${log.txHash}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-[10px] text-blue-400 hover:text-blue-300 font-mono flex items-center gap-1"
+                          >
+                            TX <ArrowRight size={10} />
+                          </a>
+                        )}
+                     </div>
                   </div>
-                  <div className="col-span-3 text-sm text-white/80 font-mono truncate">
-                    {log.facilitatorName || log.facilitatorId?.slice(0, 12) || 'Network'}
-                  </div>
-                  <div className="col-span-2">
-                    <span className={`inline-flex px-2 py-1 rounded text-[10px] font-mono font-bold uppercase ${
-                      log.status === 'success'
-                        ? 'text-green-400 bg-green-500/10'
-                        : log.status === 'failed'
-                        ? 'text-red-400 bg-red-500/10'
-                        : 'text-yellow-400 bg-yellow-500/10'
-                    }`}>
-                      {log.status}
-                    </span>
-                  </div>
-                  <div className="col-span-2 text-right">
-                    {log.txHash && (
-                      <a
-                        href={`https://testnet.snowtrace.io/tx/${log.txHash}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-xs text-blue-400 hover:text-blue-300 font-mono flex items-center gap-1 justify-end"
-                      >
-                        View TX <ArrowRight size={12} />
-                      </a>
-                    )}
-                  </div>
-                </div>
+                </React.Fragment>
               ))
             ) : (
               <div className="text-center py-12 text-white/40">
