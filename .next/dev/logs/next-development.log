@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 [00:00:01.815] Server  LOG      ✓ Ready in 1294ms
 [00:00:08.671] Server  LOG      ○ Compiling / ...
 [00:00:22.608] Server  WARN    Lit is in dev mode. Not recommended for production! See https://lit.dev/msg/dev-mode for more information.
@@ -1081,3 +1082,54 @@ Import traces:
 [22:55:50.089] Browser LOG     BackgroundLayout: {"pathname":"/institution","showColorBends":true}
 [22:55:50.089] Browser LOG     BackgroundLayout: {"pathname":"/institution","showColorBends":true}
 [22:55:53.068] Server  ERROR   ❌ Error listing facilitators: TypeError: Failed to parse URL from 
+=======
+[00:00:01.073] Server  LOG      ✓ Ready in 825ms
+[00:00:10.450] Server  LOG      ○ Compiling / ...
+[00:00:17.871] Server  WARN    Lit is in dev mode. Not recommended for production! See https://lit.dev/msg/dev-mode for more information.
+[00:00:18.281] Server  WARN    [Reown Config] Failed to fetch remote project configuration. Using local/default values. Error: HTTP status code: 403
+[00:00:19.838] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:00:21.403] Browser LOG     BackgroundLayout: {"pathname":"/","showColorBends":false}
+[00:00:21.403] Browser LOG     BackgroundLayout: {"pathname":"/","showColorBends":false}
+[00:00:22.564] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[00:00:22.564] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/","route":"/"}
+[00:00:22.566] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/ color: rgb(120, 120, 120) color: inherit {"dp":"/","o":"http://localhost:3000/","r":"","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1765883431568}
+[00:00:23.098] Browser WARN    Lit is in dev mode. Not recommended for production! See https://lit.dev/msg/dev-mode for more information.
+[00:00:23.283] Browser WARN    [Reown Config] Failed to fetch remote project configuration. Using local/default values. {}
+[00:00:25.535] Server  LOG      ○ Compiling /api/facilitator/list ...
+[00:00:27.203] Server  LOG     🔗 Connecting to Local Redis (Docker)
+[00:00:27.205] Server  WARN    [Upstash Redis] Unable to find environment variable: `UPSTASH_REDIS_REST_URL`
+[00:00:27.206] Server  WARN    [Upstash Redis] Unable to find environment variable: `UPSTASH_REDIS_REST_TOKEN`
+[00:00:27.206] Server  WARN    [Upstash Redis] The 'url' property is missing or undefined in your Redis config.
+[00:00:27.206] Server  WARN    [Upstash Redis] The 'token' property is missing or undefined in your Redis config.
+[00:00:27.233] Server  WARN    [Upstash Redis] Redis client was initialized without url or token. Failed to execute command.
+[00:00:29.564] Browser ERROR   Analytics SDK: {} {"context":"AnalyticsSDKApiError"}
+[00:00:31.892] Server  ERROR   ❌ Error listing facilitators: TypeError: Failed to parse URL from 
+[00:00:31.934] Server  WARN    [Upstash Redis] Redis client was initialized without url or token. Failed to execute command.
+[00:00:32.294] Server  LOG      ○ Compiling /demo ...
+[00:00:36.638] Server  ERROR   ❌ Error listing facilitators: TypeError: Failed to parse URL from 
+[00:00:39.113] Browser LOG     BackgroundLayout: {"pathname":"/demo","showColorBends":true}
+[00:00:39.113] Browser LOG     BackgroundLayout: {"pathname":"/demo","showColorBends":true}
+[00:00:39.113] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/demo color: rgb(120, 120, 120) color: inherit {"dp":"/demo","o":"http://localhost:3000/demo","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1765883448086}
+[00:00:45.161] Server  WARN    [Upstash Redis] Redis client was initialized without url or token. Failed to execute command.
+[00:00:45.370] Browser LOG     BackgroundLayout: {"pathname":"/","showColorBends":false}
+[00:00:45.371] Browser LOG     BackgroundLayout: {"pathname":"/","showColorBends":false}
+[00:00:45.371] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/ color: rgb(120, 120, 120) color: inherit {"dp":"/","o":"http://localhost:3000/","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1765883454304}
+[00:00:45.371] Browser ERROR   Analytics SDK: {} {"context":"AnalyticsSDKApiError"}
+[00:00:47.246] Browser LOG     BackgroundLayout: {"pathname":"/demo","showColorBends":true}
+[00:00:47.246] Browser LOG     BackgroundLayout: {"pathname":"/demo","showColorBends":true}
+[00:00:47.246] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/demo color: rgb(120, 120, 120) color: inherit {"dp":"/demo","o":"http://localhost:3000/demo","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1765883456379}
+[00:00:48.620] Browser LOG     BackgroundLayout: {"pathname":"/","showColorBends":false}
+[00:00:48.620] Browser LOG     BackgroundLayout: {"pathname":"/","showColorBends":false}
+[00:00:48.620] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/ color: rgb(120, 120, 120) color: inherit {"dp":"/","o":"http://localhost:3000/","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1765883457684}
+[00:00:49.792] Server  ERROR   ❌ Error listing facilitators: TypeError: Failed to parse URL from 
+[00:00:49.820] Server  WARN    [Upstash Redis] Redis client was initialized without url or token. Failed to execute command.
+[00:00:54.291] Server  ERROR   ❌ Error listing facilitators: TypeError: Failed to parse URL from 
+[00:00:54.315] Server  WARN    [Upstash Redis] Redis client was initialized without url or token. Failed to execute command.
+[00:00:59.907] Server  ERROR   ❌ Error listing facilitators: TypeError: Failed to parse URL from 
+[00:01:00.000] Server  WARN    [Upstash Redis] Redis client was initialized without url or token. Failed to execute command.
+[00:01:04.479] Server  ERROR   ❌ Error listing facilitators: TypeError: Failed to parse URL from 
+[00:01:29.731] Browser ERROR   Analytics SDK: {} {"context":"AnalyticsSDKApiError"}
+[18:19:58.517] Server  LOG      ✓ Compiled in 5.2s
+[18:20:11.016] Browser LOG     BackgroundLayout: {"pathname":"/","showColorBends":false}
+[18:20:11.016] Browser LOG     BackgroundLayout: {"pathname":"/","showColorBends":false}
+>>>>>>> Stashed changes
